@@ -86,22 +86,24 @@ exports.categoryPageDetails = async (req, res) => {
       _id: { $ne: categoryId },
     })
     let differentCategory = await Category.findOne(
-      categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
-        ._id
-    )
-      .populate({
-        path: "courses",
-        match: { status: "Published" },
-      })
-      .exec()
+		categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
+			._id,
+	)
+		.populate({
+			path: "courses",
+			match: { status: "Published" },
+			populate: "ratingAndReviews",
+		})
+		.exec();
     console.log()
     // Get top-selling courses across all categories
     const allCategories = await Category.find()
-      .populate({
-        path: "courses",
-        match: { status: "Published" },
-      })
-      .exec()
+		.populate({
+			path: "courses",
+			match: { status: "Published" },
+			populate: "ratingAndReviews",
+		})
+		.exec();
     const allCourses = allCategories.flatMap((category) => category.courses)
     const mostSellingCourses = allCourses
       .sort((a, b) => b.sold - a.sold)
