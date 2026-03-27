@@ -11,7 +11,7 @@ export default function HeroSection() {
 	return (
 		<div className="min-h-screen section-container w-full text-white relative overflow-hidden pb-12">
 			{/* Subtle background glow */}
-			<div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_90%)]" />
+			<div className="absolute bg-pink-300 w-36 h-36 left-64 top-24 rounded-full blur-3xl animate-pulse duration-1000" />
 
 			{/* Hero Content */}
 			<main className="relative z-10 flex flex-col font-orbitron items-center justify-center text-center px-6 mt-30">
