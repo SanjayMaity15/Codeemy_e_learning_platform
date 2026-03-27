@@ -238,8 +238,11 @@ exports.deleteStudentByAdmin = async (req, res) => {
 exports.popularCourses = async (req, res) => {
 	try {
 		const courses = await Course.find({})
-			.populate("instructor", "firstName lastName")
-			.populate("ratingAndReviews", "rating");
+			.populate("instructor", "firstName lastName") 
+			.populate("ratingAndReviews", "rating")
+			.select(
+				"courseName whatYouWillLearn price thumbnail instructor ratingAndReviews",
+			);
 
 		const topCourses = courses
 			.map((course) => {
