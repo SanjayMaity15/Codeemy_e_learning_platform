@@ -6,11 +6,11 @@ export default function Footer() {
 	const navigate = useNavigate()
 
 	return (
-		<footer className="relative bg-white pt-16 pb-8 overflow-hidden text-black">
+		<footer className="relative bg-white pt-16 pb-8 overflow-hidden text-black z-100">
 			{/* subtle top glow */}
 
 			<div className="relative max-w-7xl mx-auto px-6 py-4">
-				<div className="absolute inset-x-0 top-0 h-52 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_70%)]" />
+				
 				{/* Top section */}
 				<div className="grid grid-cols-1 md:grid-cols-4 gap-10 border-b border-gray-800 pb-12">
 					{/* Brand */}
@@ -31,16 +31,16 @@ export default function Footer() {
 							Platform
 						</h3>
 						<ul className="space-y-2 text-gray-500 text-sm">
-							<li className="hover:text-white transition cursor-pointer">
+							<li className="hover:text-primary transition cursor-pointer">
 								Courses
 							</li>
-							<li className="hover:text-white transition cursor-pointer">
+							<li className="hover:text-primary transition cursor-pointer">
 								Mentors
 							</li>
-							<li className="hover:text-white transition cursor-pointer">
+							<li className="hover:text-primary transition cursor-pointer">
 								Projects
 							</li>
-							<li className="hover:text-white transition cursor-pointer">
+							<li className="hover:text-primary transition cursor-pointer">
 								Pricing
 							</li>
 						</ul>
@@ -52,16 +52,16 @@ export default function Footer() {
 							Resources
 						</h3>
 						<ul className="space-y-2 text-gray-500 text-sm">
-							<li className="hover:text-white transition cursor-pointer">
+							<li className="hover:text-primary transition cursor-pointer">
 								Blog
 							</li>
-							<li className="hover:text-white transition cursor-pointer">
+							<li className="hover:text-primary transition cursor-pointer">
 								FAQ
 							</li>
-							<li className="hover:text-white transition cursor-pointer">
+							<li className="hover:text-primary transition cursor-pointer">
 								Support
 							</li>
-							<li className="hover:text-white transition cursor-pointer">
+							<li className="hover:text-primary transition cursor-pointer">
 								Community
 							</li>
 						</ul>
@@ -73,13 +73,13 @@ export default function Footer() {
 							Connect
 						</h3>
 						<div className="flex gap-4">
-							<a className="hover:text-white transition cursor-pointer">
+							<a className="hover:text-primary transition cursor-pointer">
 								<FaGithub size={20} />
 							</a>
-							<a className="hover:text-white transition cursor-pointer">
+							<a className="hover:text-primary transition cursor-pointer">
 								<FaLinkedin size={20} />
 							</a>
-							<a className="hover:text-white transition cursor-pointer">
+							<a className="hover:text-primary transition cursor-pointer">
 								<FaTwitter size={20} />
 							</a>
 						</div>
@@ -93,13 +93,13 @@ export default function Footer() {
 						reserved.
 					</p>
 					<div className="flex gap-6">
-						<span className="hover:text-white transition cursor-pointer">
+						<span className="hover:text-primary transition cursor-pointer">
 							Privacy Policy
 						</span>
-						<span className="hover:text-white transition cursor-pointer">
+						<span className="hover:text-primary transition cursor-pointer">
 							Terms
 						</span>
-						<span className="hover:text-white transition cursor-pointer">
+						<span className="hover:text-primary transition cursor-pointer">
 							Cookies
 						</span>
 					</div>
