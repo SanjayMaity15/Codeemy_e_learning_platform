@@ -1,14 +1,11 @@
 import { useRef, useState } from "react";
-import { AiOutlineCaretDown } from "react-icons/ai";
+
 import { VscDashboard, VscRequestChanges, VscSignOut } from "react-icons/vsc";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import useOnClickOutside from "../../hooks/useOnClickOutside";
-import axios from "axios";
-import { setUser } from "../../feature/profileSlice";
-import { setToken } from "../../feature/authSlice";
-import { toast } from "react-hot-toast";
+
 import Logout from "./Logout";
 
 
@@ -16,7 +13,7 @@ export default function ProfileDropdown() {
 	const { user } = useSelector((state) => state.profile);
 	const [open, setOpen] = useState(false);
 	const ref = useRef(null);
-	const dispatch = useDispatch();
+	
 	const navigate = useNavigate()
 	const [openLogoutPopup, setOpenLogoutPopup] = useState(false)
 	useOnClickOutside(ref, () => setOpen(false));
@@ -38,7 +35,7 @@ export default function ProfileDropdown() {
 				<img
 					src={user.image}
 					alt={`profile-${user.firstName}`}
-					className="aspect-square w-8.5 rounded-full object-cover "
+					className="aspect-square w-10 rounded-full object-cover "
 				/>
 
 			</button>

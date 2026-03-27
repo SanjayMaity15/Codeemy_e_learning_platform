@@ -127,7 +127,7 @@ function App() {
 						/>
 						<Route
 							path="/course/:courseId"
-							element={<CourseDetailsPage />}
+							element={user ? <CourseDetailsPage/> : <Navigate to={"/login"}/> }
 						/>
 
 						<Route element={<ProtectedRoute />}>

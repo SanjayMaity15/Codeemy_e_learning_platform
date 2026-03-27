@@ -12,6 +12,7 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 const NavItems = ({ onClick, subLinks }) => {
 	const [showDropdown, setShowDropdown] = useState(false);
 	const location = useLocation()
+	
 	const coursesRoute = location.pathname.split("/")[1] === "courses"
 	
 	return (
@@ -155,7 +156,7 @@ const Navbar = () => {
 
 				{/* Login/SignUp/Dashboard */}
 				<div className="flex gap-x-4 items-center">
-					{user && user?.accountType != "Instructor" && (
+					{user && user?.accountType != "Instructor" || "Admin" && (
 						<Link
 							to="/dashboard/cart"
 							className="relative text-black text-2xl flex items-center"
