@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaBars, FaGithub, FaLinkedin, FaTimes } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { NavbarLinks } from "../../data/navbar-links";
 import { useSelector } from "react-redux";
 import ProfileDropdown from "../auth/ProfileDropDown";
@@ -11,7 +11,9 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 // Nav items component, reusable for desktop and mobile
 const NavItems = ({ onClick, subLinks }) => {
 	const [showDropdown, setShowDropdown] = useState(false);
-
+	const location = useLocation()
+	const coursesRoute = location.pathname.split("/")[1] === "courses"
+	
 	return (
 		<ul className="flex flex-col md:flex-row gap-8">
 			{NavbarLinks.map((currNavLink, index) => (
@@ -39,14 +41,26 @@ const NavItems = ({ onClick, subLinks }) => {
 					) : (
 						<>
 							{/* Courses Button */}
-							<div className="cursor-pointer flex items-center">
+							<div
+								className={`cursor-pointer flex items-center ${
+									coursesRoute
+										? "text-primary font-bold"
+										: "hover:text-sm transition-all duration-300"
+								}`}
+							>
 								{currNavLink.title}{" "}
-								{showDropdown ? <MdArrowDropUp className="text-2xl"/> : <MdArrowDropDown className="text-2xl" />}
+								{showDropdown ? (
+									<MdArrowDropUp className="text-2xl" />
+								) : (
+									<MdArrowDropDown className="text-2xl" />
+								)}
 							</div>
 
 							{/* 🔥 Dropdown */}
 							{showDropdown && (
-									<div className="absolute top-6 -left-18 bg-white border border-richblack-600 rounded-md min-w-55  z-2000 text-sm">
+								<div className="absolute top-8 -left-18 bg-white border border-primary rounded-md min-w-55  z-2000 text-sm">
+									<div className="w-5 h-5 bg-white relative left-1/2 -translate-x-1/2 rotate-45 bottom-2 " />
+
 									{subLinks?.length > 0 ? (
 										subLinks.map((cat) => (
 											<NavLink
@@ -55,7 +69,7 @@ const NavItems = ({ onClick, subLinks }) => {
 													.toLowerCase()
 													.replace(/\s+/g, "-")}`} // slug
 												onClick={onClick}
-												className="block px-3 py-2 hover:bg-indigo-400  hover:text-white"
+												className="block px-3 py-2 hover:bg-indigo-400  hover:text-white "
 											>
 												{cat.name}
 											</NavLink>
@@ -76,16 +90,15 @@ const NavItems = ({ onClick, subLinks }) => {
 };
 
 const Navbar = () => {
-
 	const { token } = useSelector((state) => state.auth);
-	
+
 	const { user } = useSelector((state) => state.profile);
 	const { totalItems } = useSelector((state) => state.cart);
 
 	const [navBgActive, setNavBgActive] = useState(false);
 	const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
-	const [loading, setLoading] = useState(false)
-	const [subLinks, setSubLinks] = useState([])
+	const [loading, setLoading] = useState(false);
+	const [subLinks, setSubLinks] = useState([]);
 
 	// Toggle background shadow on scroll
 	useEffect(() => {
@@ -101,20 +114,21 @@ const Navbar = () => {
 		return () => window.removeEventListener("scroll", handleNavBg);
 	}, []);
 
-	 useEffect(() => {
+	useEffect(() => {
 		(async () => {
-		  setLoading(true)
-		  try {
-			const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}course/showAllCategories`, {withCredentials: true})
-			setSubLinks(res.data.data)
-		  } catch (error) {
-			console.log("Could not fetch Categories.", error)
-		  }
-		  setLoading(false)
-		})()
-	 }, [])
-	
-	
+			setLoading(true);
+			try {
+				const res = await axios.get(
+					`${import.meta.env.VITE_SERVER_URL}course/showAllCategories`,
+					{ withCredentials: true },
+				);
+				setSubLinks(res.data.data);
+			} catch (error) {
+				console.log("Could not fetch Categories.", error);
+			}
+			setLoading(false);
+		})();
+	}, []);
 
 	return (
 		<section
