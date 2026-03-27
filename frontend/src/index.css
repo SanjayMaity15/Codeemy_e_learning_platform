@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+
+/* Register the font for Tailwind v4 */
+@theme {
+  --font-inter: "Inter", sans-serif;
+  --font-orbitron : "Orbitron", sans-serif;
+  --color-background: #f3f4f6;     /* soft gray */
+  --color-primary: #4f46e5;        /* indigo-600 */
+  --color-primary-hover: #4338ca;
+}
+
+
+.section-container{
+    @apply max-w-7xl mx-auto px-6 font-inter
+}
+
+body{
+  @apply bg-background
+}
+
+::selection{
+  @apply bg-pink-200 text-pink-600
+}
+
