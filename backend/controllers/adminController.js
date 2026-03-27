@@ -7,28 +7,29 @@ const Course = require("../models/Course");
 const RatingAndReview = require("../models/RatingAndRaview");
 const CourseProgress = require("../models/CourseProgress");
 const Payment = require("../models/Payment");
-const { studentAccountDeleted } = require("../mail/templates/deleteStudentMail");
+const {
+	studentAccountDeleted,
+} = require("../mail/templates/deleteStudentMail");
 const OTP = require("../models/OTP");
 
-
 exports.getPaymentsData = async (req, res) => {
-    try {
-        const payments = await Payment.find({})
+	try {
+		const payments = await Payment.find({});
 
-        if (payments.length === 0) {
-            return res.status(404).json({message: "No payment data"})
-        }
+		if (payments.length === 0) {
+			return res.status(404).json({ message: "No payment data" });
+		}
 
-        return res.status(200).json({
-            data: payments,
-            message: "Payment fetch successfully"
-        })
-    } catch (error) {
-        return res.status(500).json({
-            message: "server error"
-        })
-    }
-}
+		return res.status(200).json({
+			data: payments,
+			message: "Payment fetch successfully",
+		});
+	} catch (error) {
+		return res.status(500).json({
+			message: "server error",
+		});
+	}
+};
 
 exports.getAllInstructorData = async (req, res) => {
 	try {
@@ -107,7 +108,6 @@ exports.approvedInstructor = async (req, res) => {
 			);
 			console.log("Email sent successfully:", emailResponse.response);
 		} catch (error) {
-			
 			console.error("Error occurred while sending email:", error);
 			return res.status(500).json({
 				success: false,
@@ -188,9 +188,9 @@ exports.deleteStudentByAdmin = async (req, res) => {
 		await RatingAndReview.deleteMany({ user: userId }, { session });
 
 		// 5. Delete User
-        await User.findByIdAndDelete(userId, { session });
-        
-        await OTP.deleteMany({email: user.email}, {session})
+		await User.findByIdAndDelete(userId, { session });
+
+		await OTP.deleteMany({ email: user.email }, { session });
 
 		// Commit Transaction
 		await session.commitTransaction();
@@ -201,11 +201,13 @@ exports.deleteStudentByAdmin = async (req, res) => {
 			const emailResponse = await mailSender(
 				user.email,
 				"Account deleted",
-				studentAccountDeleted(`${user.firstName} ${user.lastName}`, user.email),
+				studentAccountDeleted(
+					`${user.firstName} ${user.lastName}`,
+					user.email,
+				),
 			);
 			console.log("Email sent successfully:", emailResponse.response);
 		} catch (error) {
-			
 			console.error("Error occurred while sending email:", error);
 			return res.status(500).json({
 				success: false,
@@ -229,6 +231,39 @@ exports.deleteStudentByAdmin = async (req, res) => {
 			success: false,
 			message: "User deletion failed",
 			error: error.message,
+		});
+	}
+};
+
+exports.popularCourses = async (req, res) => {
+	try {
+		const courses = await Course.find({})
+			.populate("instructor", "firstName lastName")
+			.populate("ratingAndReviews", "rating");
+
+		const topCourses = courses
+			.map((course) => {
+				const avgRating =
+					course.ratingAndReviews.length > 0
+						? course.ratingAndReviews.reduce(
+								(sum, r) => sum + r.rating,
+								0,
+							) / course.ratingAndReviews.length
+						: 0;
+				return { ...course.toObject(), avgRating };
+			})
+			.sort((a, b) => b.avgRating - a.avgRating)
+			.slice(0, 3);
+
+		console.log(topCourses);
+
+		return res.status(200).json({
+			data: topCourses,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: "Courses fetching error",
 		});
 	}
 };
