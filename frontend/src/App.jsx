@@ -13,6 +13,7 @@ import { ACCOUNT_TYPE } from "./utils/constants";
 import AdminDashboard from "./components/dashboard/AdminDashboard";
 import Chart from "./components/dashboard/Chart";
 import AdminCategory from "./components/dashboard/AdminCategory";
+import StudentRating from "./components/dashboard/student rating/StudentRating";
 
 // Lazy load pages/components
 const Home = lazy(() => import("./pages/Home"));
@@ -161,6 +162,10 @@ function App() {
 								<Route
 									path="category"
 									element={user?.accountType === ACCOUNT_TYPE?.ADMIN ? <AdminCategory /> : <Navigate to="/"/>}
+								/>
+								<Route
+									path="rating-reviews"
+									element={user?.accountType === ACCOUNT_TYPE?.STUDENT ? <StudentRating /> : <Navigate to="/"/>}
 								/>
 							</Route>
 						</Route>
