@@ -4,9 +4,10 @@ const CourseProgress = require("../models/CourseProgress");
 const Payment = require("../models/Payment");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
-const RatingAndReview = require("../models/RatingAndRaview")
+const RatingAndReview = require("../models/RatingAndRaview");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/secToDuration");
+const RatingAndRaview = require("../models/RatingAndRaview");
 // Method for updating a profile
 exports.updateProfile = async (req, res) => {
 	try {
@@ -134,7 +135,6 @@ exports.deleteAccount = async (req, res) => {
 				success: true,
 				message: "User deleted successfully",
 			});
-		
 	} catch (error) {
 		console.log(error);
 
@@ -302,5 +302,99 @@ exports.instructorDashboard = async (req, res) => {
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: "Server Error" });
+	}
+};
+
+exports.getAllOwnReviews = async (req, res) => {
+	try {
+		const reviews = await RatingAndRaview.find({ user: req.user.id }).populate("course", "courseName");
+
+		if (reviews.length === 0) {
+			return res.status(400).json({
+				success: false,
+				message: "No review found",
+			});
+		}
+
+		res.status(200).json({
+			message: "Reviews fetch successfully",
+			data: reviews,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: "Server error",
+		});
+	}
+};
+
+exports.editReview = async (req, res) => {
+	try {
+		const { reviewId, rating, review } = req.body;
+
+		if (!reviewId) {
+			return res.status(400).json({
+				message: "Id not found",
+			});
+		}
+
+		const presentReview = await RatingAndRaview.findOne({ _id: reviewId })
+		
+		const newReview = review ? review : presentReview.review;
+		const newRating = rating ? rating : presentReview.rating;
+
+		const result = await RatingAndRaview.updateOne(
+			{ _id: reviewId },
+			{ rating:newRating, review:newReview },
+			{ new: true },
+		);
+
+		console.log(result);
+
+		if (!result) {
+			return res.status(400).json({
+				success: false,
+				message: "No review found",
+			});
+		}
+
+		res.status(200).json({
+			message: "Review updated successfully",
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: "Server error",
+		});
+	}
+};
+
+exports.deleteReview = async (req, res) => {
+	try {
+		const { reviewId } = req.params;
+
+		const result = await RatingAndRaview.findOneAndDelete({
+			_id: reviewId,
+		});
+
+		if (!result) {
+			return res.status(400).json({
+				message: "Review not found",
+			});
+		}
+
+		await Course.updateOne(
+			{ ratingAndReviews: reviewId },
+			{ $pull: { ratingAndReviews: reviewId } },
+		);
+
+		res.status(200).json({
+			message: "Review deleted successfully",
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: "Server error",
+		});
 	}
 };
