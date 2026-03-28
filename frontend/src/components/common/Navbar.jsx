@@ -9,7 +9,7 @@ import axios from "axios";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
 // Nav items component, reusable for desktop and mobile
-const NavItems = ({ onClick, subLinks }) => {
+const NavItems = ({ onClick, subLinks, isMobile }) => {
 	const [showDropdown, setShowDropdown] = useState(false);
 	const location = useLocation()
 	
@@ -34,7 +34,7 @@ const NavItems = ({ onClick, subLinks }) => {
 							className={({ isActive }) =>
 								isActive
 									? "text-primary font-bold"
-									: "hover:text-sm transition-all duration-300"
+									: `hover:text-sm transition-all duration-300 ${isMobile && "text-white"}`
 							}
 						>
 							{currNavLink.title}
@@ -43,13 +43,16 @@ const NavItems = ({ onClick, subLinks }) => {
 						<>
 							{/* Courses Button */}
 							<div
+								onClick={() => {
+									if (isMobile) {
+										setShowDropdown((prev) => !prev);
+									}
+								}}
 								className={`cursor-pointer flex items-center ${
-									coursesRoute
-										? "text-primary font-bold"
-										: "hover:text-sm transition-all duration-300"
+									coursesRoute ? "text-primary font-bold" : `${isMobile && "text-white"}`
 								}`}
 							>
-								{currNavLink.title}{" "}
+								{currNavLink.title}
 								{showDropdown ? (
 									<MdArrowDropUp className="text-2xl" />
 								) : (
@@ -59,7 +62,9 @@ const NavItems = ({ onClick, subLinks }) => {
 
 							{/* 🔥 Dropdown */}
 							{showDropdown && (
-								<div className="absolute top-8 -left-18 bg-white border border-primary rounded-md min-w-55  z-2000 text-sm">
+								<div
+									className={`absolute top-8 -left-18 bg-white border border-primary rounded-md min-w-55  z-2000 text-sm ${isMobile ? "max-h-50 overflow-y-auto" : ""}`}
+								>
 									<div className="w-5 h-5 bg-white relative left-1/2 -translate-x-1/2 rotate-45 bottom-2 " />
 
 									{subLinks?.length > 0 ? (
@@ -100,6 +105,7 @@ const Navbar = () => {
 	const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [subLinks, setSubLinks] = useState([]);
+	const isMobile = window.innerWidth < 768;
 
 	// Toggle background shadow on scroll
 	useEffect(() => {
@@ -134,9 +140,7 @@ const Navbar = () => {
 	return (
 		<section
 			className={`sticky top-0 h-20 w-full z-20 transition-shadow ${
-				navBgActive
-					? "shadow-md backdrop-blur-xs "
-					: "bg-transparent"
+				navBgActive ? "shadow-md backdrop-blur-xs " : "bg-transparent"
 			}`}
 		>
 			<div className="section-container relative z-20 h-20 flex justify-between items-center">
@@ -156,19 +160,20 @@ const Navbar = () => {
 
 				{/* Login/SignUp/Dashboard */}
 				<div className="flex gap-x-4 items-center">
-					{user && user?.accountType != "Instructor" || "Admin" && (
-						<Link
-							to="/dashboard/cart"
-							className="relative text-black text-2xl flex items-center"
-						>
-							<AiOutlineShoppingCart />
-							{totalItems > 0 && (
-								<span className="bg-pink-500 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full absolute left-4 top-2.5 font-bold">
-									{totalItems}
-								</span>
-							)}
-						</Link>
-					)}
+					{(user && user?.accountType != "Instructor") ||
+						("Admin" && (
+							<Link
+								to="/dashboard/cart"
+								className="relative text-black text-2xl flex items-center"
+							>
+								<AiOutlineShoppingCart />
+								{totalItems > 0 && (
+									<span className="bg-pink-500 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full absolute left-4 top-2.5 font-bold">
+										{totalItems}
+									</span>
+								)}
+							</Link>
+						))}
 
 					{token === null && (
 						<Link to="/login">
@@ -177,18 +182,22 @@ const Navbar = () => {
 							</button>
 						</Link>
 					)}
-					{token !== null && <ProfileDropdown />}
+					{token !== null && (
+						<div className="hidden md:block">
+							<ProfileDropdown />
+						</div>
+					)}
 				</div>
 
 				{/* Mobile menu setup */}
 
 				{/* Hamburger Toggle */}
-				<div className="md:hidden z-40 text-white">
+				<div className="md:hidden z-40">
 					<button
 						onClick={() =>
 							setIsMobileMenuActive(!isMobileMenuActive)
 						}
-						className="text-white text-xl"
+						className="text-xl"
 					>
 						{isMobileMenuActive ? <FaTimes /> : <FaBars />}
 					</button>
@@ -196,13 +205,14 @@ const Navbar = () => {
 
 				{/* Mobile Menu */}
 				<div
-					className={`md:hidden fixed top-0 left-0 w-full mt-20 h-[50%] bg-black/75 flex justify-center items-center text-center transition-transform duration-300 z-40 ${
+					className={`md:hidden fixed top-0 left-0 w-full mt-20 h-full bg-black/80 flex flex-col justify-start pt-12 gap-4 items-center text-center transition-transform duration-300 z-2000  ${
 						isMobileMenuActive
 							? "translate-x-0"
 							: "-translate-x-full"
 					}`}
 				>
-					<NavItems onClick={() => setIsMobileMenuActive(false)} />
+					{token !== null && <ProfileDropdown />}
+					<NavItems subLinks={subLinks} isMobile={isMobile} onClick={() => setIsMobileMenuActive(false)} />
 				</div>
 			</div>
 		</section>
