@@ -11,12 +11,12 @@ import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 // Nav items component, reusable for desktop and mobile
 const NavItems = ({ onClick, subLinks, isMobile }) => {
 	const [showDropdown, setShowDropdown] = useState(false);
-	const location = useLocation()
-	
-	const coursesRoute = location.pathname.split("/")[1] === "courses"
-	
+	const location = useLocation();
+
+	const coursesRoute = location.pathname.split("/")[1] === "courses";
+
 	return (
-		<ul className="flex flex-col md:flex-row gap-8">
+		<ul className="flex flex-col md:flex-row gap-4 md:gap-8">
 			{NavbarLinks.map((currNavLink, index) => (
 				<li
 					key={index}
@@ -49,7 +49,9 @@ const NavItems = ({ onClick, subLinks, isMobile }) => {
 									}
 								}}
 								className={`cursor-pointer flex items-center ${
-									coursesRoute ? "text-primary font-bold" : `${isMobile && "text-white"}`
+									coursesRoute
+										? "text-primary font-bold"
+										: `${isMobile && "text-white"}`
 								}`}
 							>
 								{currNavLink.title}
@@ -160,20 +162,19 @@ const Navbar = () => {
 
 				{/* Login/SignUp/Dashboard */}
 				<div className="flex gap-x-4 items-center">
-					{(user && user?.accountType != "Instructor") ||
-						("Admin" && (
-							<Link
-								to="/dashboard/cart"
-								className="relative text-black text-2xl flex items-center"
-							>
-								<AiOutlineShoppingCart />
-								{totalItems > 0 && (
-									<span className="bg-pink-500 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full absolute left-4 top-2.5 font-bold">
-										{totalItems}
-									</span>
-								)}
-							</Link>
-						))}
+					{user && (user?.accountType != "Instructor" || "Admin") && (
+						<Link
+							to="/dashboard/cart"
+							className="relative text-black text-2xl md:flex items-center hidden "
+						>
+							<AiOutlineShoppingCart />
+							{totalItems > 0 && (
+								<span className="bg-pink-500 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full absolute left-4 top-2.5 font-bold">
+									{totalItems}
+								</span>
+							)}
+						</Link>
+					)}
 
 					{token === null && (
 						<Link to="/login">
@@ -212,7 +213,31 @@ const Navbar = () => {
 					}`}
 				>
 					{token !== null && <ProfileDropdown />}
-					<NavItems subLinks={subLinks} isMobile={isMobile} onClick={() => setIsMobileMenuActive(false)} />
+
+					<div className="">
+						{" "}
+						{user &&
+							(user?.accountType != "Instructor" || "Admin") && (
+								<Link
+									to="/dashboard/cart"
+									className="relative text-white text-lg flex gap-2 items-center text-left"
+								>
+									<span>Cart</span>
+									<AiOutlineShoppingCart />
+									{totalItems > 0 && (
+										<span className="bg-pink-500 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full absolute left-4 top-2.5 font-bold">
+											{totalItems}
+										</span>
+									)}
+								</Link>
+							)}
+					</div>
+
+					<NavItems
+						subLinks={subLinks}
+						isMobile={isMobile}
+						onClick={() => setIsMobileMenuActive(false)}
+					/>
 				</div>
 			</div>
 		</section>
