@@ -133,9 +133,9 @@ const Navbar = () => {
 
 	return (
 		<section
-			className={`sticky top-0 outline-1 outline-neutral-700 shadow-xl h-20 w-full z-20 transition-shadow ${
+			className={`sticky top-0 h-20 w-full z-20 transition-shadow ${
 				navBgActive
-					? "shadow-xl backdrop-blur outline-1 outline-neutral-700"
+					? "shadow-md backdrop-blur-xs "
 					: "bg-transparent"
 			}`}
 		>
@@ -143,7 +143,7 @@ const Navbar = () => {
 				{/* Logo / Name */}
 				<div>
 					<Link to="/">
-						<p className="bg-linear-to-b from-indigo-600 to-pink-600 bg-clip-text text-transparent font-bold tracking-wide text-3xl font-orbitron">
+						<p className="bg-linear-to-b from-indigo-600 to-pink-600 bg-clip-text text-transparent font-bold tracking-wide text-3xl font-orbitron select-none">
 							<span className="text-4xl">C</span>odeemy
 						</p>
 					</Link>

@@ -42,7 +42,7 @@ export default function ProfileDropdown() {
 
 			{/* Dropdown */}
 			{open && (
-				<div className="absolute top-[150%] -right-2 z-50">
+				<div className="absolute top-[150%] -right-2 z-10000">
 		
 					{/* Menu */}
 					<div className="overflow-hidden rounded-sm border border-primary bg-white transition">

@@ -202,10 +202,10 @@ const VideoDetails = () => {
 									onclick={() => handleLectureCompletion()}
 									text={
 										!loading
-											? "Mark As Completed"
+											? "Mark as completed"
 											: "Loading..."
 									}
-									customClasses="text-xl max-w-max px-4 mx-auto"
+									customClasses="text-sm max-w-max px-4 mx-auto"
 								/>
 							)}
 							<IconBtn
@@ -217,24 +217,24 @@ const VideoDetails = () => {
 										setVideoEnded(false);
 									}
 								}}
-								text="Rewatch"
-								customClasses="text-xl max-w-max px-4 mx-auto mt-2"
+								text="Re-watch"
+								customClasses="text-sm max-w-max px-4 mx-auto mt-2"
 							/>
 							<div className="mt-10 flex min-w-62.5 justify-center gap-x-4 text-xl">
 								{!isFirstVideo() && (
 									<button
 										disabled={loading}
 										onClick={goToPrevVideo}
-										className="blackButton bg-pink-600 text-white px-4 py-1 rounded-sm"
+										className="blackButton bg-red-600 text-white px-4 py-1 rounded-sm text-sm hover:bg-red-700 transition-colors duration-200 cursor-pointer "
 									>
-										Prev
+										Previous
 									</button>
 								)}
 								{!isLastVideo() && (
 									<button
 										disabled={loading}
 										onClick={goToNextVideo}
-										className="blackButton bg-green-600 text-white px-4 py-1 rounded-sm"
+										className="blackButton bg-green-600 text-white px-4 py-1 rounded-sm text-sm hover:bg-green-700 transition-colors duration-200 cursor-pointer"
 									>
 										Next
 									</button>
