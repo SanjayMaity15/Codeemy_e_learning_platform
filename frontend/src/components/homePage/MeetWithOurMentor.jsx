@@ -31,7 +31,7 @@ export default function MeetWithOurMentors() {
 	return (
 		<section className="text-black py-20 section-container">
 			<div className="max-w-7xl mx-auto">
-				<h2 className="text-3xl text-gray-500 md:text-5xl font-bold text-center mb-14 pt-12 font-orbitron">
+				<h2 className="text-3xl text-gray-500 md:text-5xl font-bold text-center mb-14 md:pt-12 font-orbitron">
 					Meet With Our{" "}
 					<span className="bg-linear-to-b from-indigo-600  to-pink-600 bg-clip-text text-transparent">
 						Mentors

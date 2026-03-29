@@ -206,7 +206,7 @@ const Navbar = () => {
 
 				{/* Mobile Menu */}
 				<div
-					className={`md:hidden fixed top-0 left-0 w-full mt-20 h-full bg-black/80 flex flex-col justify-start pt-12 gap-4 items-center text-center transition-transform duration-300 z-2000  ${
+					className={`md:hidden fixed top-0 left-0 w-full mt-20 h-screen bg-black/80 flex flex-col justify-start pt-12 gap-4 items-center text-center transition-transform duration-300 z-2000  ${
 						isMobileMenuActive
 							? "translate-x-0"
 							: "-translate-x-full"

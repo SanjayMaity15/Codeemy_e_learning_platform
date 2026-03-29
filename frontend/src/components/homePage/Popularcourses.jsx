@@ -30,7 +30,7 @@ const Popularcourses = () => {
 	}
 
 	return (
-		<div className="section-container pt-20 mt-12">
+		<div className="section-container md:pt-20 mt-12">
 			{/* Heading */}
 			<h2 className="text-3xl md:text-5xl font-bold text-center mb-4 font-orbitron text-gray-500">
 				Popular{" "}

@@ -8,7 +8,7 @@ import {
 
 export default function WhyChooseUs() {
 	return (
-		<section className="text-white py-20 px-6">
+		<section className="text-white md:py-20 px-6">
 			<div className="max-w-6xl mx-auto">
 				{/* Heading */}
 				<h2 className="text-3xl md:text-5xl font-bold text-center mb-4 font-orbitron text-gray-500">

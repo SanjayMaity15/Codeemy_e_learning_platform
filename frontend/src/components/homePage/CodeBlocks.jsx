@@ -5,34 +5,37 @@ import { TypeAnimation } from "react-type-animation";
 const CodeBlocks = () => {
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.profile);
+	const isMobile = window.innerWidth < 450;
 
 	return (
 		<div className={`max-w-7xl mx-auto`}>
-			<div className="pt-12">
+			<div className="">
 				<div className="flex flex-col md:flex-row">
 					{/*Section 1*/}
-					<div className="text-pink-600  flex-1  rounded-md px-4 py-16 flex flex-col items-start gap-5 ">
-						<h1 className="text-3xl font-semibold font-orbitron">
+					<div className="text-pink-600  flex-1  rounded-md px-4 md:py-16 py-8 flex flex-col items-start gap-5 ">
+						<h1 className="text-3xl font-semibold font-orbitron text-center md:text-left">
 							Empowering you with practical coding skills through
 							online education.
 						</h1>
-						<p className="w-[80%] text-neutral-500">
+						<p className="md:w-[80%] text-neutral-500 text-center md:text-left">
 							Our courses are designed and taught by industry
 							experts who have years of experience in coding and
 							are passionate about sharing their knowledge with
 							you
 						</p>
-						<button
-							className="font-orbitron px-10 py-3 rounded-full shadow-sm border border-indigo-800 bg-primary text-white hover:border-green-400   font-semibold hover:opacity-90 transition cursor-pointer"
-							onClick={() =>
-								navigate(user? "/courses" : "/login")
-							}
-						>
-							Let's Start
-						</button>
+						<div className="flex justify-center md:justify-start w-full">
+							<button
+								className="font-orbitron px-10 py-3 rounded-full shadow-sm border border-indigo-800 bg-primary text-white hover:border-green-400   font-semibold hover:opacity-90 transition cursor-pointer"
+								onClick={() =>
+									navigate(user ? "/courses" : "/login")
+								}
+							>
+								Let's Start
+							</button>
+						</div>
 					</div>
 					{/*Section 2*/}
-					<div className=" h-fit  relative flex flex-row text-10[px] w-full pt-16 flex-1 ">
+					<div className=" h-fit  relative flex flex-row text-10[px] w-full pt-16 flex-1 px-4 md:px-0">
 						{/*HW -> BG gradient*/}
 						<div className="absolute top-30 left-35 w-36 h-36 bg-purple-300 opacity-20 rounded-full filter blur-3xl animate-pulse z-0" />
 
@@ -52,6 +55,15 @@ const CodeBlocks = () => {
 							<p>13</p>
 							<p>14</p>
 							<p>15</p>
+							{
+								isMobile && <>
+									<p>16</p>
+									<p>17</p>
+									<p>18</p>
+									<p>19</p>
+									<p>20</p>
+								</>
+							}
 						</div>
 
 						<div
