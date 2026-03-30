@@ -37,7 +37,8 @@ ChartJS.register(
 );
 
 const AdminDashboard = () => {
-	const [loading, setLoading] = useState(false);
+	const [loadingId, setLoadingId] = useState(null);
+	const [actionType, setActionType] = useState("")
 
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.profile);
@@ -92,7 +93,8 @@ const AdminDashboard = () => {
 	// Approve instructor
 	const approveInstructor = async (insId) => {
 		try {
-			setLoading(true);
+			setLoadingId(insId);
+			setActionType("approve")
 			const res = await axios.post(
 				`${import.meta.env.VITE_SERVER_URL}admin/approved`,
 				{ insId },
@@ -100,18 +102,42 @@ const AdminDashboard = () => {
 			);
 			fetchInstructors();
 			toast.success(res.data.message);
-			setLoading(false);
+			setLoadingId(null);
+			setActionType("")
 		} catch (error) {
 			toast.error(error.response.data.message);
 			console.log(err);
-			setLoading(false);
+			setLoadingId(null);
+			setActionType("")
+		}
+	};
+	// Approve instructor
+	const deactivateInstructor = async (insId) => {
+		try {
+			setLoadingId(insId);
+			setActionType("deactivate")
+			const res = await axios.post(
+				`${import.meta.env.VITE_SERVER_URL}admin/deactivate`,
+				{ insId },
+				{ withCredentials: true },
+			);
+			fetchInstructors();
+			toast.success(res.data.message);
+			setLoadingId(null);
+			setActionType("")
+		} catch (error) {
+			toast.error(error.response.data.message);
+			console.log(err);
+			setLoadingId(null);
+			setActionType("")
 		}
 	};
 
 	// Delete student
 	const deleteStudent = async (stuId) => {
 		try {
-			setLoading(true);
+			setLoadingId(stuId);
+			setActionType("delete")
 			const res = await axios.delete(
 				`${import.meta.env.VITE_SERVER_URL}admin/delete-student/${stuId}`,
 				{ withCredentials: true },
@@ -119,10 +145,12 @@ const AdminDashboard = () => {
 
 			fetchStudents();
 			toast.success(res.data.message);
-			setLoading(false);
+			setLoadingId(null);
+			setActionType("")
 		} catch (err) {
 			toast.error(err.response.data.message);
-			setLoading(false);
+			setLoadingId(null);
+			setActionType("")
 			console.log(err);
 		}
 	};
@@ -180,17 +208,30 @@ const AdminDashboard = () => {
 								{new Date(ins.createdAt).toLocaleDateString()}
 							</td>
 							<td className="border p-2 text-sm">
-								{!ins.approved && (
+								{!ins.approved ? (
 									<button
 										className="text-green-600 bg-green-100 px-2 cursor-pointer border rounded-full hover:bg-green-200 transition"
 										onClick={() =>
 											approveInstructor(ins._id)
 										}
 									>
-										{loading ? (
+										{loadingId === ins._id && actionType === "approve" ? (
 											<ButtonLoader text="Approving" />
 										) : (
 											<span>Approve</span>
+										)}
+									</button>
+								) : (
+									<button
+										className="text-red-600 bg-red-100 px-2 cursor-pointer border rounded-full hover:bg-red-200 transition"
+										onClick={() =>
+											deactivateInstructor(ins._id)
+										}
+									>
+										{loadingId === ins._id && actionType === "deactivate" ? (
+											<ButtonLoader text="Deactivating" />
+										) : (
+											<span>Deactivate</span>
 										)}
 									</button>
 								)}
@@ -247,10 +288,10 @@ const AdminDashboard = () => {
 									className="text-red-600 bg-red-100 px-2 cursor-pointer border rounded-full hover:bg-red-200 transition"
 									onClick={() => deleteStudent(stu._id)}
 								>
-									{loading ? (
+									{loadingId === stu._id && actionType === "delete" ? (
 										<ButtonLoader text="Deleting" />
 									) : (
-										<span>Approve</span>
+										<span>Delete</span>
 									)}
 								</button>
 							</td>
