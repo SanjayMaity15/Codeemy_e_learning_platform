@@ -5,12 +5,13 @@ const {
 	
 	isAdmin,
 } = require("../middlewares/auth");
-const { getAllInstructorData, approvedInstructor, getAllStudentData, deleteStudentByAdmin, getPaymentsData, popularCourses } = require("../controllers/adminController");
+const { getAllInstructorData, approvedInstructor, getAllStudentData, deleteStudentByAdmin, getPaymentsData, popularCourses, removeInstructorPower } = require("../controllers/adminController");
 
 router.get("/payment", auth, isAdmin, getPaymentsData);
 router.get("/instructor", auth, isAdmin, getAllInstructorData);
 router.get("/student", auth, isAdmin, getAllStudentData);
 router.post("/approved", auth, isAdmin, approvedInstructor);
+router.post("/deactivate", auth, isAdmin, removeInstructorPower);
 router.delete("/delete-student/:userId", auth, isAdmin, deleteStudentByAdmin);
 
 

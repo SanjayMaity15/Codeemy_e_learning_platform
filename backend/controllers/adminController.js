@@ -11,6 +11,7 @@ const {
 	studentAccountDeleted,
 } = require("../mail/templates/deleteStudentMail");
 const OTP = require("../models/OTP");
+const { instructorDeactivated } = require("../mail/templates/instructorDeactivate");
 
 exports.getPaymentsData = async (req, res) => {
 	try {
@@ -118,6 +119,51 @@ exports.approvedInstructor = async (req, res) => {
 
 		return res.status(200).json({
 			message: "Instructor verified successfully",
+		});
+	} catch (error) {
+		return res.status(500).json({
+			message: "Server error",
+		});
+	}
+};
+
+exports.removeInstructorPower = async (req, res) => {
+	try {
+		const { insId } = req.body;
+
+		if (!insId) {
+			return res.status(400).json({
+				message: "Required field not present",
+			});
+		}
+
+		const instructor = await User.findOneAndUpdate(
+			{ _id: insId },
+			{ approved: false },
+			{ new: true },
+		);
+
+		// Send notification email
+		try {
+			const emailResponse = await mailSender(
+				instructor.email,
+				"Account deactivated",
+				instructorDeactivated(
+					`${instructor.firstName} ${instructor.lastName}`,
+				),
+			);
+			console.log("Email sent successfully:", emailResponse.response);
+		} catch (error) {
+			console.error("Error occurred while sending email:", error);
+			return res.status(500).json({
+				success: false,
+				message: "Error occurred while sending email",
+				error: error.message,
+			});
+		}
+
+		return res.status(200).json({
+			message: "Instructor deactivated successfully",
 		});
 	} catch (error) {
 		return res.status(500).json({
