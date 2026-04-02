@@ -20,7 +20,7 @@ const MouseShadow = () => {
     }, [])
 
   return (
-    <div className='fixed top-0 left-0 w-10 h-10 bg-pink-400 filter blur-2xl pointer-events-none' style={{left: mouseX, top: mouseY}}></div>
+    <div className='fixed top-0 left-0 w-10 h-10 bg-pink-400 filter blur-2xl pointer-events-none z-10000' style={{left: mouseX, top: mouseY}}></div>
   )
 }
 
