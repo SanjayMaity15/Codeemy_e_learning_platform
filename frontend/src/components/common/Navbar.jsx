@@ -7,6 +7,7 @@ import ProfileDropdown from "../auth/ProfileDropDown";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import axios from "axios";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
+import brandImage from "../../assets/brand.png";
 
 // Nav items component, reusable for desktop and mobile
 const NavItems = ({ onClick, subLinks, isMobile }) => {
@@ -142,15 +143,16 @@ const Navbar = () => {
 	return (
 		<section
 			className={`sticky top-0 h-20 w-full z-20 transition-shadow ${
-				navBgActive ? "shadow-md backdrop-blur-xs " : "bg-transparent"
+				navBgActive ? "shadow-md outline backdrop-blur-xs " : "bg-transparent"
 			}`}
 		>
 			<div className="section-container relative z-20 h-20 flex justify-between items-center">
 				{/* Logo / Name */}
 				<div>
-					<Link to="/">
-						<p className="bg-linear-to-b from-indigo-600 to-pink-600 bg-clip-text text-transparent font-bold tracking-wide text-3xl font-orbitron select-none">
-							<span className="text-4xl">C</span>odeemy
+					<Link to="/" className="flex items-center">
+						<img src={brandImage} alt="codeemy" className="w-20 mb-3 selection:none" />
+						<p className="bg-linear-to-b from-indigo-600 to-pink-600 bg-clip-text text-transparent font-bold tracking-wide text-3xl font-orbitron select-none -ml-5">
+							odeemy
 						</p>
 					</Link>
 				</div>
