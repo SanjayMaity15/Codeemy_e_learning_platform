@@ -14,6 +14,7 @@ import AdminDashboard from "./components/dashboard/AdminDashboard";
 import Chart from "./components/dashboard/Chart";
 import AdminCategory from "./components/dashboard/AdminCategory";
 import StudentRating from "./components/dashboard/student rating/StudentRating";
+import MouseShadow from "./components/mouse/MouseShadow";
 
 // Lazy load pages/components
 const Home = lazy(() => import("./pages/Home"));
@@ -97,6 +98,7 @@ function App() {
 			/>
 
 			<ScrollToTop />
+			<MouseShadow/>
 			<Navbar />
 
 				<Suspense
