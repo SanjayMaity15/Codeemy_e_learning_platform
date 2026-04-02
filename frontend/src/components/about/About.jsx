@@ -9,6 +9,7 @@ import {
 } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import PageTitle from "../common/HelmetForTitle";
 
 export default function AboutUs() {
 	const navigate = useNavigate();
@@ -16,6 +17,7 @@ export default function AboutUs() {
 
 	return (
 		<div className="w-full section-container text-black">
+			<PageTitle title="About us"/>
 			{/* ================= HERO SECTION ================= */}
 			<section className="min-h-screen flex flex-col justify-center items-center text-center px-6">
 				<h1 className="text-4xl md:text-6xl text-pink-600 font-bold mb-6 leading-tight font-orbitron">

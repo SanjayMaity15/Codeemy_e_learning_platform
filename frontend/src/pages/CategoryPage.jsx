@@ -4,6 +4,7 @@ import Course_Card from "../components/Catalog/Course_Card";
 import Course_Slider from "../components/Catalog/Course_Slider";
 import axios from "axios";
 import Loader from "../components/common/Loader";
+import PageTitle from "../components/common/HelmetForTitle";
 
 function CategoryPage() {
 	const { category } = useParams();
@@ -79,6 +80,7 @@ function CategoryPage() {
 
 	return (
 		<div className="section-container">
+			<PageTitle title={`Courses | ${category}`}/>
 			{/* Hero Section */}
 			<div className="">
 				<div className="mx-auto flex py-8 flex-col justify-center gap-2">

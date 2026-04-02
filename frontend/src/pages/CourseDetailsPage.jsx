@@ -13,6 +13,7 @@ import { BuyCourse } from "../apis/studentFeaturesAPI";
 import GetAvgRating from "../utils/avgRating";
 import axios from "axios";
 import Loader from "../components/common/Loader";
+import PageTitle from "../components/common/HelmetForTitle";
 // import Error from "./Error";
 
 function CourseDetailsPage() {
@@ -122,11 +123,15 @@ function CourseDetailsPage() {
 		return <Loader />;
 	}
 
+
+	console.log(response);
+
 	return (
 		<>
 			<div
 				className={`relative section-container w-full bg-linear-to-br from-green-50 via-white to-yellow-50 text-black z-10`}
 			>
+				<PageTitle title={response.data.courseDetails.courseName}/>
 				{/* Hero Section */}
 				<div className="mx-auto lg:w-315 2xl:relative ">
 					<div className="mx-auto grid min-h-112.5 justify-items-center py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-202.5">

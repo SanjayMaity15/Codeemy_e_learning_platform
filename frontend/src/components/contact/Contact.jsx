@@ -9,6 +9,7 @@ import {
 import { toast } from "react-toastify";
 import axios from "axios";
 import contactImg from "../../assets/contact.jpeg"
+import PageTitle from "../common/HelmetForTitle";
 
 export default function Contact() {
 	const [name, setName] = useState("");
@@ -73,6 +74,7 @@ export default function Contact() {
 
 	return (
 		<div className="min-h-screen w-full px-4 pb-12">
+			<PageTitle title={"Contact us"}/>
 			<div className="flex justify-center pt-6">
 				<div className="h-12 w-12 rounded-full bg-pink-200 flex items-center justify-center mb-2">
 					<FiMessageCircle className="text-pink-600 text-xl" />
