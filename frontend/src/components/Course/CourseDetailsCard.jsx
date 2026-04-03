@@ -34,10 +34,13 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
 
   const handleAddToCart = () => {
     console.log("work");
-    if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
-      toast.error("You are an Instructor. You can't buy a course.")
-      return
-    }
+    if (
+		(user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) ||
+		(user && user?.accountType === ACCOUNT_TYPE.ADMIN)
+	) {
+		toast.error("You can't buy a course.");
+		return;
+	}
     if (token) {
 		dispatch(addToCart(course))
 		console.log(course);

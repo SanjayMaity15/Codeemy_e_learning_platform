@@ -1,0 +1,55 @@
+/* Loader container */
+#initial-loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ffffff;
+  font-family: "Orbitron", sans-serif;
+}
+
+/* Logo in the center */
+.loader-logo {
+  width: 75px; /* adjust as needed */
+  position: absolute; /* centered inside inner spinner */
+}
+
+/* Outer spinner */
+.spinner-outer {
+  width: 125px;
+  height: 125px;
+  border: 10px solid #d6f3ff;
+  border-top: 10px solid #3b82f6;
+  border-radius: 50%;
+  animation: outer 2s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Inner spinner */
+.spinner-inner {
+  width: 85px;
+  height: 85px;
+  border: 10px solid #d6f3ff;
+  border-top: 10px solid #d4129a;
+  border-radius: 50%;
+  animation: inner 1s linear infinite reverse;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Outer spin keyframes */
+@keyframes outer {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Inner spin keyframes */
+@keyframes inner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

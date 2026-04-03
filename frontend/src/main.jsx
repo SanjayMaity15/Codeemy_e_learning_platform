@@ -1,11 +1,11 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { store } from './store/store.js'
-import { HelmetProvider } from 'react-helmet-async'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./store/store.js";
+import { HelmetProvider } from "react-helmet-async";
 
 createRoot(document.getElementById("root")).render(
 	<HelmetProvider>
@@ -16,3 +16,6 @@ createRoot(document.getElementById("root")).render(
 		</Provider>
 	</HelmetProvider>,
 );
+
+const loader = document.getElementById("initial-loader");
+if (loader) loader.remove();

@@ -24,11 +24,11 @@ import toast from "react-hot-toast";
 function CourseDetailsPage() {
 	const { user } = useSelector((state) => state.profile);
 	const { token } = useSelector((state) => state.auth);
-	const { loading } = useSelector((state) => state.profile);
+	
 	const { paymentLoading } = useSelector((state) => state.course);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
+	const [loading, setLoading] = useState(false)
 	// Getting courseId from url parameter
 	const { courseId } = useParams();
 	// console.log(`course id: ${courseId}`)
@@ -40,6 +40,7 @@ function CourseDetailsPage() {
 		// Calling fetchCourseDetails fucntion to fetch the details
 		(async () => {
 			try {
+				setLoading(true)
 				const res = await axios.post(
 					`${import.meta.env.VITE_SERVER_URL}course/getFullCourseDetails`,
 					{ courseId },
@@ -48,7 +49,9 @@ function CourseDetailsPage() {
 				// console.log("course details res: ", res)
 				console.log(res);
 				setResponse(res.data);
+				setLoading(false)
 			} catch (error) {
+				setLoading(false)
 				console.log("Could not fetch Course Details");
 			}
 		})();
@@ -130,8 +133,8 @@ function CourseDetailsPage() {
 
 	const handleAddToCart = (course) => {
 		console.log("work");
-		if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
-			toast.error("You are an Instructor. You can't buy a course.");
+		if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR || user && user.accountType === ACCOUNT_TYPE.ADMIN) {
+			toast.error("You can't buy a course.");
 			return;
 		}
 		if (token) {
