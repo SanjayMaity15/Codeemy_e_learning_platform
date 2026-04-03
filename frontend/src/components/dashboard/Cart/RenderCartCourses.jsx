@@ -13,8 +13,8 @@ export default function RenderCartCourses() {
       {cart.map((course, indx) => (
         <div
           key={course._id}
-          className={`flex w-full flex-wrap items-center shadow-sm bg-white p-4 justify-between gap-6 ${
-            indx !== cart.length - 1 && "border-b border-b-richblack-400 pb-6"
+          className={`flex w-full flex-col md:flex-row flex-wrap items-center shadow-sm bg-white p-4 justify-between gap-6 ${
+            indx !== cart.length - 1 && "border-b border-b-gray-400 pb-6"
           } ${indx !== 0 && "mt-6"} `}
         >
           <div className="flex flex-1 flex-col gap-4 xl:flex-row items-center">
@@ -47,7 +47,7 @@ export default function RenderCartCourses() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-end space-y-2">
+          <div className="flex md:flex-col items-center flex-row-reverse md:items-end space-y-2 gap-3">
             <button
               onClick={() => dispatch(removeFromCart(course._id))}
               className="flex items-center gap-x-1 rounded-md border border-richblack-600 bg-pink-100 cursor-pointer py-2 px-4 text-pink-600"
@@ -55,7 +55,7 @@ export default function RenderCartCourses() {
               <RiDeleteBin6Line />
               <span>Remove</span>
             </button>
-            <p className="mb-6 text-2xl font-semibold text-primary">
+            <p className="md:mb-6 text-xl md:text-2xl font-semibold text-primary">
               ₹ {course?.price}
             </p>
           </div>

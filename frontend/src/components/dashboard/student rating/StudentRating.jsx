@@ -49,7 +49,7 @@ const StudentRating = () => {
 		<div>
 			<h3 className="text-2xl font-semibold ">Ratings and Reviews</h3>
 
-			<ul className="grid grid-cols-2 gap-4 mt-6">
+			<ul className="grid sm:grid-cols-2 gap-4 mt-6">
 				{studentRatings?.map((rating) => (
 					<li
 						key={rating._id}

@@ -45,13 +45,13 @@ const PurchaseHistory = () => {
 				{history?.map((item) => (
 					<div
 						key={item._id}
-						className="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm"
+						className="flex flex-col sm:flex-row items-center gap-4 bg-white p-4 rounded-xl shadow-sm"
 					>
 						{/* Thumbnail */}
 						<img
 							src={item?.course?.thumbnail}
 							alt="course"
-							className="w-20 h-20 rounded-lg object-cover"
+							className="sm:w-20 sm:h-20 rounded-lg object-cover"
 						/>
 
 						{/* Details */}

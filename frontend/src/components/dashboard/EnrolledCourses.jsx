@@ -69,7 +69,7 @@ export default function EnrolledCourses() {
 							key={i}
 						>
 							<div
-								className="flex w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
+								className="flex flex-col sm:flex-row w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
 								onClick={() => {
 									navigate(
 										`/view-course/${course?._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`,
@@ -79,13 +79,13 @@ export default function EnrolledCourses() {
 								<img
 									src={course.thumbnail}
 									alt="course_img"
-									className="h-14 w-14 rounded-lg object-cover"
+									className="sm:h-14 sm:w-14 w-full rounded-lg object-cover"
 								/>
-								<div className="flex max-w-xs flex-col gap-2">
-									<p className="font-semibold text-primary">
+								<div className="flex flex-col gap-2">
+									<p className="font-semibold text-primary text-xs md:text-lg">
 										{course.courseName}
 									</p>
-									<p className="text-xs text-richblack-300">
+									<p className="text-xs text-richblack-300 hidden sm:block md:text-sm">
 										{course.courseDescription.length > 50
 											? `${course.courseDescription.slice(0, 50)}...`
 											: course.courseDescription}
@@ -96,15 +96,15 @@ export default function EnrolledCourses() {
 								{course?.totalDuration}
 							</div>
 							<div className="flex w-1/5 flex-col gap-2 px-2 py-3">
-								<p>
+								<p className="text-xs ">
 									Progress: {course.progressPercentage || 0}%
 								</p>
 								<ProgressBar
 									completed={course.progressPercentage || 0}
 									height="8px"
 									isLabelVisible={false}
-									bgColor="#4f46e5"
-									baseBgColor="#A5B4FC"
+									bgColor="#DB2777"
+									baseBgColor="#F9A8D4"
 								/>
 							</div>
 						</div>
