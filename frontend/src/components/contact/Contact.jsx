@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
 	FiMail,
 	FiUser,
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import contactImg from "../../assets/contact.jpeg"
 import PageTitle from "../common/HelmetForTitle";
+import { gsap } from "gsap";
 
 export default function Contact() {
 	const [name, setName] = useState("");
@@ -18,6 +19,21 @@ export default function Contact() {
 	const [message, setMessage] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState({});
+	const formRef = useRef(null)
+	const imageRef = useRef(null)
+
+	useEffect(() => {
+		gsap.from(formRef.current, {
+			x: -100,
+			opacity: 0,
+			duration:1
+		})
+		gsap.from(imageRef.current, {
+			x: 100,
+			opacity: 0,
+			duration:1
+		})
+	}, [])
 
 	const validateForm = () => {
 		const newErrors = {};
@@ -90,7 +106,7 @@ export default function Contact() {
 
 			<div className="w-full max-w-5xl mt-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center mx-auto">
 				{/* FORM SECTION */}
-				<div className="px-6 border border-neutral-700 rounded-2xl py-6">
+				<div className="px-6 border border-neutral-700 rounded-2xl py-6" ref={formRef}>
 					<form className="mt-8 space-y-6" onSubmit={handleContactUs}>
 						{/* Name */}
 						<div>
@@ -181,7 +197,7 @@ export default function Contact() {
 				</div>
 
 				{/* IMAGE SECTION (hidden on small screens) */}
-				<div className="hidden md:flex justify-center h-full rounded-2xl">
+				<div className="hidden md:flex justify-center h-full rounded-2xl" ref={imageRef}>
 					<img
 						src={contactImg} // <-- replace with your image path
 						alt="Contact Us"

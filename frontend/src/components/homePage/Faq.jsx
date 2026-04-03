@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
-
+import { useScrollAnim } from "../common/ScrollAnimation";
 
 export default function Faq() {
 	const [openIndex, setOpenIndex] = useState(null);
-
+	const faqRef = useRef(null)
 	const faqs = [
 		{
 			question:
@@ -34,12 +34,17 @@ export default function Faq() {
 		},
 	];
 
+	useScrollAnim(faqRef, {
+		start: "top 75%",
+		end: "top 40%",
+	});
+
 	const toggleFAQ = (index) => {
 		setOpenIndex(openIndex === index ? null : index);
 	};
 
 	return (
-		<div className="min-h-screen section-container text-white flex justify-center items-center px-4 pb-8">
+		<div className="min-h-screen section-container text-white flex justify-center items-center px-4 pb-8" ref={faqRef}>
 			<div className="max-w-3xl w-full">
 				<h2 className="text-3xl md:text-5xl font-bold text-center mb-4 mt-12 font-orbitron text-gray-500">
 					Frequently Asked{" "}

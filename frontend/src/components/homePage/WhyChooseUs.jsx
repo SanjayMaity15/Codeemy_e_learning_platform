@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
 import {
 	FaRocket,
 	FaBrain,
 	FaProjectDiagram,
 	FaChartLine,
 } from "react-icons/fa";
+import { useScrollAnim } from "../common/ScrollAnimation";
 
 export default function WhyChooseUs() {
+	const WhyChooseRef = useRef(null);
+
+	useScrollAnim(WhyChooseRef, {
+		start: "top 75%",
+		end: "top 40%",
+	});
+
 	return (
-		<section className="text-white md:py-20 px-6">
+		<section className="text-white md:py-20 px-6" ref={WhyChooseRef}>
 			<div className="max-w-6xl mx-auto">
 				{/* Heading */}
 				<h2 className="text-3xl md:text-5xl font-bold text-center mb-4 font-orbitron text-gray-500">
@@ -25,8 +37,8 @@ export default function WhyChooseUs() {
 
 				{/* Grid */}
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-					{/* Card 1 */}
-					<div className="rounded-2xl border border-pink-800 bg-white hover:bg-pink-50 p-8 hover:border-green-400 transition">
+					{/* why-card 1 */}
+					<div className="rounded-2xl border border-pink-800 bg-white hover:bg-pink-50 p-8 hover:border-green-400 transition why-card">
 						<FaRocket className="text-pink-400 text-4xl mb-4" />
 						<h3 className="text-xl text-pink-600 font-semibold mb-2">
 							Career-Oriented Learning
@@ -38,8 +50,8 @@ export default function WhyChooseUs() {
 						</p>
 					</div>
 
-					{/* Card 2 */}
-					<div className="rounded-2xl border border-indigo-800 bg-white p-8 hover:border-green-400 transition hover:bg-indigo-50">
+					{/* why-card 2 */}
+					<div className="rounded-2xl border border-indigo-800 bg-white p-8 hover:border-green-400 transition hover:bg-indigo-50 why-card">
 						<FaBrain className="text-indigo-400 text-4xl mb-4" />
 						<h3 className="text-xl text-primary font-semibold mb-2">
 							Smart Learning Assistance
@@ -51,8 +63,8 @@ export default function WhyChooseUs() {
 						</p>
 					</div>
 
-					{/* Card 3 */}
-					<div className="rounded-2xl border border-indigo-800 bg-white p-8 hover:border-green-400 transition hover:bg-indigo-50">
+					{/* why-card 3 */}
+					<div className="rounded-2xl border border-indigo-800 bg-white p-8 hover:border-green-400 transition hover:bg-indigo-50 why-card">
 						<FaProjectDiagram className="text-indigo-400 text-4xl mb-4" />
 						<h3 className="text-xl text-primary font-semibold mb-2">
 							Real-World Projects
@@ -64,8 +76,8 @@ export default function WhyChooseUs() {
 						</p>
 					</div>
 
-					{/* Card 4 */}
-					<div className="rounded-2xl border border-pink-800 bg-white p-8 hover:border-green-400 transition hover:bg-pink-50">
+					{/* why-card 4 */}
+					<div className="rounded-2xl border border-pink-800 bg-white p-8 hover:border-green-400 transition hover:bg-pink-50 why-card">
 						<FaChartLine className="text-pink-400 text-4xl mb-4" />
 						<h3 className="text-xl text-pink-600 font-semibold mb-2">
 							Track Your Growth

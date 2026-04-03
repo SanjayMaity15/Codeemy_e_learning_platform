@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useScrollAnim } from "../common/ScrollAnimation";
+import { gsap } from "gsap";
 
 const mentors = [
 	{
@@ -28,8 +30,40 @@ const mentors = [
 ];
 
 export default function MeetWithOurMentors() {
+	const meetOurMentorRef = useRef(null);
+	useScrollAnim(meetOurMentorRef, {
+		start: "top 75%",
+		end: "top 40%",
+	});
+	useEffect(() => {
+		const ctx = gsap.context(() => {
+			gsap.from(".card", {
+				y: 80,
+				opacity: 0,
+				duration: 2,
+				stagger: {
+					each: 0.5,
+					from: "random",
+				},
+				
+				ease: "power3.out",
+				scrollTrigger: {
+					trigger: meetOurMentorRef.current,
+					start: "top 80%",
+					toggleActions: "play none none reverse",
+					// markers: true
+				},
+			});
+		}, meetOurMentorRef);
+
+		return () => ctx.revert();
+	}, []);
+
 	return (
-		<section className="text-black py-20 section-container">
+		<section
+			className="text-black py-20 section-container"
+			ref={meetOurMentorRef}
+		>
 			<div className="max-w-7xl mx-auto">
 				<h2 className="text-3xl text-gray-500 md:text-5xl font-bold text-center mb-14 md:pt-12 font-orbitron">
 					Meet With Our{" "}
@@ -40,7 +74,7 @@ export default function MeetWithOurMentors() {
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 					{mentors.map((mentor, index) => (
-						<div key={index} className="perspective">
+						<div key={index} className="perspective card">
 							<div className="relative h-80 w-full transition-transform duration-700 transform-style-preserve-3d hover:rotate-y-180 ">
 								{/* Front */}
 								<div className="absolute inset-0 backface-hidden rounded-lg bg-white p-8 border hover:border-primary transition flex flex-col items-center justify-center shadow-xl">

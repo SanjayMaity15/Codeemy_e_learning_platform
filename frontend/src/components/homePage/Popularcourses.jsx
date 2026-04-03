@@ -1,11 +1,25 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useEffect, useRef, useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { PiCurrencyInrBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { useScrollAnim } from "../common/ScrollAnimation";
 
 const Popularcourses = () => {
 	const [popularCourses, setPopularCourses] = useState([]);
+
+	const popularCourseRef = useRef(null);
+	// if (popularCourses.length === 0) return;
+	useScrollAnim(
+		popularCourseRef,
+		{
+			start: "top 75%",
+			end: "top 40%",
+		},
+		[popularCourses],
+	);
 
 	async function fetchPopularCourses() {
 		try {
@@ -21,16 +35,19 @@ const Popularcourses = () => {
 
 	useEffect(() => {
 		fetchPopularCourses();
-    }, []);
-    
-    console.log(popularCourses);
+	}, []);
+
+	console.log(popularCourses);
 
 	if (popularCourses?.length === 0) {
 		return <div></div>;
 	}
 
 	return (
-		<div className="section-container md:pt-20 mt-12">
+		<div
+			className="section-container md:pt-20 mt-12"
+			ref={popularCourseRef}
+		>
 			{/* Heading */}
 			<h2 className="text-3xl md:text-5xl font-bold text-center mb-4 font-orbitron text-gray-500">
 				Popular{" "}

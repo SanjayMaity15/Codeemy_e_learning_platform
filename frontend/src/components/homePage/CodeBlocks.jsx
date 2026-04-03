@@ -1,14 +1,27 @@
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
+import { useScrollAnim } from "../common/ScrollAnimation";
+gsap.registerPlugin(ScrollTrigger);
 
 const CodeBlocks = () => {
+
+	
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.profile);
 	const isMobile = window.innerWidth < 450;
+	const codeBlockRef = useRef(null);
+	useScrollAnim(codeBlockRef, {
+		start: "top 75%",
+		end: "top 40%",
+	});
+
 
 	return (
-		<div className={`max-w-7xl mx-auto`}>
+		<div className={`max-w-7xl mx-auto`} ref={codeBlockRef}>
 			<div className="">
 				<div className="flex flex-col md:flex-row">
 					{/*Section 1*/}
@@ -55,15 +68,15 @@ const CodeBlocks = () => {
 							<p>13</p>
 							<p>14</p>
 							<p>15</p>
-							{
-								isMobile && <>
+							{isMobile && (
+								<>
 									<p>16</p>
 									<p>17</p>
 									<p>18</p>
 									<p>19</p>
 									<p>20</p>
 								</>
-							}
+							)}
 						</div>
 
 						<div

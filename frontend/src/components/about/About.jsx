@@ -11,23 +11,66 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "../common/HelmetForTitle";
 
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+
 export default function AboutUs() {
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.profile);
 
+	const textRef = useRef(null);
+
+	useEffect(() => {
+		const ctx = gsap.context(() => {
+			const lines = gsap.utils.toArray(".wave-line");
+
+			lines.forEach((line, index) => {
+				const letters = line.querySelectorAll("span");
+
+				gsap.from(letters, {
+					y: 60,
+					opacity: 0,
+					rotateX: -90,
+					transformOrigin: "top",
+					duration: 0.6,
+					ease: "power3.out",
+					stagger: 0.04,
+					delay: index * 0.3, // 🔥 second line comes later
+				});
+			});
+		}, textRef);
+
+		return () => ctx.revert();
+	}, []);
+
 	return (
 		<div className="w-full section-container text-black">
-			<PageTitle title="About us"/>
+			<PageTitle title="About us" />
 			{/* ================= HERO SECTION ================= */}
-			<section className="min-h-screen flex flex-col justify-center items-center text-center px-6">
-				<h1 className="text-4xl md:text-6xl text-pink-600 font-bold mb-6 leading-tight font-orbitron">
-					Empowering Learners.
-					<br />
-					<span className="text-neutral-500">
-						Building Future Careers.
-					</span>
+			<section className="min-h-screen flex flex-col items-center text-center px-6">
+				<h1
+					ref={textRef}
+					className="text-4xl md:text-6xl text-pink-600 font-bold mb-6 mt-20 leading-tight font-orbitron"
+				>
+					{/* Line 1 */}
+					<p className="wave-line">
+						{"Empowering Learners.".split("").map((char, i) => (
+							<span key={i} className="inline-block">
+								{char === " " ? "\u00A0" : char}
+							</span>
+						))}
+					</p>
+
+					{/* Line 2 */}
+					<p className="wave-line text-neutral-500">
+						{"Building Future Careers.".split("").map((char, i) => (
+							<span key={i} className="inline-block">
+								{char === " " ? "\u00A0" : char}
+							</span>
+						))}
+					</p>
 				</h1>
-				<p className="max-w-4xl text-gray-500 text-lg md:text-xl leading-relaxed">
+				<p className="max-w-4xl text-gray-500 text-lg md:text-lg leading-relaxed">
 					Codeemy is an education-first technology platform focused on
 					transforming how students and professionals learn modern
 					technical skills. We don’t just teach concepts — we help
