@@ -2,6 +2,7 @@ import { useSelector } from "react-redux"
 import { Outlet } from "react-router-dom"
 import Sidebar from "../components/dashboard/Sidebar"
 import PageTitle from "../components/common/HelmetForTitle"
+import { FiSidebar } from "react-icons/fi"
 
 function Dashboard() {
   const { loading: profileLoading } = useSelector((state) => state.profile)
@@ -17,7 +18,8 @@ function Dashboard() {
 
   return (
 	  <div className="relative flex min-h-screen">
-		  <PageTitle title={"Dashboard"}/>
+		  <PageTitle title={"Dashboard"} />
+		  <button className="sm:hidden md:hidden absolute left-3"><FiSidebar/></button>
 	  <Sidebar />
 	  <div className="flex-1 overflow-auto">
 		<div className="mx-auto w-11/12 max-w-250 py-10">

@@ -75,14 +75,14 @@ export default function ChangeProfilePicture() {
 	return (
 		<>
 			<div className="flex items-center justify-between rounded-md  bg-white shadow-sm p-8 px-12">
-				<div className="flex items-center gap-x-4">
+				<div className="flex flex-col sm:flex-row items-center gap-x-4">
 					<img
 						src={previewSource || user?.image}
 						alt={`profile-${user?.firstName}`}
-						className="aspect-square w-19.5 rounded-full object-cover"
+						className="aspect-square w-12 sm:w-19.5 rounded-full object-cover"
 					/>
 					<div className="space-y-2">
-						<p>Change Profile Picture</p>
+						<p className="text-center sm:text-left">Change Profile Picture</p>
 						<div className="flex flex-row gap-3">
 							<input
 								type="file"
