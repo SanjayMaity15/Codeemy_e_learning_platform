@@ -47,10 +47,10 @@ export default function AboutUs() {
 		<div className="w-full section-container text-black">
 			<PageTitle title="About us" />
 			{/* ================= HERO SECTION ================= */}
-			<section className="min-h-screen flex flex-col items-center text-center px-6">
+			<section className="min-h-screen flex flex-col items-center text-center md:px-6">
 				<h1
 					ref={textRef}
-					className="text-4xl md:text-6xl text-pink-600 font-bold mb-6 mt-20 leading-tight font-orbitron"
+					className="text-4xl md:text-6xl text-pink-600 font-bold mb-6 md:mt-20 mt-12 leading-tight font-orbitron"
 				>
 					{/* Line 1 */}
 					<p className="wave-line">
@@ -70,7 +70,7 @@ export default function AboutUs() {
 						))}
 					</p>
 				</h1>
-				<p className="max-w-4xl text-gray-500 text-lg md:text-lg leading-relaxed">
+				<p className="max-w-4xl text-gray-500 text-sm md:text-lg leading-relaxed">
 					Codeemy is an education-first technology platform focused on
 					transforming how students and professionals learn modern
 					technical skills. We don’t just teach concepts — we help
@@ -80,7 +80,7 @@ export default function AboutUs() {
 			</section>
 
 			{/* ================= OUR ORIGIN ================= */}
-			<section className="max-w-6xl mx-auto px-6 py-16">
+			<section className="max-w-6xl mx-auto md:px-6 md:py-16">
 				<h2 className="text-3xl md:text-4xl font-bold mb-8 font-orbitron text-pink-600">
 					Our Origin
 				</h2>
@@ -108,9 +108,9 @@ export default function AboutUs() {
 			</section>
 
 			{/* ================= MISSION, VISION, VALUES ================= */}
-			<section className=" border-gray-800 p-8 hover:border-green-400 transition py-16">
-				<div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12">
-					<div className="bg-white p-8">
+			<section className=" border-gray-800 md:p-8 hover:border-green-400 transition py-16">
+				<div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
+					<div className="bg-white md:p-8 p-4">
 						<h3 className="text-2xl font-bold mb-4 flex items-center gap-3 font-orbitron text-orange-500">
 							<FiTarget className="text-green-500" /> Our Mission
 						</h3>
@@ -146,12 +146,12 @@ export default function AboutUs() {
 			</section>
 
 			{/* ================= WHAT WE TEACH ================= */}
-			<section className="max-w-6xl mx-auto px-6 py-16">
+			<section className="max-w-6xl mx-auto md:px-6 md:py-16">
 				<h2 className="text-3xl md:text-4xl font-bold mb-12 font-orbitron text-pink-600">
 					What We Teach
 				</h2>
 				<div className="grid md:grid-cols-3 gap-10">
-					<div className=" border-gray-800 bg-white p-8 hover:border-green-400 transition rounded-2xl border ">
+					<div className=" border-gray-800 bg-white md:p-8 p-4 hover:border-green-400 transition rounded-2xl border ">
 						<FiCode className="text-3xl mb-4 text-amber-300" />
 						<h4 className="text-xl text-green-500 font-semibold mb-3">
 							Modern Web Development
@@ -188,7 +188,7 @@ export default function AboutUs() {
 			</section>
 
 			{/* ================= HOW WE TEACH ================= */}
-			<section className=" bg-white p-8 hover:border-green-400 transition py-16">
+			<section className=" bg-white md:p-8 hover:border-green-400 transition mt-8 md:mt-0 py-16">
 				<div className="max-w-6xl mx-auto px-6">
 					<h2 className="text-3xl md:text-4xl font-bold mb-10 font-orbitron text-pink-600">
 						How We Teach
@@ -224,8 +224,8 @@ export default function AboutUs() {
 			</section>
 
 			{/* ================= WHY CODEEMY ================= */}
-			<section className="bg-white p-8 hover:border-green-400 transition py-24 ">
-				<div className="max-w-6xl mx-auto px-6">
+			<section className="bg-white md:p-8 p-4 hover:border-green-400 transition md:py-24 ">
+				<div className="max-w-6xl mx-auto md:px-6">
 					<h2 className="text-3xl md:text-4xl font-bold mb-10 font-orbitron text-pink-600">
 						Why Codeemy?
 					</h2>
@@ -273,7 +273,7 @@ export default function AboutUs() {
 			</section>
 
 			{/* ================= CTA ================= */}
-			<section className="py-24 text-center px-6">
+			<section className="md:py-24 py-8 text-center px-6">
 				<h2 className="text-3xl md:text-4xl font-bold mb-6 font-orbitron text-pink-600">
 					Start Your Learning Journey with Codeemy
 				</h2>
