@@ -1,12 +1,21 @@
-import { useState } from "react";
 import { Chart, registerables } from "chart.js";
 import { Pie } from "react-chartjs-2";
-
+import { useState, useEffect } from "react";
 Chart.register(...registerables);
 
 export default function InstructorChart({ courses }) {
 	// State to keep track of the currently selected chart
 	const [currChart, setCurrChart] = useState("students");
+	const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
 	// Function to generate random colors for the chart
 	const generateRandomColors = (numColors) => {
@@ -43,25 +52,21 @@ export default function InstructorChart({ courses }) {
 	};
 
 	// Options for the chart
-	const options = {
-		maintainAspectRatio: false,
-		layout: {
-			padding: {
-				top: 20,
-				bottom: 20,
-			},
-		},
-		plugins: {
-			legend: {
-				position: "left",
-				align: "start",
-				labels: {
-					textAlign: "left",
-				},
-			},
-		},
-	};
+const options = {
+	maintainAspectRatio: false,
 
+	plugins: {
+		legend: {
+			position: isMobile ? "bottom" : "left", // ✅ only change here
+			align: isMobile? "center": "center",
+			labels: {
+				textAlign: "left",
+				boxWidth: 12,
+				padding: 12, 
+			},
+		},
+	},
+};
 	return (
 		<div className="flex flex-1 flex-col gap-y-4 rounded-md">
 			<p className="text-lg font-bold text-indigo-600">Visualize</p>
@@ -89,7 +94,7 @@ export default function InstructorChart({ courses }) {
 					Income
 				</button>
 			</div>
-			<div className="relative mx-auto aspect-square h-full overflow-hidden w-full py-4">
+			<div className="relative mx-auto md:h-full h-90 overflow-hidden w-full py-4">
 				{/* Render the Pie chart based on the selected chart */}
 				<Pie
 					data={
