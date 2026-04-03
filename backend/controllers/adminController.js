@@ -36,7 +36,9 @@ exports.getAllInstructorData = async (req, res) => {
 	try {
 		const allInstructor = await User.find({
 			accountType: "Instructor",
-		}).select("-password");
+		})
+			.populate("additionalDetails")
+			.select("-password");
 
 		if (allInstructor.length === 0) {
 			return res.status(404).json({

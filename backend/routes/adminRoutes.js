@@ -13,6 +13,7 @@ router.get("/student", auth, isAdmin, getAllStudentData);
 router.post("/approved", auth, isAdmin, approvedInstructor);
 router.post("/deactivate", auth, isAdmin, removeInstructorPower);
 router.delete("/delete-student/:userId", auth, isAdmin, deleteStudentByAdmin);
+router.get("/get-ins", getAllInstructorData)
 
 
 // get top courses
