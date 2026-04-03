@@ -331,12 +331,12 @@ export default function CourseInformationForm() {
 				getValues={getValues}
 			/>
 			{/* Next Button */}
-			<div className="flex justify-end gap-x-2">
+			<div className="flex flex-col gap-2 md:flex-row justify-end gap-x-2">
 				{editCourse && (
 					<button
 						onClick={() => dispatch(setStep(2))}
 						disabled={loading}
-						className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-2 px-5 font-semibold text-richblack-900`}
+						className={`flex cursor-pointer justify-center items-center gap-x-2 rounded-md bg-pink-600 py-2 px-5 font-semibold text-white text-center hover:bg-pink-700`}
 					>
 						Continue Wihout Saving
 					</button>

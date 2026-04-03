@@ -1,38 +1,41 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import ProgressBar from "@ramonak/react-progress-bar"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
-
+import axios from "axios";
+import { useEffect, useState } from "react";
+import ProgressBar from "@ramonak/react-progress-bar";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function EnrolledCourses() {
-  const { token } = useSelector((state) => state.auth)
-  const navigate = useNavigate()
+	const { token } = useSelector((state) => state.auth);
+	const navigate = useNavigate();
 
-  const [enrolledCourses, setEnrolledCourses] = useState(null)
+	const [enrolledCourses, setEnrolledCourses] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const result = await axios.get(`${import.meta.env.VITE_SERVER_URL}profile/getEnrolledCourses`, {withCredentials: true}) // Getting all the published and thedrafted courses
+	useEffect(() => {
+		(async () => {
+			try {
+				const result = await axios.get(
+					`${import.meta.env.VITE_SERVER_URL}profile/getEnrolledCourses`,
+					{ withCredentials: true },
+				); // Getting all the published and thedrafted courses
 
-        const res = result.data.data;
+				const res = result.data.data;
 
-        // Filtering the published course out
-        const filterPublishCourse = res.filter((ele) => ele.status !== "Draft")
-        
+				// Filtering the published course out
+				const filterPublishCourse = res.filter(
+					(ele) => ele.status !== "Draft",
+				);
 
-        setEnrolledCourses(filterPublishCourse)
-      } catch (error) {
-        console.log("Could not fetch enrolled courses.")
-      }
-    })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+				setEnrolledCourses(filterPublishCourse);
+			} catch (error) {
+				console.log("Could not fetch enrolled courses.");
+			}
+		})();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-  console.log(enrolledCourses);
+	console.log(enrolledCourses);
 
-  return (
+	return (
 		<>
 			<div className="text-2xl font-semibold">Enrolled Courses</div>
 			{!enrolledCourses ? (
@@ -69,7 +72,7 @@ export default function EnrolledCourses() {
 							key={i}
 						>
 							<div
-								className="flex flex-col sm:flex-row w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
+								className="flex flex-col md:flex-row w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
 								onClick={() => {
 									navigate(
 										`/view-course/${course?._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`,
@@ -79,13 +82,13 @@ export default function EnrolledCourses() {
 								<img
 									src={course.thumbnail}
 									alt="course_img"
-									className="sm:h-14 sm:w-14 w-full rounded-lg object-cover"
+									className="md:h-14 md:w-14 w-full rounded-lg object-cover"
 								/>
 								<div className="flex flex-col gap-2">
 									<p className="font-semibold text-primary text-xs md:text-lg">
 										{course.courseName}
 									</p>
-									<p className="text-xs text-richblack-300 hidden sm:block md:text-sm">
+									<p className="text-xs text-richblack-300 hidden md:block md:text-sm">
 										{course.courseDescription.length > 50
 											? `${course.courseDescription.slice(0, 50)}...`
 											: course.courseDescription}
@@ -112,5 +115,5 @@ export default function EnrolledCourses() {
 				</div>
 			)}
 		</>
-  );
+	);
 }

@@ -8,8 +8,8 @@ import toast from "react-hot-toast";
 const StudentRating = () => {
 	const [studentRatings, setStudentRatings] = useState([]);
 	const [openEditRatingModel, setOpenEditRatingModel] = useState(null);
-    const [modalData, setModalData] = useState(null);
-    const [loading, setLoading] = useState(false)
+	const [modalData, setModalData] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	async function fetchStudentRatings() {
 		try {
@@ -32,9 +32,9 @@ const StudentRating = () => {
 				{ withCredentials: true },
 			);
 			toast.success(res?.data?.message);
-            setLoading(false);
-            setModalData(null)
-            fetchStudentRatings()
+			setLoading(false);
+			setModalData(null);
+			fetchStudentRatings();
 		} catch (error) {
 			toast.error(error?.response?.data?.message);
 			setLoading(false);
@@ -49,7 +49,7 @@ const StudentRating = () => {
 		<div>
 			<h3 className="text-2xl font-semibold ">Ratings and Reviews</h3>
 
-			<ul className="grid sm:grid-cols-2 gap-4 mt-6">
+			<ul className="grid md:grid-cols-2 gap-4 mt-6">
 				{studentRatings?.map((rating) => (
 					<li
 						key={rating._id}
@@ -91,7 +91,6 @@ const StudentRating = () => {
 							<button
 								className="text-red-600 cursor-pointer"
 								onClick={() => {
-									
 									setModalData({
 										text1: "Do you want to delete this rating & review?",
 										text2: "From the course also rating and review will be deleted",
@@ -101,8 +100,7 @@ const StudentRating = () => {
 										btn1Handler: () =>
 											handleDeleteRating(rating._id),
 
-										btn2Handler: () =>
-											setModalData(null),
+										btn2Handler: () => setModalData(null),
 									});
 								}}
 							>

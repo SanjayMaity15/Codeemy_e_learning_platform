@@ -58,11 +58,11 @@ export default function ChangeProfilePicture() {
 			localStorage.setItem(
 				"user",
 				JSON.stringify(result.data.updatedProfile),
-      );
-      
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
+			);
+
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
 			console.log("ERROR MESSAGE - ", error.message);
 		}
 	};
@@ -75,14 +75,16 @@ export default function ChangeProfilePicture() {
 	return (
 		<>
 			<div className="flex items-center justify-between rounded-md  bg-white shadow-sm p-8 px-12">
-				<div className="flex flex-col sm:flex-row items-center gap-x-4">
+				<div className="flex flex-col md:flex-row items-center gap-x-4">
 					<img
 						src={previewSource || user?.image}
 						alt={`profile-${user?.firstName}`}
-						className="aspect-square w-12 sm:w-19.5 rounded-full object-cover"
+						className="aspect-square w-12 md:w-19.5 rounded-full object-cover"
 					/>
 					<div className="space-y-2">
-						<p className="text-center sm:text-left">Change Profile Picture</p>
+						<p className="text-center md:text-left">
+							Change Profile Picture
+						</p>
 						<div className="flex flex-row gap-3">
 							<input
 								type="file"
@@ -99,7 +101,13 @@ export default function ChangeProfilePicture() {
 								Select
 							</button>
 							<IconBtn
-								text={loading ? <ButtonLoader text={"Uploading"}/> : "Upload"}
+								text={
+									loading ? (
+										<ButtonLoader text={"Uploading"} />
+									) : (
+										"Upload"
+									)
+								}
 								onclick={handleFileUpload}
 							>
 								{!loading && (

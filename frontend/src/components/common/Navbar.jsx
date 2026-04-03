@@ -143,7 +143,7 @@ const Navbar = () => {
 	return (
 		<section
 			className={`sticky top-0 h-20 w-full z-20 transition-shadow ${
-				navBgActive ? "shadow-md outline backdrop-blur-xs " : "bg-transparent"
+				navBgActive || isMobile ? "shadow-md outline backdrop-blur-xs " : "bg-transparent"
 			}`}
 		>
 			<div className="section-container relative z-20 h-20 flex justify-between items-center">
@@ -164,7 +164,7 @@ const Navbar = () => {
 
 				{/* Login/SignUp/Dashboard */}
 				<div className="flex gap-x-4 items-center">
-					{user && (user?.accountType != "Instructor" || "Admin") && (
+					{user && (user?.accountType != ("Instructor" || "Admin")) && (
 						<Link
 							to="/dashboard/cart"
 							className="relative text-black text-2xl md:flex items-center hidden "
@@ -178,9 +178,9 @@ const Navbar = () => {
 						</Link>
 					)}
 
-					{token === null && (
+					{token === null  && (
 						<Link to="/login">
-							<button className="px-8 py-3 rounded-full shadow-sm border border-indigo-800 bg-indigo-600 hover:border-indigo-400   font-semibold hover:opacity-95 transition cursor-pointer text-white font-orbitron">
+							<button className="hidden md:block px-8 py-3 rounded-full shadow-sm border border-indigo-800 bg-indigo-600 hover:border-indigo-400   font-semibold hover:opacity-95 transition cursor-pointer text-white font-orbitron">
 								Get's started
 							</button>
 						</Link>

@@ -41,7 +41,7 @@ function ReviewSlider() {
 					</span>
 				</h2>
 
-				<div className="px-4 md:px-0">
+				<div className="px-4 lg:px-0">
 					<Swiper
 						slidesPerView={1}
 						spaceBetween={25}

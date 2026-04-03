@@ -61,7 +61,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
 	return (
 		<>
 			<div
-				className="rounded-lg bg-richblack-700 p-6 px-8"
+				className="rounded-lg bg-richblack-700 md:p-6 md:px-8"
 				id="nestedViewContainer"
 			>
 				{course?.courseContent?.map((section) => (
@@ -71,7 +71,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
 						<summary className="flex cursor-pointer items-center justify-between border-b-2 border-b-richblack-600 py-2">
 							<div className="flex items-center gap-x-3">
 								<RxDropdownMenu className="text-2xl text-richblack-50" />
-								<p className="font-semibold text-richblack-50">
+								<p className="font-semibold text-richblack-50 text-sm">
 									{section.sectionName}
 								</p>
 							</div>
@@ -123,7 +123,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
 								>
 									<div className="flex items-center gap-x-3 py-2 ">
 										<RxDropdownMenu className="text-2xl text-richblack-50" />
-										<p className="font-semibold text-richblack-50">
+										<p className="font-semibold text-richblack-50 text-xs">
 											{data.title}
 										</p>
 									</div>

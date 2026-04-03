@@ -1,43 +1,39 @@
-import React from 'react'
-import axios from "axios"
-import { useEffect, useState } from "react"
-import Loader from '../common/Loader'
+import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Loader from "../common/Loader";
 
 const PurchaseHistory = () => {
+	const [history, setHistory] = useState(null);
 
+	useEffect(() => {
+		const fetchHistory = async () => {
+			try {
+				const res = await axios.get(
+					`${import.meta.env.VITE_SERVER_URL}payment/purchase-history`,
+					{ withCredentials: true },
+				);
 
+				setHistory(res.data.data);
+			} catch (error) {
+				console.log("Failed to fetch purchase history");
+			}
+		};
 
-  const [history, setHistory] = useState(null)
+		fetchHistory();
+	}, []);
 
-  useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_SERVER_URL}payment/purchase-history`,
-          { withCredentials: true }
-        )
+	console.log(history);
 
-        setHistory(res.data.data)
-      } catch (error) {
-        console.log("Failed to fetch purchase history")
-      }
-    }
+	if (!history) {
+		return <Loader />;
+	}
 
-    fetchHistory()
-  }, [])
+	if (!history?.length) {
+		return <p className="text-center mt-10">No purchase history</p>;
+	}
 
-
-  console.log(history);
-  
-  if (!history) {
-    return <Loader/>
-  }
-
-  if (!history?.length) {
-    return <p className="text-center mt-10">No purchase history</p>
-  }
-
-  return (
+	return (
 		<div className="max-w-5xl mx-auto my-10 px-4">
 			<h2 className="text-2xl font-semibold mb-6">Purchase History</h2>
 
@@ -45,13 +41,13 @@ const PurchaseHistory = () => {
 				{history?.map((item) => (
 					<div
 						key={item._id}
-						className="flex flex-col sm:flex-row items-center gap-4 bg-white p-4 rounded-xl shadow-sm"
+						className="flex flex-col md:flex-row items-center gap-4 bg-white p-4 rounded-xl shadow-sm"
 					>
 						{/* Thumbnail */}
 						<img
 							src={item?.course?.thumbnail}
 							alt="course"
-							className="sm:w-20 sm:h-20 rounded-lg object-cover"
+							className="md:w-20 md:h-20 rounded-lg object-cover"
 						/>
 
 						{/* Details */}
@@ -66,7 +62,8 @@ const PurchaseHistory = () => {
 							</p>
 
 							<p className="text-sm text-gray-500">
-								<span className='text-black'>Payment ID:</span> {item?.paymentId}
+								<span className="text-black">Payment ID:</span>{" "}
+								{item?.paymentId}
 							</p>
 
 							<p className="text-sm text-pink-600">
@@ -93,8 +90,7 @@ const PurchaseHistory = () => {
 				))}
 			</div>
 		</div>
-  );
-}
+	);
+};
 
-export default PurchaseHistory
-
+export default PurchaseHistory;

@@ -40,7 +40,7 @@ export default function Logout({ onClose }) {
 	};
 
 	return (
-		<div className="fixed min-h-screen w-full inset-0 z-1000 flex items-center justify-center bg-black/50 backdrop-blur-xs">
+		<div className="fixed min-h-screen top-0 left-0 min-w-screen inset-0 z-1000 flex items-center justify-center bg-black/50 backdrop-blur-xs">
 			{/* Modal */}
 			<div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl animate-fadeIn">
 				{/* Icon */}

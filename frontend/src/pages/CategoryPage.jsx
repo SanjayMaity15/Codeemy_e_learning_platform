@@ -129,7 +129,7 @@ function CategoryPage() {
 				</div>
 			</div>
 			{/* Section 2 */}
-			<div className="w-full px-4 py-12">
+			<div className="w-full md:px-4 py-12">
 				<div className="section_heading text-2xl">
 					Top courses in{" "}
 					{catalogPageData?.data?.differentCategory?.name}
@@ -145,7 +145,7 @@ function CategoryPage() {
 			</div>
 
 			{/* Section 3 */}
-			<div className="w-full px-4 py-12">
+			<div className="w-full md:px-4 py-12">
 				<div className="section_heading text-2xl">
 					Frequently Bought
 				</div>

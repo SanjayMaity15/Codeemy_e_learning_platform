@@ -49,7 +49,7 @@ export default function RenderSteps() {
 						{item.id !== steps.length && (
 							<>
 								<div
-									className={`h-4.25 w-[33%]  border-dashed border-b-2 ${
+									className={`h-4.25 md:w-[33%] w-[25%]  border-dashed border-b-2 ${
 										step > item.id
 											? "border-primary"
 											: "border-indigo-300"
@@ -65,11 +65,11 @@ export default function RenderSteps() {
 				{steps.map((item) => (
 					<>
 						<div
-							className="flex min-w-32.5 flex-col items-center gap-y-2"
+							className="flex md:min-w-32.5 min-w-20 flex-col items-center gap-y-2"
 							key={item.id}
 						>
 							<p
-								className={`text-sm ${
+								className={`text-xs md:text-sm ${
 									step >= item.id
 										? "text-green-600"
 										: ""

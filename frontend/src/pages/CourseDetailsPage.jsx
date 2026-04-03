@@ -269,7 +269,7 @@ function CourseDetailsPage() {
 								Course Content
 							</p>
 							<div className="flex flex-wrap justify-between gap-2">
-								<div className="flex gap-2 text-xs sm:text-sm">
+								<div className="flex gap-2 text-xs md:text-sm">
 									<span>
 										{courseContent.length} {`section(s)`}
 									</span>
@@ -281,7 +281,7 @@ function CourseDetailsPage() {
 										length
 									</span>
 								</div>
-								<div className="flex justify-end w-full text-xs sm:text-sm">
+								<div className="flex justify-end w-full text-xs md:text-sm">
 									<button
 										className="text-pink-500 cursor-pointer"
 										onClick={() => setIsActive([])}

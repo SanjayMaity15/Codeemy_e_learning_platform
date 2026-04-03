@@ -38,7 +38,7 @@ export default function DeleteAccount() {
 
 	return (
 		<>
-			<div className="my-10 flex flex-col gap-4 sm:flex-row gap-x-5 rounded-md border border-pink-700 bg-pink-600 p-8 md:px-12">
+			<div className="my-10 flex flex-col gap-4 md:flex-row gap-x-5 rounded-md border border-pink-700 bg-pink-600 p-8 md:px-12">
 				<div className="flex aspect-square h-14 w-14 items-center justify-center rounded-full bg-red-400">
 					<FiTrash2 className="text-2xl md:text-3xl text-pink-200" />
 				</div>
@@ -46,7 +46,7 @@ export default function DeleteAccount() {
 					<h2 className="text-lg font-semibold text-white">
 						Delete Account
 					</h2>
-					<div className="text-gray-200 text-xs sm:text-sm">
+					<div className="text-gray-200 text-xs md:text-sm">
 						<p>Would you like to delete account?</p>
 						<p>
 							This account may contain Paid Courses. Deleting your

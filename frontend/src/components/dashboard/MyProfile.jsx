@@ -1,25 +1,24 @@
-import { RiEditBoxLine } from "react-icons/ri"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { RiEditBoxLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-
-import IconBtn from "../common/IconBtn"
+import IconBtn from "../common/IconBtn";
 
 export default function MyProfile() {
-  const { user } = useSelector((state) => state.profile)
-  const navigate = useNavigate()
+	const { user } = useSelector((state) => state.profile);
+	const navigate = useNavigate();
 
-  return (
+	return (
 		<>
 			<h1 className="mb-4 md:text-2xl text-xl font-semibold">
 				My Profile
 			</h1>
 			<div className="flex items-center justify-between rounded-sm shadow-sm bg-white md:p-8 p-4 md:px-12">
-				<div className="flex flex-col item-start sm:flex-row sm:items-center gap-x-4">
+				<div className="flex flex-col item-start md:flex-row md:items-center gap-x-4">
 					<img
 						src={user?.image}
 						alt={`profile-${user?.firstName}`}
-						className="aspect-square sm:w-19.5 w-12 rounded-full object-cover"
+						className="aspect-square md:w-19.5 w-12 rounded-full object-cover"
 					/>
 					<div className="space-y-1">
 						<p className="text-lg font-semibold text-richblack-5">
@@ -68,7 +67,7 @@ export default function MyProfile() {
 						<RiEditBoxLine />
 					</IconBtn>
 				</div>
-				<div className="flex flex-col sm:flex-row max-w-125 justify-between">
+				<div className="flex flex-col md:flex-row max-w-125 justify-between">
 					<div className="flex flex-col gap-y-5">
 						<div>
 							<p className="mb-2 text-sm font-semibold">
@@ -122,5 +121,5 @@ export default function MyProfile() {
 				</div>
 			</div>
 		</>
-  );
+	);
 }
