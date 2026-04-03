@@ -29,7 +29,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
 
   const handleShare = () => {
     copy(window.location.href)
-    toast.success("Link copied to clipboard")
+    toast.success("Link copied")
   }
 
   const handleAddToCart = () => {

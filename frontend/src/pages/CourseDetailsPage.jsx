@@ -14,6 +14,11 @@ import GetAvgRating from "../utils/avgRating";
 import axios from "axios";
 import Loader from "../components/common/Loader";
 import PageTitle from "../components/common/HelmetForTitle";
+import { ACCOUNT_TYPE } from "../utils/constants";
+import { addToCart } from "../feature/cartSlice";
+import { FaShareSquare } from "react-icons/fa";
+import copy from "copy-to-clipboard";
+import toast from "react-hot-toast";
 // import Error from "./Error";
 
 function CourseDetailsPage() {
@@ -59,10 +64,9 @@ function CourseDetailsPage() {
 		);
 		setAvgReviewCount(count);
 	}, [response]);
-	
 
-	 // Collapse all
-	
+	// Collapse all
+
 	const [isActive, setIsActive] = useState(Array(0));
 	const handleActive = (id) => {
 		setIsActive(
@@ -119,10 +123,36 @@ function CourseDetailsPage() {
 		});
 	};
 
+	const handleShare = () => {
+		copy(window.location.href);
+		toast.success("Link copied");
+	};
+
+	const handleAddToCart = (course) => {
+		console.log("work");
+		if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
+			toast.error("You are an Instructor. You can't buy a course.");
+			return;
+		}
+		if (token) {
+			dispatch(addToCart(course));
+			console.log(course);
+			// toast.success(`${course.courseName} added to cart`)
+			return;
+		}
+		setConfirmationModal({
+			text1: "You are not logged in!",
+			text2: "Please login to add To Cart",
+			btn1Text: "Login",
+			btn2Text: "Cancel",
+			btn1Handler: () => navigate("/login"),
+			btn2Handler: () => setConfirmationModal(null),
+		});
+	};
+
 	if (paymentLoading) {
 		return <Loader />;
 	}
-
 
 	console.log(response);
 
@@ -131,14 +161,12 @@ function CourseDetailsPage() {
 			<div
 				className={`relative section-container w-full bg-linear-to-br from-green-50 via-white to-yellow-50 text-black z-10`}
 			>
-				<PageTitle title={response.data.courseDetails.courseName}/>
+				<PageTitle title={response.data.courseDetails.courseName} />
 				{/* Hero Section */}
 				<div className="mx-auto lg:w-315 2xl:relative ">
-					<div className="mx-auto grid min-h-112.5 justify-items-center py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-202.5">
+					<div className="mx-auto grid min-h-112.5 py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-202.5">
 						<div className="relative block max-h-120 lg:hidden">
-							<div className="absolute bottom-0 left-0 h-full w-full shadow-[#161D29_0px_-64px_36px_-28px_inset]">
-								
-							</div>
+							<div className="absolute bottom-0 left-0 h-full w-full shadow-md"></div>
 							<img
 								src={thumbnail}
 								alt="course thumbnail"
@@ -146,10 +174,10 @@ function CourseDetailsPage() {
 							/>
 						</div>
 						<div
-							className={`z-30 my-5 flex flex-col justify-center gap-4 py-5 text-lg `}
+							className={`z-30 my-5 flex flex-col justify-start gap-4 py-5 text-lg `}
 						>
 							<div>
-								<p className="text-4xl text-primary font-bold sm:text-[42px]">
+								<p className="md:text-4xl text-2xl text-primary font-bold">
 									{courseName}
 								</p>
 							</div>
@@ -181,18 +209,35 @@ function CourseDetailsPage() {
 									<HiOutlineGlobeAlt /> English
 								</p>
 							</div>
+							<div className="text-center">
+								<button
+									className="mx-auto flex items-center gap-2 py-6 text-green-600 "
+									onClick={handleShare}
+								>
+									<FaShareSquare size={15} /> Share
+								</button>
+							</div>
 						</div>
 						<div className="flex w-full flex-col gap-4 py-4 lg:hidden">
 							<p className="space-x-3 pb-4 text-3xl font-semibold ">
 								Rs. {price}
 							</p>
 							<button
-								className="bg-green-500"
+								className="bg-primary py-2 rounded-md text-white cursor-pointer hover:bg-indigo-700 transition-colors duration-200 "
 								onClick={handleBuyCourse}
 							>
 								Buy Now
 							</button>
-							<button className="blackButton">Add to Cart</button>
+							<button
+								className="bg-pink-600 py-2 rounded-md text-white cursor-pointer hover:bg-pink-700 transition-colors duration-200 "
+								onClick={() =>
+									handleAddToCart(
+										response?.data?.courseDetails,
+									)
+								}
+							>
+								Add to Cart
+							</button>
 						</div>
 					</div>
 					{/* Courses Card */}
@@ -224,7 +269,7 @@ function CourseDetailsPage() {
 								Course Content
 							</p>
 							<div className="flex flex-wrap justify-between gap-2">
-								<div className="flex gap-2">
+								<div className="flex gap-2 text-xs sm:text-sm">
 									<span>
 										{courseContent.length} {`section(s)`}
 									</span>
@@ -236,7 +281,7 @@ function CourseDetailsPage() {
 										length
 									</span>
 								</div>
-								<div>
+								<div className="flex justify-end w-full text-xs sm:text-sm">
 									<button
 										className="text-pink-500 cursor-pointer"
 										onClick={() => setIsActive([])}
