@@ -54,8 +54,8 @@ export default function CoursesTable({ courses, setCourses }) {
 	return (
 		<>
 			<table className="rounded-xl border border-primary">
-				<thead className="bg-indigo-100 text-indigo-700">
-					<tr className="flex gap-x-10 rounded-t-md border-b border-b-primary px-6 py-2">
+				<thead className="bg-indigo-100 text-indigo-700 hidden md:block">
+					<tr className="flex  gap-x-10 rounded-t-md border-b border-b-primary px-6 py-2">
 						<th className="flex-1 text-left text-sm font-bold uppercase">
 							Courses
 						</th>
@@ -82,9 +82,10 @@ export default function CoursesTable({ courses, setCourses }) {
 						courses?.map((course) => (
 							<tr
 								key={course._id}
-								className="flex items-center gap-x-10 px-6 py-8 shadow-sm bg-white mb-4"
+								className="flex flex-col md:flex-row items-center gap-4 md:gap-10 px-6 py-8 shadow-sm bg-white mb-4"
 							>
-								<td className="flex flex-1 gap-x-4">
+								<td className="flex flex-col md:flex-row flex-1 gap-4">
+									
 									<div className="flex justify-center items-center">
 										<img
 											src={course?.thumbnail}
@@ -93,7 +94,7 @@ export default function CoursesTable({ courses, setCourses }) {
 										/>
 									</div>
 									<div className="flex flex-col justify-between">
-										<p className="text-lg font-semibold text-primary">
+										<p className="md:text-lg text-sm font-semibold text-primary">
 											{course.courseName}
 										</p>
 										<p className="text-xs text-gray-500">
