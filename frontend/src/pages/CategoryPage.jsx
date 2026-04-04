@@ -34,7 +34,7 @@ function CategoryPage() {
 	console.log(categoryId);
 
 	useEffect(() => {
-		setCatalogPageData(null)
+		setCatalogPageData(null);
 		if (categoryId) {
 			(async () => {
 				try {
@@ -80,7 +80,7 @@ function CategoryPage() {
 
 	return (
 		<div className="section-container">
-			<PageTitle title={`Courses | ${category}`}/>
+			<PageTitle title={`Courses | ${category}`} />
 			{/* Hero Section */}
 			<div className="">
 				<div className="mx-auto flex py-8 flex-col justify-center gap-2">
@@ -107,7 +107,7 @@ function CategoryPage() {
 						className={`px-4 py-2 ${
 							active === 1
 								? "border-b border-b-yellow-25 text-yellow-25"
-								: "text-richblack-50"
+								: "text-black-50"
 						} cursor-pointer`}
 						onClick={() => setActive(1)}
 					>
@@ -117,7 +117,7 @@ function CategoryPage() {
 						className={`px-4 py-2 ${
 							active === 2
 								? "border-b border-b-yellow-25 text-yellow-25"
-								: "text-richblack-50"
+								: "text-black-50"
 						} cursor-pointer`}
 						onClick={() => setActive(2)}
 					>

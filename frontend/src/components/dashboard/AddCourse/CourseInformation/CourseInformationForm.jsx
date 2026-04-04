@@ -60,7 +60,7 @@ export default function CourseInformationForm() {
 
 	const isFormUpdated = () => {
 		const currentValues = getValues();
-		
+
 		if (
 			currentValues.courseTitle !== course.courseName ||
 			currentValues.courseShortDesc !== course.courseDescription ||
@@ -173,7 +173,7 @@ export default function CourseInformationForm() {
 			}
 			setLoading(false);
 		} catch (error) {
-			setLoading(false)
+			setLoading(false);
 			console.log(error);
 		}
 	};
@@ -204,7 +204,7 @@ export default function CourseInformationForm() {
 			{/* Course Short Description */}
 			<div className="flex flex-col space-y-2">
 				<label
-					className="text-sm text-richblack-5"
+					className="text-sm text-black-5"
 					htmlFor="courseShortDesc"
 				>
 					Course Short Description{" "}
@@ -224,10 +224,7 @@ export default function CourseInformationForm() {
 			</div>
 			{/* Course Price */}
 			<div className="flex flex-col space-y-2">
-				<label
-					className="text-sm text-richblack-5"
-					htmlFor="coursePrice"
-				>
+				<label className="text-sm text-black-5" htmlFor="coursePrice">
 					Course Price <sup className="text-pink-200">*</sup>
 				</label>
 				<div className="relative">
@@ -243,7 +240,7 @@ export default function CourseInformationForm() {
 						})}
 						className="form-style w-full pl-12! p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
 					/>
-					<HiOutlineCurrencyRupee className="absolute left-3 top-1/2 inline-block -translate-y-1/2 text-2xl text-richblack-400" />
+					<HiOutlineCurrencyRupee className="absolute left-3 top-1/2 inline-block -translate-y-1/2 text-2xl text-black-400" />
 				</div>
 				{errors.coursePrice && (
 					<span className="ml-2 text-xs tracking-wide text-red-600">
@@ -254,7 +251,7 @@ export default function CourseInformationForm() {
 			{/* Course Category */}
 			<div className="flex flex-col space-y-2">
 				<label
-					className="text-sm text-richblack-5"
+					className="text-sm text-black-5"
 					htmlFor="courseCategory"
 				>
 					Course Category <sup className="text-pink-200">*</sup>
@@ -303,7 +300,7 @@ export default function CourseInformationForm() {
 			{/* Benefits of the course */}
 			<div className="flex flex-col space-y-2">
 				<label
-					className="text-sm text-richblack-5"
+					className="text-sm text-black-5"
 					htmlFor="courseBenefits"
 				>
 					Benefits of the course{" "}

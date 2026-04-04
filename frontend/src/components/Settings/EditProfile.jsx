@@ -7,8 +7,6 @@ import { setUser } from "../../feature/profileSlice";
 import { useState } from "react";
 import ButtonLoader from "../common/ButtonLoader";
 
-
-
 const genders = ["Male", "Female", "Non-Binary", "Prefer not to say", "Other"];
 
 export default function EditProfile() {
@@ -53,7 +51,10 @@ export default function EditProfile() {
 					</h2>
 					<div className="flex flex-col gap-5 lg:flex-row">
 						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label htmlFor="firstName" className="lable-style text-sm">
+							<label
+								htmlFor="firstName"
+								className="lable-style text-sm"
+							>
 								First Name
 							</label>
 							<input
@@ -72,7 +73,10 @@ export default function EditProfile() {
 							)}
 						</div>
 						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label htmlFor="lastName" className="lable-style text-sm">
+							<label
+								htmlFor="lastName"
+								className="lable-style text-sm"
+							>
 								Last Name
 							</label>
 							<input
@@ -130,7 +134,10 @@ export default function EditProfile() {
 							)}
 						</div>
 						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label htmlFor="gender" className="lable-style text-sm">
+							<label
+								htmlFor="gender"
+								className="lable-style text-sm"
+							>
 								Gender
 							</label>
 							<select
@@ -197,7 +204,10 @@ export default function EditProfile() {
 							)}
 						</div>
 						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label htmlFor="about" className="lable-style text-sm">
+							<label
+								htmlFor="about"
+								className="lable-style text-sm"
+							>
 								About
 							</label>
 							<input
@@ -223,14 +233,16 @@ export default function EditProfile() {
 						onClick={() => {
 							navigate("/dashboard/my-profile");
 						}}
-						className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
+						className="cursor-pointer rounded-md bg-red-500 py-2 px-5 font-semibold text-white"
 					>
 						Cancel
 					</button>
 
 					<IconBtn
 						type="submit"
-						text={loading ? <ButtonLoader text={"Saving"}/> : "Save"}
+						text={
+							loading ? <ButtonLoader text={"Saving"} /> : "Save"
+						}
 					/>
 				</div>
 			</form>

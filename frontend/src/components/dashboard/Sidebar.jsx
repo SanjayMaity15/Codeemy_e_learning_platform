@@ -16,10 +16,9 @@ export default function Sidebar() {
 	const navigate = useNavigate();
 	const [openLogoutPopup, setOpenLogoutPopup] = useState(false);
 
-
 	if (profileLoading || authLoading) {
 		return (
-			<div className="grid h-[calc(100vh-3.5rem)] min-w-55 items-center border-r- border-r-richblack-700 bg-richblack-800">
+			<div className="grid h-[calc(100vh-3.5rem)] min-w-55 items-center border-r- border-r-richblack-700 bg-gray-800">
 				<div className="spinner"></div>
 			</div>
 		);
@@ -41,7 +40,7 @@ export default function Sidebar() {
 						);
 					})}
 				</div>
-				<div className="mx-auto mt-6 mb-6 h-px w-10/12 bg-richblack-700" />
+				<div className="mx-auto mt-6 mb-6 h-px w-10/12 bg-gray-700" />
 				<div className="flex flex-col">
 					<SidebarLink
 						link={{ name: "Settings", path: "/dashboard/settings" }}

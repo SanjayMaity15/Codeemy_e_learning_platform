@@ -40,9 +40,13 @@ export default function NestedView({ handleChangeEditSectionName }) {
 	};
 
 	const handleDeleteSubSection = async (subSectionId, sectionId) => {
-    const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}course/deleteSubSection`, { sectionId, subSectionId }, { withCredentials: true })
-    
-    const result = response.data.data;
+		const response = await axios.post(
+			`${import.meta.env.VITE_SERVER_URL}course/deleteSubSection`,
+			{ sectionId, subSectionId },
+			{ withCredentials: true },
+		);
+
+		const result = response.data.data;
 
 		if (result) {
 			// update the structure of course
@@ -61,7 +65,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
 	return (
 		<>
 			<div
-				className="rounded-lg bg-richblack-700 md:p-6 md:px-8"
+				className="rounded-lg bg-gray-100 md:p-6 md:px-8"
 				id="nestedViewContainer"
 			>
 				{course?.courseContent?.map((section) => (
@@ -70,8 +74,8 @@ export default function NestedView({ handleChangeEditSectionName }) {
 						{/* Section Dropdown Content */}
 						<summary className="flex cursor-pointer items-center justify-between border-b-2 border-b-richblack-600 py-2">
 							<div className="flex items-center gap-x-3">
-								<RxDropdownMenu className="text-2xl text-richblack-50" />
-								<p className="font-semibold text-richblack-50 text-sm">
+								<RxDropdownMenu className="text-2xl text-black-50" />
+								<p className="font-semibold text-black-50 text-sm">
 									{section.sectionName}
 								</p>
 							</div>
@@ -84,7 +88,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
 										)
 									}
 								>
-									<MdEdit className="text-xl text-richblack-300" />
+									<MdEdit className="text-xl text-black-300" />
 								</button>
 								<button
 									onClick={() =>
@@ -103,13 +107,13 @@ export default function NestedView({ handleChangeEditSectionName }) {
 										})
 									}
 								>
-									<RiDeleteBin6Line className="text-xl text-richblack-300" />
+									<RiDeleteBin6Line className="text-xl text-black-300" />
 								</button>
-								<span className="font-medium text-richblack-300">
+								<span className="font-medium text-black-300">
 									|
 								</span>
 								<AiFillCaretDown
-									className={`text-xl text-richblack-300`}
+									className={`text-xl text-black-300`}
 								/>
 							</div>
 						</summary>
@@ -122,8 +126,8 @@ export default function NestedView({ handleChangeEditSectionName }) {
 									className="flex cursor-pointer items-center justify-between gap-x-3 border-b-2 border-b-richblack-600 py-2"
 								>
 									<div className="flex items-center gap-x-3 py-2 ">
-										<RxDropdownMenu className="text-2xl text-richblack-50" />
-										<p className="font-semibold text-richblack-50 text-xs">
+										<RxDropdownMenu className="text-2xl text-black-50" />
+										<p className="font-semibold text-black-50 text-xs">
 											{data.title}
 										</p>
 									</div>
@@ -139,7 +143,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
 												})
 											}
 										>
-											<MdEdit className="text-xl text-richblack-300" />
+											<MdEdit className="text-xl text-black-300" />
 										</button>
 										<button
 											onClick={() =>
@@ -160,7 +164,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
 												})
 											}
 										>
-											<RiDeleteBin6Line className="text-xl text-richblack-300" />
+											<RiDeleteBin6Line className="text-xl text-black-300" />
 										</button>
 									</div>
 								</div>

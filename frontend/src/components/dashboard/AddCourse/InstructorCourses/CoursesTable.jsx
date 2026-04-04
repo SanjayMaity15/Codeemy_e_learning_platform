@@ -73,7 +73,7 @@ export default function CoursesTable({ courses, setCourses }) {
 				<tbody>
 					{courses?.length === 0 ? (
 						<tr>
-							<td className="py-10 text-center text-2xl font-medium text-richblack-100">
+							<td className="py-10 text-center text-2xl font-medium text-black-100">
 								No courses found
 								{/* TODO: Need to change this state */}
 							</td>
@@ -85,7 +85,6 @@ export default function CoursesTable({ courses, setCourses }) {
 								className="flex flex-col md:flex-row items-center gap-4 md:gap-10 px-6 py-8 shadow-sm bg-white mb-4"
 							>
 								<td className="flex flex-col md:flex-row flex-1 gap-4">
-									
 									<div className="flex justify-center items-center">
 										<img
 											src={course?.thumbnail}
@@ -129,13 +128,13 @@ export default function CoursesTable({ courses, setCourses }) {
 										)}
 									</div>
 								</td>
-								<td className="text-sm font-medium text-richblack-100">
+								<td className="text-sm font-medium text-black-100">
 									{course.totalDuration}
 								</td>
-								<td className="text-sm font-medium text-richblack-100">
+								<td className="text-sm font-medium text-black-100">
 									₹{course.price}
 								</td>
-								<td className="text-sm font-medium text-richblack-100 ">
+								<td className="text-sm font-medium text-black-100 ">
 									<button
 										disabled={loading}
 										onClick={() => {

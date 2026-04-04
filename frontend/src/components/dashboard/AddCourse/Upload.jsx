@@ -61,7 +61,7 @@ export default function Upload({
 
 	return (
 		<div className="flex flex-col space-y-2">
-			<label className="text-sm text-richblack-5" htmlFor={name}>
+			<label className="text-sm text-black-5" htmlFor={name}>
 				{label} {!viewData && <sup className="text-pink-200">*</sup>}
 			</label>
 
@@ -69,7 +69,7 @@ export default function Upload({
 			<div
 				{...getRootProps()}
 				className={`${
-					isDragActive ? "bg-richblack-600" : "bg-richblack-700"
+					isDragActive ? "bg-gray-200" : "bg-gray-100"
 				} flex min-h-62.5 cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}
 			>
 				{/* 🔥 REQUIRED INPUT */}
@@ -100,7 +100,7 @@ export default function Upload({
 									setSelectedFile(null);
 									setValue(name, null);
 								}}
-								className="mt-3 text-richblack-400 underline"
+								className="mt-3 text-black-400 underline"
 							>
 								Cancel
 							</button>
@@ -112,7 +112,7 @@ export default function Upload({
 							<FiUploadCloud className="text-2xl text-yellow-50" />
 						</div>
 
-						<p className="mt-2 max-w-50 text-center text-sm text-richblack-200">
+						<p className="mt-2 max-w-50 text-center text-sm text-black-200">
 							Drag and drop an {!video ? "image" : "video"}, or
 							click to{" "}
 							<span className="font-semibold text-primary">
@@ -121,7 +121,7 @@ export default function Upload({
 							a file
 						</p>
 
-						<ul className="mt-10 flex list-disc justify-between space-x-12 text-xs text-richblack-200">
+						<ul className="mt-10 flex list-disc justify-between space-x-12 text-xs text-black-200">
 							<li>Aspect ratio 16:9</li>
 							<li>Recommended size 1024x576</li>
 						</ul>

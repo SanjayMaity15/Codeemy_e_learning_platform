@@ -21,7 +21,7 @@ export default function MyProfile() {
 						className="aspect-square md:w-19.5 w-12 rounded-full object-cover"
 					/>
 					<div className="space-y-1">
-						<p className="text-lg font-semibold text-richblack-5">
+						<p className="text-lg font-semibold text-black-5">
 							{user?.firstName + " " + user?.lastName}
 						</p>
 						<p className="text-sm text-gray-500">{user?.email}</p>

@@ -1,47 +1,50 @@
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function RequirementsField({
-  name,
-  label,
-  register,
-  setValue,
-  errors,
-  getValues,
+	name,
+	label,
+	register,
+	setValue,
+	errors,
+	getValues,
 }) {
-  const { editCourse, course } = useSelector((state) => state.course)
-  const [requirement, setRequirement] = useState("")
-  const [requirementsList, setRequirementsList] = useState([])
+	const { editCourse, course } = useSelector((state) => state.course);
+	const [requirement, setRequirement] = useState("");
+	const [requirementsList, setRequirementsList] = useState([]);
 
-  useEffect(() => {
-    if (editCourse) {
-      setRequirementsList(course?.instructions)
-    }
-    register(name, { required: true, validate: (value) => value.length > 0 })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+	useEffect(() => {
+		if (editCourse) {
+			setRequirementsList(course?.instructions);
+		}
+		register(name, {
+			required: true,
+			validate: (value) => value.length > 0,
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-  useEffect(() => {
-    setValue(name, requirementsList)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requirementsList])
+	useEffect(() => {
+		setValue(name, requirementsList);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [requirementsList]);
 
-  const handleAddRequirement = () => {
-    if (requirement) {
-      setRequirementsList([...requirementsList, requirement])
-      setRequirement("")
-    }
-  }
+	const handleAddRequirement = () => {
+		if (requirement) {
+			setRequirementsList([...requirementsList, requirement]);
+			setRequirement("");
+		}
+	};
 
-  const handleRemoveRequirement = (index) => {
-    const updatedRequirements = [...requirementsList]
-    updatedRequirements.splice(index, 1)
-    setRequirementsList(updatedRequirements)
-  }
+	const handleRemoveRequirement = (index) => {
+		const updatedRequirements = [...requirementsList];
+		updatedRequirements.splice(index, 1);
+		setRequirementsList(updatedRequirements);
+	};
 
-  return (
+	return (
 		<div className="flex flex-col space-y-2">
-			<label className="text-sm text-richblack-5" htmlFor={name}>
+			<label className="text-sm text-black-5" htmlFor={name}>
 				{label} <sup className="text-pink-200">*</sup>
 			</label>
 			<div className="flex flex-col items-start space-y-2">
@@ -50,8 +53,8 @@ export default function RequirementsField({
 					id={name}
 					value={requirement}
 					onChange={(e) => setRequirement(e.target.value)}
-          className="form-style w-full p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
-          placeholder="Add course prequisite"
+					className="form-style w-full p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
+					placeholder="Add course prequisite"
 				/>
 				<button
 					type="button"
@@ -66,7 +69,7 @@ export default function RequirementsField({
 					{requirementsList.map((requirement, index) => (
 						<li
 							key={index}
-							className="flex items-center text-richblack-5"
+							className="flex items-center text-black-5"
 						>
 							<span>{requirement}</span>
 							<button
@@ -86,5 +89,5 @@ export default function RequirementsField({
 				</span>
 			)}
 		</div>
-  );
+	);
 }

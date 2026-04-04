@@ -12,7 +12,7 @@ export default function CourseReviewModal({ setReviewModal }) {
 	const { user } = useSelector((state) => state.profile);
 	const { token } = useSelector((state) => state.auth);
 	const { courseEntireData } = useSelector((state) => state.viewCourse);
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false);
 	const [rating, setRating] = useState(0);
 
 	const {
@@ -34,11 +34,11 @@ export default function CourseReviewModal({ setReviewModal }) {
 
 	const onSubmit = async (data) => {
 		if (!data.courseRating) {
-			toast.error("Please give rating first")
-			return
+			toast.error("Please give rating first");
+			return;
 		}
 		try {
-			setLoading(true)
+			setLoading(true);
 			const result = await axios.post(
 				`${import.meta.env.VITE_SERVER_URL}course/createRating`,
 				{
@@ -49,11 +49,11 @@ export default function CourseReviewModal({ setReviewModal }) {
 				{ withCredentials: true },
 			);
 			toast.success(result.data.message);
-			setLoading(false)
+			setLoading(false);
 			setReviewModal(false);
 		} catch (error) {
 			toast.error(error.response.data.message);
-			setLoading(false)
+			setLoading(false);
 		}
 	};
 
@@ -61,12 +61,12 @@ export default function CourseReviewModal({ setReviewModal }) {
 		<div className="fixed inset-0 z-1000 grid h-screen w-screen place-items-center overflow-auto bg-black/50 backdrop-blur-xs">
 			<div className="my-10 w-11/12 max-w-150 rounded-lg border bg-white">
 				{/* Header */}
-				<div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
-					<p className="text-xl font-semibold text-richblack-5">
+				<div className="flex items-center justify-between rounded-t-lg bg-gray-700 p-5">
+					<p className="text-xl font-semibold text-black-5">
 						Add Review
 					</p>
 					<button onClick={() => setReviewModal(false)}>
-						<RxCross2 className="text-2xl text-richblack-5" />
+						<RxCross2 className="text-2xl text-black-5" />
 					</button>
 				</div>
 
@@ -80,10 +80,10 @@ export default function CourseReviewModal({ setReviewModal }) {
 							className="aspect-square w-12 rounded-full object-cover"
 						/>
 						<div>
-							<p className="font-semibold text-richblack-5">
+							<p className="font-semibold text-black-5">
 								{user?.firstName} {user?.lastName}
 							</p>
-							<p className="text-sm text-richblack-5">
+							<p className="text-sm text-black-5">
 								Posting Publicly
 							</p>
 						</div>
@@ -113,7 +113,7 @@ export default function CourseReviewModal({ setReviewModal }) {
 						{/* Textarea */}
 						<div className="flex w-11/12 flex-col space-y-2">
 							<label
-								className="text-sm text-richblack-5"
+								className="text-sm text-black-5"
 								htmlFor="courseExperience"
 							>
 								Add Your Experience{" "}
@@ -141,12 +141,12 @@ export default function CourseReviewModal({ setReviewModal }) {
 							<button
 								type="button"
 								onClick={() => setReviewModal(false)}
-								className="rounded-md bg-richblack-300 py-2 px-5 font-semibold text-richblack-900"
+								className="rounded-md bg-gray-300 py-2 px-5 font-semibold text-black-900"
 							>
 								Cancel
 							</button>
 
-							<IconBtn text={loading ? "Submitting": "Submit"} />
+							<IconBtn text={loading ? "Submitting" : "Submit"} />
 						</div>
 					</form>
 				</div>

@@ -143,14 +143,20 @@ const Navbar = () => {
 	return (
 		<section
 			className={`sticky top-0 h-20 w-full z-20 transition-shadow ${
-				navBgActive || isMobile ? "shadow-md outline backdrop-blur-xs " : "bg-transparent"
+				navBgActive || isMobile
+					? "shadow-md outline backdrop-blur-xs "
+					: "bg-transparent"
 			}`}
 		>
 			<div className="section-container relative z-20 h-20 flex justify-between items-center">
 				{/* Logo / Name */}
 				<div>
 					<Link to="/" className="flex items-center">
-						<img src={brandImage} alt="codeemy" className="w-20 mb-3 selection:none" />
+						<img
+							src={brandImage}
+							alt="codeemy"
+							className="w-20 mb-3 selection:none"
+						/>
 						<p className="bg-linear-to-b from-indigo-600 to-pink-600 bg-clip-text text-transparent font-bold tracking-wide text-3xl font-orbitron select-none -ml-5">
 							odeemy
 						</p>
@@ -164,21 +170,24 @@ const Navbar = () => {
 
 				{/* Login/SignUp/Dashboard */}
 				<div className="flex gap-x-4 items-center">
-					{user && (user?.accountType != ("Instructor" || "Admin")) && (
-						<Link
-							to="/dashboard/cart"
-							className="relative text-black text-2xl md:flex items-center hidden "
-						>
-							<AiOutlineShoppingCart />
-							{totalItems > 0 && (
-								<span className="bg-pink-500 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full absolute left-4 top-2.5 font-bold">
-									{totalItems}
-								</span>
-							)}
-						</Link>
-					)}
+					{user &&
+						user?.accountType !== "Admin" &&
+						user?.accountType !== "Instructor" && (
+							<Link
+								to="/dashboard/cart"
+								className="relative text-black text-2xl md:flex items-center hidden"
+							>
+								<AiOutlineShoppingCart />
 
-					{token === null  && (
+								{totalItems > 0 && (
+									<span className="bg-pink-500 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full absolute left-4 top-2.5 font-bold">
+										{totalItems}
+									</span>
+								)}
+							</Link>
+						)}
+
+					{token === null && (
 						<Link to="/login">
 							<button className="hidden md:block px-8 py-3 rounded-full shadow-sm border border-indigo-800 bg-indigo-600 hover:border-indigo-400   font-semibold hover:opacity-95 transition cursor-pointer text-white font-orbitron">
 								Get's started

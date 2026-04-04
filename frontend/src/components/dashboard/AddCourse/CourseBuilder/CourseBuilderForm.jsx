@@ -40,12 +40,15 @@ export default function CourseBuilderForm() {
 				sectionName: data.sectionName,
 				sectionId: editSectionName,
 				courseId: course._id,
-      };
-      
-      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}course/updateSection`, formdata, { withCredentials: true })
-      
-      result = response.data.data
+			};
 
+			const response = await axios.post(
+				`${import.meta.env.VITE_SERVER_URL}course/updateSection`,
+				formdata,
+				{ withCredentials: true },
+			);
+
+			result = response.data.data;
 		} else {
 			const formdata = {
 				sectionName: data.sectionName,
@@ -105,13 +108,13 @@ export default function CourseBuilderForm() {
 
 	return (
 		<div className="space-y-8 rounded-md border border-gray-700 bg-white shadow-sm p-6">
-			<p className="text-2xl font-semibold text-richblack-5">
+			<p className="text-2xl font-semibold text-black-5">
 				Course Builder
 			</p>
 			<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 				<div className="flex flex-col space-y-2">
 					<label
-						className="text-sm text-richblack-5"
+						className="text-sm text-black-5"
 						htmlFor="sectionName"
 					>
 						Section Name <sup className="text-pink-200">*</sup>
@@ -150,7 +153,7 @@ export default function CourseBuilderForm() {
 						<button
 							type="button"
 							onClick={cancelEdit}
-							className="text-sm text-richblack-300 underline"
+							className="text-sm text-black-300 underline"
 						>
 							Cancel Edit
 						</button>

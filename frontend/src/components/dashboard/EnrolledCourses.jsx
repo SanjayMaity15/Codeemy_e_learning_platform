@@ -48,9 +48,9 @@ export default function EnrolledCourses() {
 					{/* TODO: Modify this Empty State */}
 				</p>
 			) : (
-				<div className="my-8 text-richblack-5">
+				<div className="my-8 text-black-5">
 					{/* Headings */}
-					<div className="flex rounded-t-lg bg-richblack-500 ">
+					<div className="flex rounded-t-lg bg-gray-500 ">
 						<p className="w-[45%] px-5 py-3 font-semibold">
 							Course Name
 						</p>
@@ -88,7 +88,7 @@ export default function EnrolledCourses() {
 									<p className="font-semibold text-primary text-xs md:text-lg">
 										{course.courseName}
 									</p>
-									<p className="text-xs text-richblack-300 hidden md:block md:text-sm">
+									<p className="text-xs text-black-300 hidden md:block md:text-sm">
 										{course.courseDescription.length > 50
 											? `${course.courseDescription.slice(0, 50)}...`
 											: course.courseDescription}
