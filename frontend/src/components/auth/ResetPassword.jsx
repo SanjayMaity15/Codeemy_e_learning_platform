@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { FiLock, FiEye, FiArrowRight } from "react-icons/fi";
+import { FiLock, FiEye, FiArrowRight, FiEyeOff } from "react-icons/fi";
 import ButtonLoader from "../common/ButtonLoader";
 
 export default function ResetPassword() {
@@ -13,7 +13,8 @@ export default function ResetPassword() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState({});
 	const [loading, setLoading] = useState(false);
-	const [showPassword, setShowPassword] = useState(false);
+	const [showPassword1, setShowPassword1] = useState(false);
+	const [showPassword2, setShowPassword2] = useState(false);
 
 	const validateForm = () => {
 		const newErrors = {};
@@ -43,7 +44,7 @@ export default function ResetPassword() {
 					password,
 					confirmPassword,
 					token,
-				}
+				},
 			);
 
 			toast.success(response.data.message);
@@ -83,16 +84,27 @@ export default function ResetPassword() {
 						<div className="relative">
 							<FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
 							<input
-								type={showPassword ? "text" : "password"}
+								type={showPassword1 ? "text" : "password"}
 								placeholder="Enter new password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								className="w-full bg-transparent border-b border-neutral-700 py-3 pl-10 pr-10 placeholder-neutral-500 focus:outline-none focus:border-primary"
 							/>
-							<FiEye
-								onClick={() => setShowPassword(!showPassword)}
-								className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
-							/>
+							{showPassword1 ? (
+								<FiEye
+									onClick={() =>
+										setShowPassword1(!showPassword1)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							) : (
+								<FiEyeOff
+									onClick={() =>
+										setShowPassword1(!showPassword1)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							)}
 						</div>
 						{errors.password && (
 							<p className="text-red-500 text-sm mt-1">
@@ -109,7 +121,7 @@ export default function ResetPassword() {
 						<div className="relative">
 							<FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
 							<input
-								type={showPassword ? "text" : "password"}
+								type={showPassword2 ? "text" : "password"}
 								placeholder="Confirm new password"
 								value={confirmPassword}
 								onChange={(e) =>
@@ -117,6 +129,21 @@ export default function ResetPassword() {
 								}
 								className="w-full bg-transparent border-b border-neutral-700 py-3 pl-10 pr-3 placeholder-neutral-500 focus:outline-none focus:border-primary"
 							/>
+							{showPassword2 ? (
+								<FiEye
+									onClick={() =>
+										setShowPassword2(!showPassword2)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							) : (
+								<FiEyeOff
+									onClick={() =>
+										setShowPassword2(!showPassword2)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							)}
 						</div>
 						{errors.confirmPassword && (
 							<p className="text-red-500 text-sm mt-1">
@@ -132,7 +159,7 @@ export default function ResetPassword() {
 						className="w-full flex items-center justify-center gap-2 bg-primary text-white font-medium py-4 rounded-full hover:bg-indigo-700 transition"
 					>
 						{loading ? (
-							<ButtonLoader text={"Resetting password"}/>
+							<ButtonLoader text={"Resetting password"} />
 						) : (
 							<>
 								<FiArrowRight />

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { FiLock, FiEye } from "react-icons/fi";
+import { FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ButtonLoader from "../common/ButtonLoader";
-
 
 export default function ChangePassword() {
 	const [oldPassword, setOldPassword] = useState("");
@@ -14,8 +13,8 @@ export default function ChangePassword() {
 	const [showPassword1, setShowPassword1] = useState(false);
 	const [showPassword2, setShowPassword2] = useState(false);
 	const [showPassword3, setShowPassword3] = useState(false);
-    const [errors, setErrors] = useState({});
-    const navigate = useNavigate()
+	const [errors, setErrors] = useState({});
+	const navigate = useNavigate();
 
 	const validateForm = () => {
 		const newErrors = {};
@@ -40,14 +39,18 @@ export default function ChangePassword() {
 
 		try {
 			setLoading(true);
-			const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}auth/changepassword`,{
-				oldPassword,
-				newPassword,
-				confirmNewPassword,
-            }, { withCredentials: true });
-            
+			const response = await axios.post(
+				`${import.meta.env.VITE_SERVER_URL}auth/changepassword`,
+				{
+					oldPassword,
+					newPassword,
+					confirmNewPassword,
+				},
+				{ withCredentials: true },
+			);
+
 			toast.success(response.data.message);
-            navigate("/")
+			navigate("/");
 			setOldPassword("");
 			setNewPassword("");
 			setConfirmNewPassword("");
@@ -97,10 +100,21 @@ export default function ChangePassword() {
 								value={oldPassword}
 								onChange={(e) => setOldPassword(e.target.value)}
 							/>
-							<FiEye
-								onClick={() => setShowPassword1(!showPassword1)}
-								className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
-							/>
+							{showPassword1 ? (
+								<FiEye
+									onClick={() =>
+										setShowPassword1(!showPassword1)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							) : (
+								<FiEyeOff
+									onClick={() =>
+										setShowPassword1(!showPassword1)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							)}
 						</div>
 						{errors.oldPassword && (
 							<p className="text-red-500 text-sm mt-1">
@@ -123,10 +137,21 @@ export default function ChangePassword() {
 								value={newPassword}
 								onChange={(e) => setNewPassword(e.target.value)}
 							/>
-							<FiEye
-								onClick={() => setShowPassword2(!showPassword2)}
-								className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
-							/>
+							{showPassword2 ? (
+								<FiEye
+									onClick={() =>
+										setShowPassword2(!showPassword2)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							) : (
+								<FiEyeOff
+									onClick={() =>
+										setShowPassword2(!showPassword2)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							)}
 						</div>
 						{errors.newPassword && (
 							<p className="text-red-500 text-sm mt-1">
@@ -151,10 +176,21 @@ export default function ChangePassword() {
 									setConfirmNewPassword(e.target.value)
 								}
 							/>
-							<FiEye
-								onClick={() => setShowPassword3(!showPassword3)}
-								className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
-							/>
+							{showPassword3 ? (
+								<FiEye
+									onClick={() =>
+										setShowPassword3(!showPassword3)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							) : (
+								<FiEyeOff
+									onClick={() =>
+										setShowPassword3(!showPassword3)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							)}
 						</div>
 						{errors.confirmNewPassword && (
 							<p className="text-red-500 text-sm mt-1">
@@ -176,7 +212,11 @@ export default function ChangePassword() {
 						disabled={loading}
 						className="w-full flex items-center justify-center gap-2 bg-primary text-white font-medium py-4 rounded-full hover:bg-indigo-700 cursor-pointer transition"
 					>
-						{loading ? <ButtonLoader text={"Changing password"}/> : "Change Password"}
+						{loading ? (
+							<ButtonLoader text={"Changing password"} />
+						) : (
+							"Change Password"
+						)}
 					</button>
 				</form>
 

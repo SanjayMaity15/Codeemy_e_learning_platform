@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { FiLock, FiMail, FiEye, FiArrowRight } from "react-icons/fi";
+import { FiLock, FiMail, FiEye, FiArrowRight, FiEyeOff } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { setToken } from "../../feature/authSlice";
 import { setUser } from "../../feature/profileSlice";
@@ -44,7 +44,7 @@ export default function Login() {
 			const result = await axios.post(
 				`${import.meta.env.VITE_SERVER_URL}auth/login`,
 				{ email, password },
-				{ withCredentials: true }
+				{ withCredentials: true },
 			);
 
 			if (result.status === 200) {
@@ -55,7 +55,7 @@ export default function Login() {
 				localStorage.setItem("user", JSON.stringify(result.data.user));
 				localStorage.setItem(
 					"token",
-					JSON.stringify(result.data.token)
+					JSON.stringify(result.data.token),
 				);
 			}
 
@@ -91,9 +91,7 @@ export default function Login() {
 				<form className="mt-8 space-y-6" onSubmit={handleLogin}>
 					{/* Email */}
 					<div>
-						<label className="block text-sm mb-2">
-							Email
-						</label>
+						<label className="block text-sm mb-2">Email</label>
 						<div className="relative">
 							<FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
 							<input
@@ -113,9 +111,7 @@ export default function Login() {
 
 					{/* Password */}
 					<div>
-						<label className="block text-sm mb-2">
-							Password
-						</label>
+						<label className="block text-sm mb-2">Password</label>
 						<div className="relative">
 							<FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
 							<input
@@ -125,10 +121,21 @@ export default function Login() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
-							<FiEye
-								onClick={() => setShowPassword(!showPassword)}
-								className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
-							/>
+							{showPassword ? (
+								<FiEye
+									onClick={() =>
+										setShowPassword(!showPassword)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							) : (
+								<FiEyeOff
+									onClick={() =>
+										setShowPassword(!showPassword)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							)}
 						</div>
 						{errors.password && (
 							<p className="text-red-500 text-sm mt-1">
@@ -154,7 +161,7 @@ export default function Login() {
 						className="w-full flex items-center justify-center gap-2 bg-primary text-white font-medium py-4 cursor-pointer rounded-full hover:bg-indigo-700 transition"
 					>
 						{loading ? (
-							<ButtonLoader text="Logging in"/>
+							<ButtonLoader text="Logging in" />
 						) : (
 							<>
 								<FiArrowRight />

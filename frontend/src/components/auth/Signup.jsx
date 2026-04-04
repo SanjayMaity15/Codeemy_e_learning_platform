@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { FiUser, FiMail, FiLock, FiEye, FiArrowRight } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiEye, FiArrowRight, FiEyeOff } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import ButtonLoader from "../common/ButtonLoader";
@@ -203,9 +203,7 @@ export default function Signup() {
 
 					{/* Password */}
 					<div>
-						<label className="block text-sm mb-2">
-							Password
-						</label>
+						<label className="block text-sm mb-2">Password</label>
 						<div className="relative">
 							<FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
 							<input
@@ -215,10 +213,21 @@ export default function Signup() {
 								placeholder="Create a password"
 								className="w-full bg-transparent border-b border-neutral-700 py-3 pl-10 pr-10 placeholder-neutral-500 focus:outline-none focus:border-primary"
 							/>
-							<FiEye
-								onClick={() => setShowPassword(!showPassword)}
-								className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
-							/>
+							{showPassword ? (
+								<FiEye
+									onClick={() =>
+										setShowPassword(!showPassword)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							) : (
+								<FiEyeOff
+									onClick={() =>
+										setShowPassword(!showPassword)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							)}
 						</div>
 						{errors.password && (
 							<p className="text-red-500 text-sm mt-1">
@@ -243,10 +252,21 @@ export default function Signup() {
 								placeholder="Confirm your password"
 								className="w-full bg-transparent border-b border-neutral-700 py-3 pl-10 pr-10 placeholder-neutral-500 focus:outline-none focus:border-primary"
 							/>
-							<FiEye
-								onClick={() => setShowConfirm(!showConfirm)}
-								className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
-							/>
+							{showConfirm ? (
+								<FiEye
+									onClick={() =>
+										setShowConfirm(!showConfirm)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							) : (
+								<FiEyeOff
+									onClick={() =>
+										setShowConfirm(!showConfirm)
+									}
+									className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 cursor-pointer"
+								/>
+							)}
 						</div>
 						{errors.confirmPassword && (
 							<p className="text-red-500 text-sm mt-1">
@@ -262,7 +282,7 @@ export default function Signup() {
 						className="w-full flex items-center justify-center gap-2 bg-primary text-white font-medium py-4 rounded-full hover:bg-indigo-700 cursor-pointer transition"
 					>
 						{loading ? (
-							<ButtonLoader text="Sending OTP"/>
+							<ButtonLoader text="Sending OTP" />
 						) : (
 							<>
 								<FiArrowRight />
@@ -274,7 +294,10 @@ export default function Signup() {
 
 					<p className="text-center text-sm text-gray-500">
 						Already have an account?{" "}
-						<a href="/login" className="text-pink-600 hover:underline">
+						<a
+							href="/login"
+							className="text-pink-600 hover:underline"
+						>
 							Sign In
 						</a>
 					</p>
