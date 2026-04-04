@@ -7,7 +7,7 @@ import { setToken } from "../../feature/authSlice";
 import axios from "axios";
 import { FiLogOut } from "react-icons/fi";
 import ButtonLoader from "../common/ButtonLoader";
-
+import { createPortal } from "react-dom";
 export default function Logout({ onClose }) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -39,8 +39,8 @@ export default function Logout({ onClose }) {
 		}
 	};
 
-	return (
-		<div className="fixed min-h-screen top-0 left-0 min-w-screen inset-0 z-1000 flex items-center justify-center bg-black/50 backdrop-blur-xs">
+	return createPortal(
+		<div className="fixed inset-0 z-9999 flex items-center justify-center bg-black/50 backdrop-blur-sm">
 			{/* Modal */}
 			<div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl animate-fadeIn">
 				{/* Icon */}
@@ -73,10 +73,15 @@ export default function Logout({ onClose }) {
 						disabled={loading}
 						className="px-5 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition cursor-pointer"
 					>
-						{loading ? <ButtonLoader text="Logging out"/> : "Logout"}
+						{loading ? (
+							<ButtonLoader text="Logging out" />
+						) : (
+							"Logout"
+						)}
 					</button>
 				</div>
 			</div>
-		</div>
+		</div>,
+		document.body,
 	);
 }

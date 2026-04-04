@@ -5,6 +5,7 @@ import Course_Slider from "../components/Catalog/Course_Slider";
 import axios from "axios";
 import Loader from "../components/common/Loader";
 import PageTitle from "../components/common/HelmetForTitle";
+import cartoonImage from "../assets/cartoon.png"
 
 function CategoryPage() {
 	const { category } = useParams();
@@ -31,8 +32,6 @@ function CategoryPage() {
 		})();
 	}, [category]);
 
-	console.log(categoryId);
-
 	useEffect(() => {
 		setCatalogPageData(null);
 		if (categoryId) {
@@ -55,6 +54,8 @@ function CategoryPage() {
 		}
 	}, [categoryId]);
 
+	console.log(catalogPageData);
+
 	const courses = catalogPageData?.data?.selectedCategory?.courses || [];
 
 	let filteredCourses = [];
@@ -74,8 +75,14 @@ function CategoryPage() {
 	if (loading) {
 		return <Loader />;
 	}
-	if (catalogPageData?.length === 0) {
-		return <div>No course found</div>;
+
+	if (!courses || courses.length === 0) {
+		return (
+			<div className="h-screen flex flex-col justify-start md:pt-24 pt-12 items-center gap-4 relative">
+				<img src={cartoonImage} alt="cartoon crying" className="w-50 z-10" />
+				<p className="-rotate-15 md:text-8xl text-4xl text-gray-400 absolute top-45">No course found</p>
+			</div>
+		);
 	}
 
 	return (
