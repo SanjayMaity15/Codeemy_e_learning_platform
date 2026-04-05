@@ -32,26 +32,68 @@ exports.getPaymentsData = async (req, res) => {
 	}
 };
 
+
 exports.getAllInstructorData = async (req, res) => {
 	try {
-		const allInstructor = await User.find({
+		const instructors = await User.find({
 			accountType: "Instructor",
 		})
 			.populate("additionalDetails")
 			.select("-password");
 
-		if (allInstructor.length === 0) {
+		if (instructors.length === 0) {
 			return res.status(404).json({
 				success: false,
 				message: "No instructor available",
 			});
 		}
 
+		// 🔥 Attach extra data
+		const instructorData = await Promise.all(
+			instructors.map(async (instructor) => {
+				// Get all courses by this instructor
+				const courses = await Course.find({
+					instructor: instructor._id,
+					status: "Published",
+				}).populate("ratingAndReviews");
+
+				// ✅ Total students
+				const totalStudents = courses.reduce(
+					(acc, course) => acc + course.studentsEnrolled.length,
+					0,
+				);
+
+				// ✅ Average rating
+				let totalRating = 0;
+				let totalReviews = 0;
+
+				courses.forEach((course) => {
+					course.ratingAndReviews.forEach((review) => {
+						totalRating += review.rating;
+						totalReviews++;
+					});
+				});
+
+				const avgRating =
+					totalReviews === 0
+						? 0
+						: (totalRating / totalReviews).toFixed(1);
+
+				return {
+					...instructor.toObject(),
+					totalCourses: courses.length,
+					totalStudents,
+					avgRating,
+				};
+			}),
+		);
+
 		return res.status(200).json({
 			success: true,
-			data: allInstructor,
+			data: instructorData,
 		});
 	} catch (error) {
+		console.error(error);
 		return res.status(500).json({
 			success: false,
 			message: "Server error",
