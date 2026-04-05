@@ -90,7 +90,7 @@ exports.signup = async (req, res) => {
 			about: null,
 			contactNumber: null,
 		});
-		const user = await User.create({
+		const createUser = await User.create({
 			firstName,
 			lastName,
 			email,
@@ -101,6 +101,36 @@ exports.signup = async (req, res) => {
 			additionalDetails: profileDetails._id,
 			image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
 		});
+
+		const user = await User.findById(createUser._id)
+			.populate("additionalDetails")
+			.select("-password");
+
+		// Generate JWT token
+		const token = jwt.sign(
+			{
+				email: user.email,
+				id: user._id,
+				accountType: user.accountType,
+				approved: user.approved,
+			},
+			process.env.JWT_SECRET,
+			{
+				expiresIn: "7d",
+			},
+		);
+
+		// Remove password before sending response
+		
+		user.token = token;
+
+		// Cookie options
+		const options = {
+			expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+			httpOnly: true,
+			secure: true,
+			sameSite: "None",
+		};
 
 		// Send notification email
 		try {
@@ -120,11 +150,12 @@ exports.signup = async (req, res) => {
 			});
 		}
 
-		console.log("Signup successfully");
-		return res.status(200).json({
+		
+		return res.cookie("token", token, options).status(200).json({
 			success: true,
+			token,
 			user,
-			message: "User registered successfully",
+			message: "User registration successfull 🎉",
 		});
 	} catch (error) {
 		console.error(error);
@@ -175,7 +206,7 @@ exports.login = async (req, res) => {
 				},
 				process.env.JWT_SECRET,
 				{
-					expiresIn: "24h",
+					expiresIn: "7d",
 				},
 			);
 
@@ -193,7 +224,7 @@ exports.login = async (req, res) => {
 				success: true,
 				token,
 				user,
-				message: `User Login Success`,
+				message: `User Login Successful`,
 			});
 		} else {
 			return res.status(401).json({
@@ -240,19 +271,20 @@ exports.sendotp = async (req, res) => {
 			});
 		}
 
-		var otp = otpGenerator.generate(6, {
+		let otp = otpGenerator.generate(6, {
 			upperCaseAlphabets: false,
 			lowerCaseAlphabets: false,
 			specialChars: false,
 		});
-		const result = await OTP.findOne({ otp: otp });
-		console.log("Result is Generate OTP Func");
-		console.log("OTP", otp);
-		console.log("Result", result);
+		let result = await OTP.findOne({ otp });
+
 		while (result) {
 			otp = otpGenerator.generate(6, {
 				upperCaseAlphabets: false,
+				lowerCaseAlphabets: false,
+				specialChars: false,
 			});
+			result = await OTP.findOne({ otp }); 
 		}
 		const otpPayload = { email, otp };
 		console.log("All is well");
@@ -262,7 +294,6 @@ exports.sendotp = async (req, res) => {
 		res.status(200).json({
 			success: true,
 			message: `OTP Sent Successfully...`,
-			otp,
 		});
 	} catch (error) {
 		console.log(error.message);
