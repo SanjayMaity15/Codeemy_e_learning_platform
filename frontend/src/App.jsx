@@ -13,6 +13,7 @@ import MouseShadow from "./components/mouse/MouseShadow";
 // Layouts
 import MainLayout from "./components/Layouts/MainLayout";
 import AuthLayout from "./components/Layouts/AuthLayout";
+import Support from "./components/dashboard/Support";
 
 // Lazy load
 const Home = lazy(() => import("./pages/Home"));
@@ -89,6 +90,7 @@ function App() {
 							path="/update-password/:token"
 							element={<ResetPassword />}
 						/>
+						<Route path="*" element={<ErrorPage />} />
 					</Route>
 
 					{/* ✅ WITH Navbar/Footer */}
@@ -169,6 +171,17 @@ function App() {
 										)
 									}
 								/>
+								<Route
+									path="support"
+									element={
+										user?.accountType ===
+										ACCOUNT_TYPE.ADMIN ? (
+											<Support />
+										) : (
+											<Navigate to="/" />
+										)
+									}
+								/>
 
 								<Route
 									path="category"
@@ -202,8 +215,6 @@ function App() {
 						>
 							<Route index element={<VideoDetails />} />
 						</Route>
-
-						<Route path="*" element={<ErrorPage />} />
 					</Route>
 				</Routes>
 			</Suspense>

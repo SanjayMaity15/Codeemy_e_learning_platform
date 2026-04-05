@@ -10,7 +10,7 @@ const ErrorPage = () => {
 				404
 			</h2>
 			{/* Background Blur Shape */}
-			<div className="absolute w-125 h-125 bg-linear-to-br from-primary/20 to-secondary/20 blur-3xl rounded-full top-10 left-10"></div>
+			<div className="absolute w-125 h-125 bg-linear-to-br from-primary/20 to-pink-200 blur-3xl rounded-full top-10 left-10"></div>
 			<div className="absolute w-100 h-100 bg-linear-to-tr from-secondary/20 to-primary/20 blur-3xl rounded-full bottom-10 right-10"></div>
 
 			{/* Card */}
@@ -27,8 +27,7 @@ const ErrorPage = () => {
 
 				{/* Description */}
 				<p className="mt-3 text-gray-500">
-					Oops! The file or folder you’re looking for has disappeared
-					into the cloud.
+					Oops! The page you are looking for not found.
 				</p>
 
 				{/* Buttons */}
@@ -36,7 +35,7 @@ const ErrorPage = () => {
 					{/* Go Back */}
 					<button
 						onClick={() => navigate(-1)}
-						className="flex items-center gap-2 px-5 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+						className="flex items-center gap-2 px-5 py-2 rounded-full bg-red-600 text-white hover:bg-red-700 transition cursor-pointer font-semibold"
 					>
 						<FaArrowLeft />
 						Go Back
@@ -45,7 +44,7 @@ const ErrorPage = () => {
 					{/* Dashboard */}
 					<Link
 						to="/dashboard/my-profile"
-						className="px-6 py-2 rounded-full text-white font-semibold bg-linear-to-r from-primary to-secondary shadow-lg hover:opacity-90 transition"
+						className="px-6 py-2 rounded-full text-white font-semibold bg-linear-to-r from-primary to-pink-600 shadow-lg hover:opacity-90 transition"
 					>
 						Dashboard
 					</Link>
@@ -53,7 +52,7 @@ const ErrorPage = () => {
 
 				{/* Footer */}
 				<p className="mt-6 text-sm text-gray-400">
-					Error Code: 404 • Skyfer Cloud Storage
+					Error Code: 404 • Codeemy
 				</p>
 			</div>
 		</div>

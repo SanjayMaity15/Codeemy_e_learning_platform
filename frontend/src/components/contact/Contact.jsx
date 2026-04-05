@@ -6,11 +6,12 @@ import {
 	FiPhone,
 	FiSend,
 } from "react-icons/fi";
-import { toast } from "react-toastify";
+
 import axios from "axios";
 import contactImg from "../../assets/contact.jpeg"
 import PageTitle from "../common/HelmetForTitle";
 import { gsap } from "gsap";
+import toast from "react-hot-toast";
 
 export default function Contact() {
 	const [name, setName] = useState("");

@@ -76,4 +76,11 @@ export const sidebarLinks = [
 		type: ACCOUNT_TYPE.ADMIN,
 		icon: "MdOutlineCategory",
 	},
+	{
+		id: 12,
+		name: "Support",
+		path: "/dashboard/support",
+		type: ACCOUNT_TYPE.ADMIN,
+		icon: "MdContactSupport",
+	},
 ];
