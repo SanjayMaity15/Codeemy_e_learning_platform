@@ -67,7 +67,7 @@ const Popularcourses = () => {
 							<img
 								src={course?.thumbnail}
 								alt={course?.courseName}
-								className="object-cover w-full h-60 rounded-t-xl transition-transform duration-300 hover:scale-105"
+								className="object-center w-full h-60 rounded-t-xl transition-transform duration-300 hover:scale-105"
 							/>
 						</div>
 
