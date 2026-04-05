@@ -55,7 +55,7 @@ exports.createContact = async (req, res) => {
 exports.getContacts = async (req, res) => {
 	try {
 		const contacts = await Contact.find().sort({ createdAt: -1 });
-		res.status(200).json(contacts);
+		res.status(200).json({data: contacts});
 	} catch (error) {
 		console.error("Get contacts error:", error);
 		res.status(500).json({
@@ -63,3 +63,5 @@ exports.getContacts = async (req, res) => {
 		});
 	}
 };
+
+

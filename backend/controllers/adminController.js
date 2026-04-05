@@ -11,7 +11,11 @@ const {
 	studentAccountDeleted,
 } = require("../mail/templates/deleteStudentMail");
 const OTP = require("../models/OTP");
-const { instructorDeactivated } = require("../mail/templates/instructorDeactivate");
+const {
+	instructorDeactivated,
+} = require("../mail/templates/instructorDeactivate");
+const Contact = require("../models/Contact");
+const { adminReply } = require("../mail/templates/adminReply");
 
 exports.getPaymentsData = async (req, res) => {
 	try {
@@ -31,7 +35,6 @@ exports.getPaymentsData = async (req, res) => {
 		});
 	}
 };
-
 
 exports.getAllInstructorData = async (req, res) => {
 	try {
@@ -328,7 +331,7 @@ exports.deleteStudentByAdmin = async (req, res) => {
 exports.popularCourses = async (req, res) => {
 	try {
 		const courses = await Course.find({})
-			.populate("instructor", "firstName lastName") 
+			.populate("instructor", "firstName lastName")
 			.populate("ratingAndReviews", "rating")
 			.select(
 				"courseName whatYouWillLearn price thumbnail instructor ratingAndReviews",
@@ -357,6 +360,52 @@ exports.popularCourses = async (req, res) => {
 		return res.status(500).json({
 			success: false,
 			message: "Courses fetching error",
+		});
+	}
+};
+
+exports.replyUser = async (req, res) => {
+	try {
+		const { reply, contactId } = req.body;
+
+		if (!reply || !contactId) {
+			return res.status(400).json({
+				message: "Failed to send",
+			});
+		}
+
+		const contactData = await Contact.findByIdAndUpdate(
+			contactId,
+			{
+				reply: reply,
+			},
+			{ new: true },
+		);
+
+		try {
+			const emailResponse = await mailSender(
+				contactData.email,
+				"Reply from Codeemy",
+				adminReply(contactData.name, contactData.email, contactData.reply),
+			);
+			console.log("Email sent successfully:", emailResponse.response);
+		} catch (error) {
+			// If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
+			console.error("Error occurred while sending email:", error);
+			return res.status(500).json({
+				success: false,
+				message: "Error occurred while sending email",
+				error: error.message,
+			});
+		}
+
+		return res.status(200).json({
+			message: "Replied",
+		});
+	} catch (error) {
+		console.error("reply contacts error:", error);
+		res.status(500).json({
+			message: "Server error. Please try again later.",
 		});
 	}
 };

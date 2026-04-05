@@ -5,7 +5,8 @@ const {
 	
 	isAdmin,
 } = require("../middlewares/auth");
-const { getAllInstructorData, approvedInstructor, getAllStudentData, deleteStudentByAdmin, getPaymentsData, popularCourses, removeInstructorPower } = require("../controllers/adminController");
+const { getAllInstructorData, approvedInstructor, getAllStudentData, deleteStudentByAdmin, getPaymentsData, popularCourses, removeInstructorPower, replyUser } = require("../controllers/adminController");
+
 
 router.get("/payment", auth, isAdmin, getPaymentsData);
 router.get("/instructor", auth, isAdmin, getAllInstructorData);
@@ -14,6 +15,7 @@ router.post("/approved", auth, isAdmin, approvedInstructor);
 router.post("/deactivate", auth, isAdmin, removeInstructorPower);
 router.delete("/delete-student/:userId", auth, isAdmin, deleteStudentByAdmin);
 router.get("/get-ins", getAllInstructorData)
+router.post("/reply", auth, isAdmin, replyUser)
 
 
 // get top courses
