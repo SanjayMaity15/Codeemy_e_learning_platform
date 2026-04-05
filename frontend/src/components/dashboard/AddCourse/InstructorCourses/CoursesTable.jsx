@@ -21,7 +21,7 @@ export default function CoursesTable({ courses, setCourses }) {
 	const TRUNCATE_LENGTH = 30;
 
 	const handleCourseDelete = async (courseId) => {
-		console.log(courseId);
+		
 		try {
 			setLoading(true);
 			await axios.delete(
@@ -48,8 +48,8 @@ export default function CoursesTable({ courses, setCourses }) {
 		}
 	};
 
-	console.log(courses);
-	// console.log("All Course ", courses)
+	
+	
 
 	return (
 		<>

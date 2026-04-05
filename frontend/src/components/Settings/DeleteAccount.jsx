@@ -32,7 +32,7 @@ export default function DeleteAccount() {
 		} catch (error) {
 			toast.error(error.response.data.message);
 			setLoading(false);
-			console.log("ERROR MESSAGE - ", error.message);
+			
 		}
 	}
 

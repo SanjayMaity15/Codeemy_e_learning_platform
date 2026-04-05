@@ -54,7 +54,7 @@ export default function MeetWithOurMentors() {
 		fetchInstructors();
 	}, []);
 
-	console.log(instructors);
+	
 
 	return (
 		<section

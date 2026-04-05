@@ -23,7 +23,7 @@ export default function EditProfile() {
 	} = useForm();
 
 	const submitProfileForm = async (data) => {
-		// console.log("Form Data - ", data)
+		
 		try {
 			setLoading(true);
 			const result = await axios.put(

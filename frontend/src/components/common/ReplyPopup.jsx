@@ -28,7 +28,6 @@ const ReplyPopup = ({contactClientData, close, fetchSupportMessage}) => {
 			fetchSupportMessage()
 			close()
 		} catch (error) {
-			console.log(error);
 			toast.error(error.response.data.message)
 			setLoading(false)
 			close()

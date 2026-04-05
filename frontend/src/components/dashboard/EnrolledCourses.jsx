@@ -27,13 +27,13 @@ export default function EnrolledCourses() {
 
 				setEnrolledCourses(filterPublishCourse);
 			} catch (error) {
-				console.log("Could not fetch enrolled courses.");
+				("Could not fetch enrolled courses.");
 			}
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	console.log(enrolledCourses);
+	
 
 	return (
 		<>

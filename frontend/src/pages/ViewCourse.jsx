@@ -24,8 +24,8 @@ export default function ViewCourse() {
       const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}course/getFullCourseDetails`, {courseId}, {withCredentials: true})
 
       const courseData = response.data.data;
-      console.log(courseData);
-      // console.log("Course Data here... ", courseData.courseDetails)
+      
+      
       dispatch(setCourseSectionData(courseData.courseDetails.courseContent))
       dispatch(setEntireCourseData(courseData.courseDetails))
       dispatch(setCompletedLectures(courseData.completedVideos))

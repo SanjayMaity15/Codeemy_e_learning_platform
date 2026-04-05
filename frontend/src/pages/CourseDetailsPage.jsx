@@ -31,7 +31,7 @@ function CourseDetailsPage() {
 	const [loading, setLoading] = useState(false)
 	// Getting courseId from url parameter
 	const { courseId } = useParams();
-	// console.log(`course id: ${courseId}`)
+	
 
 	// Declear a state to save the course details
 	const [response, setResponse] = useState(null);
@@ -46,8 +46,8 @@ function CourseDetailsPage() {
 					{ courseId },
 					{ withCredentials: true },
 				);
-				// console.log("course details res: ", res)
-				console.log(res);
+				
+				
 				setResponse(res.data);
 				setLoading(false)
 			} catch (error) {
@@ -57,7 +57,7 @@ function CourseDetailsPage() {
 		})();
 	}, [courseId]);
 
-	// console.log("response: ", response)
+	
 
 	// Calculating Avg Review count
 	const [avgReviewCount, setAvgReviewCount] = useState(0);
@@ -111,7 +111,7 @@ function CourseDetailsPage() {
 	} = response.data?.courseDetails;
 
 	const handleBuyCourse = () => {
-		console.log("Buying...");
+		
 		if (token) {
 			BuyCourse(token, [courseId], user, navigate, dispatch);
 			return;
@@ -132,14 +132,14 @@ function CourseDetailsPage() {
 	};
 
 	const handleAddToCart = (course) => {
-		console.log("work");
+		
 		if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR || user && user.accountType === ACCOUNT_TYPE.ADMIN) {
 			toast.error("You can't buy a course.");
 			return;
 		}
 		if (token) {
 			dispatch(addToCart(course));
-			console.log(course);
+			
 			// toast.success(`${course.courseName} added to cart`)
 			return;
 		}
@@ -157,7 +157,7 @@ function CourseDetailsPage() {
 		return <Loader />;
 	}
 
-	console.log(response);
+	
 
 	return (
 		<>

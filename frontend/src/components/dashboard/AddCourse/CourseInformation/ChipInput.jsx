@@ -22,7 +22,7 @@ export default function ChipInput({
 
 	useEffect(() => {
 		if (editCourse) {
-			// console.log(course)
+			
 			setChips(course?.tag);
 		}
 		register(name, {

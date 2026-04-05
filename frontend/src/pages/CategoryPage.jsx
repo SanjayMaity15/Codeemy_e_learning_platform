@@ -24,7 +24,7 @@ function CategoryPage() {
 					(ct) =>
 						ct.name.split(" ").join("-").toLowerCase() === category,
 				)[0]._id;
-				console.log(category_id);
+				
 				setCategoryId(category_id);
 			} catch (error) {
 				console.log("Could not fetch Categories.", error);
@@ -43,7 +43,7 @@ function CategoryPage() {
 						{ categoryId },
 						{ withCredentials: true },
 					);
-					console.log(res);
+					
 					setCatalogPageData(res.data);
 					setLoading(false);
 				} catch (error) {
@@ -54,7 +54,7 @@ function CategoryPage() {
 		}
 	}, [categoryId]);
 
-	console.log(catalogPageData);
+	
 
 	const courses = catalogPageData?.data?.selectedCategory?.courses || [];
 

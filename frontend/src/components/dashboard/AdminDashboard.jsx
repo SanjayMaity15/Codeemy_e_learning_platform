@@ -53,7 +53,7 @@ const AdminDashboard = () => {
 				`${import.meta.env.VITE_SERVER_URL}admin/instructor`,
 				{ withCredentials: true },
 			);
-			console.log(res.data.data);
+			
 			dispatch(setInstructors(res.data.data));
 		} catch (err) {
 			console.log(err);
@@ -106,7 +106,6 @@ const AdminDashboard = () => {
 			setActionType("")
 		} catch (error) {
 			toast.error(error.response.data.message);
-			console.log(err);
 			setLoadingId(null);
 			setActionType("")
 		}
@@ -127,7 +126,6 @@ const AdminDashboard = () => {
 			setActionType("")
 		} catch (error) {
 			toast.error(error.response.data.message);
-			console.log(err);
 			setLoadingId(null);
 			setActionType("")
 		}
@@ -155,7 +153,7 @@ const AdminDashboard = () => {
 		}
 	};
 
-	console.log({ students, instructors, payments });
+	
 	return (
 		<div className="px-6 bg-linear-to-b from-gray-100 to-gray-50 min-h-screen">
 			<h1 className="text-3xl font-bold mb-2 text-indigo-700">

@@ -24,7 +24,7 @@ export default function ChangeProfilePicture() {
 
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
-		// console.log(file)
+		
 		if (file) {
 			setImageFile(file);
 			previewFile(file);
@@ -41,11 +41,11 @@ export default function ChangeProfilePicture() {
 
 	const handleFileUpload = async () => {
 		try {
-			console.log("uploading...");
+			
 			setLoading(true);
 			const formData = new FormData();
 			formData.append("displayPicture", imageFile);
-			// console.log("formdata", formData)
+			
 
 			const result = await axios.put(
 				`${import.meta.env.VITE_SERVER_URL}profile/updateDisplayPicture`,

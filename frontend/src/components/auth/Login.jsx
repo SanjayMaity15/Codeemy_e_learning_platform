@@ -50,7 +50,7 @@ export default function Login() {
 			if (result.status === 200) {
 				dispatch(setToken(result.data.token));
 				dispatch(setUser(result.data.user));
-				console.log(result.data.user);
+				
 
 				localStorage.setItem("user", JSON.stringify(result.data.user));
 				localStorage.setItem(
@@ -64,7 +64,6 @@ export default function Login() {
 			navigate("/");
 		} catch (error) {
 			setLoading(false);
-			console.log("Login error", error);
 			toast.error(error.response?.data?.message || "Login failed");
 		}
 	};

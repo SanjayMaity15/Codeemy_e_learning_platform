@@ -20,7 +20,7 @@ function Dashboard() {
 		);
 	}
 
-	console.log(isMobileMenu);
+	
 
 	return (
 		<div className="relative flex min-h-screen">

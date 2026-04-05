@@ -31,7 +31,7 @@ const Chart = () => {
 		(state) => state.admin,
 	);
 
-	console.log({ students, instructors, payments });
+	
 	// ===== Charts =====
 	const instructorCourseData = {
 		labels: instructors?.map((i) => `${i.firstName} ${i.lastName}`),

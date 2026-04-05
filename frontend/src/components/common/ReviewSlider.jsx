@@ -29,7 +29,6 @@ function ReviewSlider() {
 		})();
 	}, []);
 
-	console.log(reviews);
 
 	return (
 		<div className="w-full py-12 mb-8">

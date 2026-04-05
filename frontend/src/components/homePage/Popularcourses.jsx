@@ -37,7 +37,7 @@ const Popularcourses = () => {
 		fetchPopularCourses();
 	}, []);
 
-	console.log(popularCourses);
+	
 
 	if (popularCourses?.length === 0) {
 		return <div></div>;

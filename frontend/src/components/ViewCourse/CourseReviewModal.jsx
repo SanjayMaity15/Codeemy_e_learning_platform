@@ -61,7 +61,7 @@ export default function CourseReviewModal({ setReviewModal }) {
 		<div className="fixed inset-0 z-1000 grid h-screen w-screen place-items-center overflow-auto bg-black/50 backdrop-blur-xs">
 			<div className="my-10 w-11/12 max-w-150 rounded-lg border bg-white">
 				{/* Header */}
-				<div className="flex items-center justify-between rounded-t-lg bg-gray-700 p-5">
+				<div className="flex items-center justify-between rounded-t-lg p-5">
 					<p className="text-xl font-semibold text-black-5">
 						Add Review
 					</p>

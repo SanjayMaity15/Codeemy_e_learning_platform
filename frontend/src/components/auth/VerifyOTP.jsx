@@ -40,7 +40,7 @@ export default function VerifyOTP() {
 			if (result.status === 200) {
 				dispatch(setToken(result?.data?.token));
 				dispatch(setUser(result?.data?.user));
-				console.log(result?.data?.user);
+				
 
 				localStorage.setItem("user", JSON.stringify(result.data.user));
 				localStorage.setItem(
@@ -49,7 +49,7 @@ export default function VerifyOTP() {
 				);
 			}
 			
-			console.log(result.data);
+			
 			toast.success("Signup successful 🎉");
 			navigate("/");
 		} catch (error) {

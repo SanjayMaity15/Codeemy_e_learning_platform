@@ -67,7 +67,7 @@ export default function PublishCourse() {
 	};
 
 	const onSubmit = (data) => {
-		// console.log(data)
+		
 		handleCoursePublish();
 	};
 

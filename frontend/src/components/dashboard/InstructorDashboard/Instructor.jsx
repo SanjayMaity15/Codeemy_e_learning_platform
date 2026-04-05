@@ -22,7 +22,7 @@ export default function Instructor() {
 				`${import.meta.env.VITE_SERVER_URL}course/getInstructorCourses`,
 				{ withCredentials: true },
 			);
-			console.log(instructorApiData);
+			
 			if (instructorApiData.data.courses.length)
 				setInstructorData(instructorApiData.data.courses);
 			if (result.data.data) {

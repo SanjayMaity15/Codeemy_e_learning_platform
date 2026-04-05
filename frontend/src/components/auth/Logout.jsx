@@ -33,7 +33,7 @@ export default function Logout({ onClose }) {
 			toast.success("Logout successfully");
 			navigate("/");
 		} catch (error) {
-			console.log("Logout failed", error);
+			toast.error("Failed to logout")
 		} finally {
 			setLoading(false);
 		}

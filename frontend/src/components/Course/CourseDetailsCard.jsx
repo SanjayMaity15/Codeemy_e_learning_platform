@@ -17,7 +17,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  console.log(token);
+  
 
   const {
     thumbnail: ThumbnailImage,
@@ -25,7 +25,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
     _id,
   } = course
 
-  console.log(course);
+  
 
   const handleShare = () => {
     copy(window.location.href)
@@ -33,7 +33,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
   }
 
   const handleAddToCart = () => {
-    console.log("work");
+    
     if (
 		(user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) ||
 		(user && user?.accountType === ACCOUNT_TYPE.ADMIN)
@@ -43,8 +43,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
 	}
     if (token) {
 		dispatch(addToCart(course))
-		console.log(course);
-		// toast.success(`${course.courseName} added to cart`)
+		
       return
     }
     setConfirmationModal({

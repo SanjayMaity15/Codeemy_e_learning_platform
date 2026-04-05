@@ -23,7 +23,7 @@ const PurchaseHistory = () => {
 		fetchHistory();
 	}, []);
 
-	console.log(history);
+	
 
 	if (!history) {
 		return <Loader />;
