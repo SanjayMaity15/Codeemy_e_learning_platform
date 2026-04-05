@@ -72,7 +72,7 @@ export default function PublishCourse() {
 	};
 
 	return (
-		<div className="rounded-md bg-gray-800 p-6 bg-white shadow-sm">
+		<div className="rounded-md p-6 bg-white shadow-sm">
 			<p className="text-2xl font-semibold text-black-5">
 				Publish Settings
 			</p>
@@ -105,7 +105,7 @@ export default function PublishCourse() {
 					>
 						Back
 					</button>
-					<IconBtn disabled={loading} text="Save" />
+					<IconBtn disabled={loading} loading={loading} text="Save" />
 				</div>
 			</form>
 		</div>

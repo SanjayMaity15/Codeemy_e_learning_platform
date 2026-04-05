@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { useScrollAnim } from "../common/ScrollAnimation";
-
+import { FaArrowRight } from "react-icons/fa";
 export default function Faq() {
 	const [openIndex, setOpenIndex] = useState(null);
 	const faqRef = useRef(null)
@@ -60,14 +60,14 @@ export default function Faq() {
 					{faqs.map((faq, index) => (
 						<div
 							key={index}
-							className="rounded-xl border border-pink-800 bg-white text-black hover:border-green-400 transition overflow-hidden"
+							className="rounded-xl shadow-md bg-white text-black hover:border-green-400 transition overflow-hidden"
 						>
 							<button
 								onClick={() => toggleFAQ(index)}
 								className="w-full flex justify-between items-center px-6 py-4 text-left hover:bg-gray-100 transition"
 							>
 								<span className="text-lg font-medium">
-									{faq.question}
+									{index + 1}. {faq.question}
 								</span>
 								<FiChevronDown
 									className={`w-5 h-5 transition-transform duration-300 ${
@@ -77,7 +77,10 @@ export default function Faq() {
 							</button>
 
 							{openIndex === index && (
-								<div className="px-6 pb-4 text-gray-500">
+								<div className="px-6 pb-4 text-gray-500 flex gap-2">
+									<div className="flex items-start mt-1 text-green-500">
+										<FaArrowRight/>
+									</div>
 									{faq.answer}
 								</div>
 							)}

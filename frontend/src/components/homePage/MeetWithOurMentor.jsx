@@ -76,6 +76,7 @@ export default function MeetWithOurMentors() {
 					slidesPerView={1}
 					pagination={{ clickable: true }}
 					autoplay={{ delay: 3000 }}
+					loop={true}
 					breakpoints={{
 						640: { slidesPerView: 1 },
 						768: { slidesPerView: 2 },
@@ -110,7 +111,9 @@ export default function MeetWithOurMentors() {
 									</p>
 
 									{/* Badge */}
-									<div className="mt-2 inline-flex items-center gap-1 bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full">
+									<div
+										className={`mt-2 inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full ${instructor.approved ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}
+									>
 										{instructor.approved
 											? "✔ Verified Educator"
 											: "❌ Not Verified"}
