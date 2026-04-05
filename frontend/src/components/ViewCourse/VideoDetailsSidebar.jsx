@@ -74,7 +74,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
 							key={index}
 						>
 							{/* Section */}
-							<div className="flex flex-row justify-between bg-gray-600 px-5 py-4">
+							<div className="flex flex-row justify-between bg-gray-200 px-5 py-4">
 								<div className="w-[70%] font-semibold">
 									{course?.sectionName}
 								</div>

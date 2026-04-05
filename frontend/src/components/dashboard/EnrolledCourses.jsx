@@ -50,7 +50,7 @@ export default function EnrolledCourses() {
 			) : (
 				<div className="my-8 text-black-5">
 					{/* Headings */}
-					<div className="flex rounded-t-lg bg-gray-500 ">
+					<div className="flex rounded-t-lg bg-indigo-100 text-primary border">
 						<p className="w-[45%] px-5 py-3 font-semibold">
 							Course Name
 						</p>
