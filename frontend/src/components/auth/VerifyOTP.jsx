@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import ButtonLoader from "../common/ButtonLoader";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../feature/authSlice";
+import { setUser } from "../../feature/profileSlice";
 
 export default function VerifyOTP() {
 	const [otp, setOtp] = useState("");
@@ -10,6 +13,7 @@ export default function VerifyOTP() {
 
 	const location = useLocation();
 	const navigate = useNavigate();
+	const dispatch = useDispatch()
 	const signupData = location.state;
 
 	// ✅ Protect route correctly
@@ -24,18 +28,30 @@ export default function VerifyOTP() {
 		setLoading(true);
 
 		try {
-			const res = await axios.post(
+			const result = await axios.post(
 				`${import.meta.env.VITE_SERVER_URL}auth/signup`,
 				{
 					...signupData,
 					otp,
-				}
+				},
+				{withCredentials: true}
 			);
 
-			console.log("Signup Response:", res.data); // ✅ SAFE LOG
+			if (result.status === 200) {
+				dispatch(setToken(result?.data?.token));
+				dispatch(setUser(result?.data?.user));
+				console.log(result?.data?.user);
 
-			toast.success("Signup successful 🎉")
-			navigate("/login");
+				localStorage.setItem("user", JSON.stringify(result.data.user));
+				localStorage.setItem(
+					"token",
+					JSON.stringify(result.data.token),
+				);
+			}
+			
+			console.log(result.data);
+			toast.success("Signup successful 🎉");
+			navigate("/");
 		} catch (error) {
 			console.error(error);
 			toast.error(error.response?.data?.message || "Invalid OTP");
@@ -69,7 +85,11 @@ export default function VerifyOTP() {
 						disabled={loading}
 						className="w-full bg-primary text-white hover:bg-indigo-700 cursor-pointer 	 py-3 rounded-full"
 					>
-						{loading ? <ButtonLoader text="Verifying"/> : "Verify & Signup"}
+						{loading ? (
+							<ButtonLoader text="Verifying" />
+						) : (
+							"Verify & Signup"
+						)}
 					</button>
 				</form>
 			</div>

@@ -86,7 +86,7 @@ function ReviewSlider() {
 										</div>
 
 										{/* Review Text */}
-										<p className="text-sm text-gray-600 leading-relaxed">
+										<p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
 											{review?.review.split(" ").length >
 											truncateWords
 												? `${review?.review

@@ -14,13 +14,13 @@ function Course_Card({ course, Height }) {
 
 	return (
 		<Link to={`/course/${course._id}`}>
-			<div className="group rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+			<div className="group rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden max-h-100">
 				{/* Thumbnail */}
-				<div className="overflow-hidden">
+				<div className="overflow-hidden flex justify-center items-center h-50">
 					<img
 						src={course?.thumbnail}
 						alt="course thumbnail"
-						className={`${Height} w-full object-cover transition-transform duration-300 group-hover:scale-105`}
+						className={`${Height} w-full h-full object-fill transition-transform duration-300 group-hover:scale-105`}
 					/>
 				</div>
 

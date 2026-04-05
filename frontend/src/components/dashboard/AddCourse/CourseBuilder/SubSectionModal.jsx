@@ -141,7 +141,7 @@ export default function SubSectionModal({
 		<div className="fixed inset-0 z-1000 mt-0! grid h-screen w-screen place-items-center overflow-auto bg-black/50 backdrop-blur-sm">
 			<div className="my-10 w-11/12 max-w-175 rounded-lg border bg-white">
 				{/* Modal Header */}
-				<div className="flex items-center justify-between rounded-t-lg bg-gray-700 p-5">
+				<div className="flex items-center justify-between rounded-t-lg p-5">
 					<p className="text-xl font-semibold text-black-5">
 						{view && "Viewing"} {add && "Adding"}{" "}
 						{edit && "Editing"} Lecture

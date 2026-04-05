@@ -61,7 +61,7 @@ export default function Instructor() {
 						{totalAmount > 0 || totalStudents > 0 ? (
 							<InstructorChart courses={instructorData} />
 						) : (
-							<div className="flex-1 rounded-md bg-gray-800">
+							<div className="flex-1 rounded-md">
 								<p className="text-lg font-bold text-pink-600">
 									Visualize
 								</p>
@@ -149,7 +149,7 @@ export default function Instructor() {
 					</div>
 				</div>
 			) : (
-				<div className="mt-20 rounded-md bg-gray-800 p-6 py-20">
+				<div className="mt-20 rounded-md p-6 py-20">
 					<p className="text-center text-2xl font-bold text-black-5">
 						You have not created any courses yet
 					</p>
