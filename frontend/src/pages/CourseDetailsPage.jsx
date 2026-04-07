@@ -212,7 +212,7 @@ function CourseDetailsPage() {
 									<HiOutlineGlobeAlt /> English
 								</p>
 							</div>
-							<div className="text-center">
+							<div className="text-center md:hidden ">
 								<button
 									className="mx-auto flex items-center gap-2 py-6 text-green-600 "
 									onClick={handleShare}

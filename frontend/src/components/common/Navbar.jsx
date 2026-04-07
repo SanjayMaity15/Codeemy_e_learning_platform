@@ -78,7 +78,7 @@ const NavItems = ({ onClick, subLinks, isMobile }) => {
 													.toLowerCase()
 													.replace(/\s+/g, "-")}`} // slug
 												onClick={onClick}
-												className="block px-3 py-2 hover:bg-indigo-400  hover:text-white "
+												className="block px-3 py-2 hover:bg-indigo-400  hover:text-white text-xs"
 											>
 												{cat.name}
 											</NavLink>
