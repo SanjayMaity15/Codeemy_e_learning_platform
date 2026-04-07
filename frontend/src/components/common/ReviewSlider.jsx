@@ -11,62 +11,66 @@ import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import axios from "axios";
 
 function ReviewSlider() {
-  const [reviews, setReviews] = useState([]);
-  const [hoveredIndex, setHoveredIndex] = useState(null); // ✅ NEW STATE
-  const truncateWords = 15;
+	const [reviews, setReviews] = useState([]);
+	const [hoveredIndex, setHoveredIndex] = useState(null); // ✅ NEW STATE
+	const truncateWords = 15;
 
-  useEffect(() => {
-    (async () => {
-      const result = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}course/getReviews`,
-        { withCredentials: true }
-      );
+	useEffect(() => {
+		(async () => {
+			const result = await axios.get(
+				`${import.meta.env.VITE_SERVER_URL}course/getReviews`,
+				{ withCredentials: true },
+			);
 
-      if (result?.data?.success) {
-        setReviews(result?.data?.data);
-      }
-    })();
-  }, []);
+			if (result?.data?.success) {
+				setReviews(result?.data?.data);
+			}
+		})();
+	}, []);
 
-  return (
-    <div className="w-full py-12 mb-8">
-      <div className="mx-auto max-w-6xl">
-        <h2 className="text-3xl md:text-5xl font-bold text-center mb-12 md:mt-12 font-orbitron text-gray-500">
-          Student{" "}
-          <span className="bg-linear-to-b from-indigo-600 to-pink-600 bg-clip-text text-transparent">
-            Reviews
-          </span>
-        </h2>
+	return (
+		<div className="w-full py-12 mb-8">
+			<div className="mx-auto max-w-6xl">
+				<h2 className="text-3xl md:text-5xl font-bold text-center mb-12 md:mt-12 font-orbitron text-gray-500">
+					Student{" "}
+					<span className="bg-linear-to-b from-indigo-600 to-pink-600 bg-clip-text text-transparent">
+						Reviews
+					</span>
+				</h2>
 
-        <div className="px-4 lg:px-0">
-          <Swiper
-            slidesPerView={1}
-            spaceBetween={25}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-            loop={reviews.length > 3}
-            freeMode={true}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }}
-            modules={[FreeMode, Pagination, Autoplay]}
-            className="w-full"
-          >
-            {reviews.map((review, i) => {
-              const isHovered = hoveredIndex === i;
-              const isOther = hoveredIndex !== null && hoveredIndex !== i;
+				<div className="px-4 lg:px-0">
+					<Swiper
+						slidesPerView={1}
+						spaceBetween={25}
+						breakpoints={{
+							640: { slidesPerView: 1 },
+							768: { slidesPerView: 2 },
+							1024: { slidesPerView: 3 },
+						}}
+						loop={true}
+						freeMode={true}
+						speed={5000}
+						autoplay={{
+							delay: 2500,
+							disableOnInteraction: false,
+							pauseOnMouseEnter: true,
+						}}
+						modules={[FreeMode, Pagination, Autoplay]}
+						className="w-full"
+					>
+						{reviews.map((review, i) => {
+							const isHovered = hoveredIndex === i;
+							const isOther =
+								hoveredIndex !== null && hoveredIndex !== i;
 
-              return (
-                <SwiperSlide key={i}>
-                  <div
-                    onMouseEnter={() => setHoveredIndex(i)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    className={`
+							return (
+								<SwiperSlide key={i}>
+									<div
+										onMouseEnter={() => setHoveredIndex(i)}
+										onMouseLeave={() =>
+											setHoveredIndex(null)
+										}
+										className={`
                       flex min-h-50 flex-col justify-center gap-2 
                       rounded-2xl bg-white p-4 shadow-md 
                       transition-all duration-300
@@ -76,69 +80,72 @@ function ReviewSlider() {
                       ${isOther ? "blur-sm opacity-50" : ""}
                       ${isHovered ? "z-10 scale-95" : ""}
                     `}
-                  >
-                    {/* User Info */}
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={
-                          review?.user?.image
-                            ? review?.user?.image
-                            : `https://api.dicebear.com/5.x/initials/svg?seed=${review?.user?.firstName} ${review?.user?.lastName}`
-                        }
-                        alt=""
-                        className="h-14 w-14 rounded-full object-cover"
-                      />
+									>
+										{/* User Info */}
+										<div className="flex items-center gap-3">
+											<img
+												src={
+													review?.user?.image
+														? review?.user?.image
+														: `https://api.dicebear.com/5.x/initials/svg?seed=${review?.user?.firstName} ${review?.user?.lastName}`
+												}
+												alt=""
+												className="h-14 w-14 rounded-full object-cover"
+											/>
 
-                      <div>
-                        <h3 className="font-semibold text-gray-900 text-lg">
-                          {`${review?.user?.firstName} ${review?.user?.lastName}`}
-                        </h3>
-                        <p className="text-xs text-gray-500">
-                          {review?.course?.courseName}
-                        </p>
-                      </div>
-                    </div>
+											<div>
+												<h3 className="font-semibold text-gray-900 text-lg">
+													{`${review?.user?.firstName} ${review?.user?.lastName}`}
+												</h3>
+												<p className="text-xs text-gray-500">
+													{review?.course?.courseName}
+												</p>
+											</div>
+										</div>
 
-                    {/* Review Text */}
-                    <p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
-                      {review?.review.split(" ").length > truncateWords
-                        ? `${review?.review
-                            .split(" ")
-                            .slice(0, truncateWords)
-                            .join(" ")} ...`
-                        : review?.review}
-                    </p>
+										{/* Review Text */}
+										<p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
+											{review?.review.split(" ").length >
+											truncateWords
+												? `${review?.review
+														.split(" ")
+														.slice(0, truncateWords)
+														.join(" ")} ...`
+												: review?.review}
+										</p>
 
-                    {/* Rating */}
-                    <div className="flex items-center gap-1 mt-2">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <div key={star}>
-                          {star <= review.rating ? (
-                            <FaStar className="text-yellow-500" />
-                          ) : (
-                            <FaRegStar />
-                          )}
-                        </div>
-                      ))}
-                    </div>
+										{/* Rating */}
+										<div className="flex items-center gap-1 mt-2">
+											{[1, 2, 3, 4, 5].map((star) => (
+												<div key={star}>
+													{star <= review.rating ? (
+														<FaStar className="text-yellow-500" />
+													) : (
+														<FaRegStar />
+													)}
+												</div>
+											))}
+										</div>
 
-                    {/* Date */}
-                    <p className="text-xs mt-2 text-gray-400">
-                      Post:{" "}
-                      {new Date(review.createdAt).toLocaleDateString()}
-                    </p>
+										{/* Date */}
+										<p className="text-xs mt-2 text-gray-400">
+											Post:{" "}
+											{new Date(
+												review.createdAt,
+											).toLocaleDateString()}
+										</p>
 
-                    {/* Accent line */}
-                    <div className="h-1 w-0 bg-[--color-primary] transition-all duration-300 hover:w-full rounded-full"></div>
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-        </div>
-      </div>
-    </div>
-  );
+										{/* Accent line */}
+										<div className="h-1 w-0 bg-[--color-primary] transition-all duration-300 hover:w-full rounded-full"></div>
+									</div>
+								</SwiperSlide>
+							);
+						})}
+					</Swiper>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default ReviewSlider;
