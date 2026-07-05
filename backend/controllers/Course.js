@@ -208,9 +208,17 @@ exports.editCourse = async (req, res) => {
 			.populate("ratingAndReviews")
 			.populate({
 				path: "courseContent",
-				populate: {
-					path: "subSection",
-				},
+				populate: [
+					{
+						path: "subSection",
+					},
+					{
+						path: "quiz",
+						populate: {
+							path: "questions",
+						},
+					},
+				],
 			});
 
 		return res.json({
@@ -274,9 +282,17 @@ exports.getCourseDetails = async (req, res) => {
 			//.populate("ratingAndreviews")
 			.populate({
 				path: "courseContent",
-				populate: {
-					path: "subSection",
-				},
+				populate: [
+					{
+						path: "subSection",
+					},
+					{
+						path: "quiz",
+						populate: {
+							path: "questions",
+						},
+					},
+				],
 			})
 			.exec();
 
@@ -319,9 +335,17 @@ exports.getFullCourseDetails = async (req, res) => {
 			.populate("ratingAndReviews")
 			.populate({
 				path: "courseContent",
-				populate: {
-					path: "subSection",
-				},
+				populate: [
+					{
+						path: "subSection",
+					},
+					{
+						path: "quiz",
+						populate: {
+							path: "questions",
+						},
+					},
+				],
 			})
 			.exec();
 
@@ -381,9 +405,17 @@ exports.getInstructorCourses = async (req, res) => {
 		})
 			.populate({
 				path: "courseContent",
-				populate: {
-					path: "subSection",
-				},
+				populate: [
+					{
+						path: "subSection",
+					},
+					{
+						path: "quiz",
+						populate: {
+							path: "questions",
+						},
+					},
+				],
 			})
 			.sort({ createdAt: -1 });
 
@@ -479,6 +511,66 @@ exports.deleteCourse = async (req, res) => {
 			success: false,
 			message: "Server error",
 			error: error.message,
+		});
+	}
+};
+
+
+
+
+exports.markCourseComplete = async (req, res) => {
+	try {
+		const { courseId } = req.body;
+		const instructorId = req.user.id;
+
+		if (!courseId) {
+			return res.status(400).json({
+				success: false,
+				message: "Course ID is required",
+			});
+		}
+
+		// Find Course
+		const course = await Course.findById(courseId);
+
+		if (!course) {
+			return res.status(404).json({
+				success: false,
+				message: "Course not found",
+			});
+		}
+
+		// Only owner can complete course
+		if (course.instructor.toString() !== instructorId) {
+			return res.status(403).json({
+				success: false,
+				message: "Unauthorized",
+			});
+		}
+
+		// Already completed
+		if (course.isCompletedByInstructor) {
+			return res.status(400).json({
+				success: false,
+				message: "Course already marked as completed",
+			});
+		}
+
+		course.isCompletedByInstructor = true;
+
+		await course.save();
+
+		return res.status(200).json({
+			success: true,
+			message: "Course marked as completed successfully",
+			data: course,
+		});
+	} catch (error) {
+		console.log(error);
+
+		return res.status(500).json({
+			success: false,
+			message: "Failed to mark course as completed",
 		});
 	}
 };

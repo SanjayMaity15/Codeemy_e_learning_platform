@@ -13,6 +13,7 @@ const {
   getFullCourseDetails,
   getInstructorCourses,
   deleteCourse,
+  markCourseComplete,
 } = require("../controllers/Course")
 
 
@@ -48,6 +49,15 @@ const {
 const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth")
 const { updateCourseProgress } = require("../controllers/courseProgress")
 
+const { createQuiz, updateQuiz, deleteQuiz, getQuiz, submitQuiz, getQuizResult } = require("../controllers/Quiz");
+
+const {
+	addQuestion,
+	updateQuestion,
+	deleteQuestion,
+} = require("../controllers/Question");
+const { downloadCertificate, generateCertificate } = require("../controllers/Certificate")
+
 // ********************************************************************************************************
 //                                      Course routes
 // ********************************************************************************************************
@@ -73,6 +83,8 @@ router.post("/addSubSection", auth, isInstructor, createSubSection)
 // Get all Registered Courses
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 
+router.post("/markCourseComplete", auth, isInstructor, markCourseComplete);
+
 router.get("/getAllCourses", getAllCourses)
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails)
@@ -96,5 +108,59 @@ router.post("/getCategoryPageDetails", categoryPageDetails)
 router.post("/createRating", auth, isStudent, createRating)
 router.get("/getAverageRating", getAverageRating)
 router.get("/getReviews", getAllRating)
+
+
+// ================= QUIZ =================
+
+router.post(
+  "/createQuiz",
+  auth,
+  isInstructor,
+  createQuiz
+);
+
+router.post(
+  "/updateQuiz",
+  auth,
+  isInstructor,
+  updateQuiz
+);
+
+router.post(
+  "/deleteQuiz",
+  auth,
+  isInstructor,
+  deleteQuiz
+);
+
+router.get("/getQuiz/:quizId", auth, getQuiz);
+router.get("/quizResult/:quizId", auth, getQuizResult);
+
+router.post("/submitQuiz", auth, submitQuiz);
+// ================= QUESTION =================
+
+router.post(
+  "/addQuestion",
+  auth,
+  isInstructor,
+  addQuestion
+);
+
+router.post(
+  "/updateQuestion",
+  auth,
+  isInstructor,
+  updateQuestion
+);
+
+router.post(
+  "/deleteQuestion",
+  auth,
+  isInstructor,
+  deleteQuestion
+);
+
+router.get("/downloadCertificate/:certificateId", auth, downloadCertificate);
+router.post("/generateCertificate", auth, isStudent, generateCertificate);
 
 module.exports = router

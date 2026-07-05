@@ -7,6 +7,8 @@ const paymentRoutes = require("./routes/Payments");
 const courseRoutes = require("./routes/Course");
 const contactRoutes = require("./routes/contactRoutes")
 const adminRoutes = require("./routes/adminRoutes")
+const certificateRoutes = require("./routes/certificate")
+const chatbotRoutes = require("./routes/chatbot");
 
 const database = require("./config/databaseConnection");
 const cookieParser = require("cookie-parser");
@@ -46,6 +48,8 @@ app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/contact", contactRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/admin", adminRoutes);
+app.use("/certificates", certificateRoutes);
+app.use("/api/v1/chatbot", chatbotRoutes);
 
 
 //def route
