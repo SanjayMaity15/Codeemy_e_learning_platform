@@ -9,6 +9,7 @@ import { BigPlayButton, Player } from "video-react";
 import { updateCompletedLectures } from "../../feature/viewCourseSlice";
 import IconBtn from "../../components/common/IconBtn";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const VideoDetails = () => {
 	const { courseId, sectionId, subSectionId } = useParams();
@@ -24,6 +25,7 @@ const VideoDetails = () => {
 	const [previewSource, setPreviewSource] = useState("");
 	const [videoEnded, setVideoEnded] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [quizResults, setQuizResults] = useState({});
 
 	useEffect(() => {
 		(async () => {
@@ -90,9 +92,15 @@ const VideoDetails = () => {
 				`/view-course/${courseId}/section/${sectionId}/sub-section/${nextSubSectionId}`,
 			);
 		} else {
+			if (!canMoveToNextSection()) {
+				return;
+			}
+
 			const nextSectionId = courseSectionData[currentSectionIndx + 1]._id;
+
 			const nextSubSectionId =
 				courseSectionData[currentSectionIndx + 1].subSection[0]._id;
+
 			navigate(
 				`/view-course/${courseId}/section/${nextSectionId}/sub-section/${nextSubSectionId}`,
 			);
@@ -169,6 +177,63 @@ const VideoDetails = () => {
 		setLoading(false);
 	};
 
+	const fetchQuizResult = async (quizId) => {
+		try {
+			const res = await axios.get(
+				`${import.meta.env.VITE_SERVER_URL}course/quizResult/${quizId}`,
+				{
+					withCredentials: true,
+				},
+			);
+
+			setQuizResults((prev) => ({
+				...prev,
+				[quizId]: res.data.data,
+			}));
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	useEffect(() => {
+		courseSectionData.forEach((section) => {
+			if (section.quiz) {
+				fetchQuizResult(section.quiz._id);
+			}
+		});
+	}, [courseSectionData]);
+
+	const canMoveToNextSection = () => {
+		const currentSectionIndex = courseSectionData.findIndex(
+			(section) => section._id === sectionId,
+		);
+
+		const currentSection = courseSectionData[currentSectionIndex];
+
+		// Check all videos completed
+		const allVideosCompleted = currentSection.subSection.every((lecture) =>
+			completedLectures.includes(lecture._id),
+		);
+
+		if (!allVideosCompleted) {
+			toast.error("Complete all lectures first.");
+			return false;
+		}
+
+		// Check quiz completion (if quiz exists)
+		if (currentSection.quiz) {
+			const result = quizResults[currentSection.quiz._id];
+
+			if (!result) {
+				toast.error(
+					"Complete the quiz before moving to the next section.",
+				);
+				return false;
+			}
+		}
+
+		return true;
+	};
 	return (
 		<div className="flex flex-col gap-5 text-white">
 			{!videoData ? (

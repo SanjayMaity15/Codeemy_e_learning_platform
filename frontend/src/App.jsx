@@ -62,6 +62,8 @@ const StudentRating = lazy(
 	() => import("./components/dashboard/student rating/StudentRating"),
 );
 
+import Quiz from "./pages/Quiz";
+
 function App() {
 	const { user } = useSelector((state) => state.profile);
 
@@ -113,6 +115,10 @@ function App() {
 								)
 							}
 						/>
+						<Route
+							path="/quiz/:courseId/:quizId"
+							element={<Quiz />}
+						/>
 
 						{/* Protected Routes */}
 						<Route element={<ProtectedRoute />}>
@@ -129,6 +135,7 @@ function App() {
 									path="purchase-history"
 									element={<PurchaseHistory />}
 								/>
+
 								<Route path="cart" element={<Cart />} />
 								<Route path="settings" element={<Settings />} />
 								<Route

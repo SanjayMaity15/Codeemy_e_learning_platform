@@ -10,6 +10,8 @@ import { setCourse } from "../../../../feature/courseSlice";
 import ConfirmationModal from "../../../common/ConfirmationModal";
 import SubSectionModal from "./SubSectionModal";
 import axios from "axios";
+import QuizModal from "./QuizModal";
+import QuestionModal from "./QuestionModal";
 
 export default function NestedView({ handleChangeEditSectionName }) {
 	const { course } = useSelector((state) => state.course);
@@ -17,6 +19,8 @@ export default function NestedView({ handleChangeEditSectionName }) {
 	const dispatch = useDispatch();
 	// States to keep track of mode of modal [add, view, edit]
 	const [addSubSection, setAddSubsection] = useState(null);
+	const [addQuiz, setAddQuiz] = useState(null);
+	const [addQuestion, setAddQuestion] = useState(null);
 	const [viewSubSection, setViewSubSection] = useState(null);
 	const [editSubSection, setEditSubSection] = useState(null);
 	// to keep track of confirmation modal
@@ -177,6 +181,40 @@ export default function NestedView({ handleChangeEditSectionName }) {
 								<FaPlus className="text-lg" />
 								<p>Add Lecture</p>
 							</button>
+
+							{!section.quiz ? (
+								<button
+									type="button"
+									onClick={() => setAddQuiz(section._id)}
+									className="mt-2 flex items-center gap-2 text-primary"
+								>
+									<FaPlus />
+									<span>Add Quiz</span>
+								</button>
+							) : (
+								<div className="mt-3 rounded-md border border-green-500 bg-green-50 p-3">
+									<h3 className="font-semibold text-green-700">
+										📝 {section.quiz.title}
+									</h3>
+
+									<p className="text-sm">
+										Questions :{" "}
+										{section.quiz.questions?.length}
+									</p>
+
+									<button
+										onClick={() =>
+											setAddQuestion({
+												quizId: section.quiz._id,
+											})
+										}
+										className="mt-2 flex items-center gap-2 text-primary"
+									>
+										<FaPlus />
+										Add Question
+									</button>
+								</div>
+							)}
 						</div>
 					</details>
 				))}
@@ -203,6 +241,23 @@ export default function NestedView({ handleChangeEditSectionName }) {
 			) : (
 				<></>
 			)}
+
+			{addQuiz && (
+				<QuizModal
+					add={true}
+					modalData={addQuiz}
+					setModalData={setAddQuiz}
+				/>
+			)}
+
+			{addQuestion && (
+				<QuestionModal
+					add={true}
+					modalData={addQuestion}
+					setModalData={setAddQuestion}
+				/>
+			)}
+
 			{/* Confirmation Modal */}
 			{confirmationModal ? (
 				<ConfirmationModal modalData={confirmationModal} />

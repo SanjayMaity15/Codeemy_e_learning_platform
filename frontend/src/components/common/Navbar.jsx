@@ -106,7 +106,7 @@ const Navbar = () => {
 
 	const [navBgActive, setNavBgActive] = useState(false);
 	const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
-	const [loading, setLoading] = useState(false);
+	// const [loading, setLoading] = useState(false);
 	const [subLinks, setSubLinks] = useState([]);
 	const isMobile = window.innerWidth < 768;
 
@@ -126,7 +126,7 @@ const Navbar = () => {
 
 	useEffect(() => {
 		(async () => {
-			setLoading(true);
+			// setLoading(true);
 			try {
 				const res = await axios.get(
 					`${import.meta.env.VITE_SERVER_URL}course/showAllCategories`,
@@ -136,9 +136,12 @@ const Navbar = () => {
 			} catch (error) {
 				console.log("Could not fetch Categories.", error);
 			}
-			setLoading(false);
+			// setLoading(false);
 		})();
 	}, []);
+
+
+	console.log({token, user})
 
 	return (
 		<section

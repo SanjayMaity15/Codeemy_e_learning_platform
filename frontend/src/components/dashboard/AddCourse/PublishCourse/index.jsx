@@ -16,6 +16,7 @@ export default function PublishCourse() {
 	const { token } = useSelector((state) => state.auth);
 	const { course } = useSelector((state) => state.course);
 	const [loading, setLoading] = useState(false);
+	const [loading2, setLoading2] = useState(false);
 
 	useEffect(() => {
 		if (course?.status === COURSE_STATUS.PUBLISHED) {
@@ -71,6 +72,39 @@ export default function PublishCourse() {
 		handleCoursePublish();
 	};
 
+	const handleCourseComplete = async () => {
+		try {
+			setLoading2(true);
+
+			const response = await axios.post(
+				`${import.meta.env.VITE_SERVER_URL}course/markCourseComplete`,
+				{
+					courseId: course._id,
+				},
+				{
+					withCredentials: true,
+				},
+			);
+
+			dispatch(
+				setCourse({
+					...course,
+					isCompletedByInstructor: true,
+				}),
+			);
+
+			toast.success(response.data.message);
+		} catch (error) {
+			console.log(error);
+
+			toast.error(
+				error?.response?.data?.message || "Unable to complete course",
+			);
+		} finally {
+			setLoading2(false);
+		}
+	};
+
 	return (
 		<div className="rounded-md p-6 bg-white shadow-sm">
 			<p className="text-2xl font-semibold text-black-5">
@@ -94,6 +128,29 @@ export default function PublishCourse() {
 						</span>
 					</label>
 				</div>
+
+				{!course?.isCompletedByInstructor && (
+					<button
+						onClick={handleCourseComplete}
+						className="mt-4 rounded-md bg-green-600 px-5 py-2 text-white hover:bg-green-700"
+					>
+						Mark Course Complete
+					</button>
+				)}
+
+				{course?.isCompletedByInstructor && (
+					<div className="mt-4 rounded-md border border-green-500 bg-green-50 p-4">
+						<h3 className="font-semibold text-green-700">
+							✅ Course Completed
+						</h3>
+
+						<p className="text-sm">
+							Students can now become eligible for certificates
+							after completing all videos and maintaining at least
+							a 60% average across section quizzes.
+						</p>
+					</div>
+				)}
 
 				{/* Next Prev Button */}
 				<div className="ml-auto flex max-w-max items-center gap-x-4">

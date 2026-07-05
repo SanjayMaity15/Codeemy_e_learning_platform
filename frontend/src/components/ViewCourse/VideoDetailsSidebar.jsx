@@ -3,14 +3,19 @@ import { BsChevronDown } from "react-icons/bs";
 import { IoIosArrowBack } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 import IconBtn from "../../components/common/IconBtn";
 
 export default function VideoDetailsSidebar({ setReviewModal }) {
 	const [activeStatus, setActiveStatus] = useState("");
 	const [videoBarActive, setVideoBarActive] = useState("");
+	const [quizResults, setQuizResults] = useState({});
 	const navigate = useNavigate();
 	const location = useLocation();
+	const [certificate, setCertificate] = useState(null);
+	const [loading, setLoading] = useState(false);
 	const { sectionId, subSectionId } = useParams();
 	const {
 		courseSectionData,
@@ -19,6 +24,46 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
 		completedLectures,
 	} = useSelector((state) => state.viewCourse);
 
+	console.log(courseSectionData);
+
+	const handleGenerateCertificate = async () => {
+		try {
+			setLoading(true);
+
+			const response = await axios.post(
+				`${import.meta.env.VITE_SERVER_URL}course/generateCertificate`,
+				{
+					courseId: courseEntireData._id,
+				},
+				{
+					withCredentials: true,
+				},
+			);
+
+			setCertificate(response.data.data);
+
+			toast.success(response.data.message);
+		} catch (error) {
+			console.log(error);
+
+			toast.error(
+				error.response?.data?.message ||
+					"Unable to generate certificate",
+			);
+		} finally {
+			setLoading(false);
+		}
+	};
+	const handleDownloadCertificate = async () => {
+		const res = await axios.get(
+			`${import.meta.env.VITE_SERVER_URL}course/downloadCertificate/${certificate._id}`,
+			{
+				withCredentials: true,
+			},
+		);
+
+		window.open(res.data.url, "_blank");
+	};
 	useEffect(() => {
 		(() => {
 			if (!courseSectionData.length) return;
@@ -37,6 +82,34 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [courseSectionData, courseEntireData, location.pathname]);
+
+	const fetchQuizResult = async (quizId) => {
+		try {
+			const response = await axios.get(
+				`${import.meta.env.VITE_SERVER_URL}course/quizResult/${quizId}`,
+				{
+					withCredentials: true,
+				},
+			);
+
+			setQuizResults((prev) => ({
+				...prev,
+				[quizId]: response.data.data,
+			}));
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		if (!courseSectionData.length) return;
+
+		courseSectionData.forEach((section) => {
+			if (section.quiz) {
+				fetchQuizResult(section.quiz._id);
+			}
+		});
+	}, [courseSectionData]);
 
 	return (
 		<>
@@ -58,6 +131,28 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
 							onclick={() => setReviewModal(true)}
 						/>
 					</div>
+					{completedLectures.length === totalNoOfLectures && (
+						<div className="mt-3">
+							{certificate ? (
+								<button
+									onClick={handleDownloadCertificate}
+									className="w-full rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+								>
+									🎓 Download Certificate
+								</button>
+							) : (
+								<button
+									onClick={handleGenerateCertificate}
+									disabled={loading}
+									className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+								>
+									{loading
+										? "Generating..."
+										: "🎓 Generate Certificate"}
+								</button>
+							)}
+						</div>
+					)}
 					<div className="flex flex-col">
 						<p>{courseEntireData?.courseName}</p>
 						<p className="text-sm font-semibold text-black-500">
@@ -97,14 +192,15 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
 							{/* Sub Sections */}
 							{activeStatus === course?._id && (
 								<div className="transition-[height] duration-500 ease-in-out">
+									{/* Lectures */}
 									{course.subSection.map((topic, i) => (
 										<div
+											key={i}
 											className={`flex gap-3 items-center px-5 py-2 ${
 												videoBarActive === topic._id
 													? "bg-indigo-200 font-semibold border-r-4 border-r-primary"
 													: "hover:bg-indigo-100"
-											} `}
-											key={i}
+											}`}
 											onClick={() => {
 												navigate(
 													`/view-course/${courseEntireData?._id}/section/${course?._id}/sub-section/${topic?._id}`,
@@ -118,11 +214,96 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
 													topic?._id,
 												)}
 												onChange={() => {}}
-												className="w-3 h-3  accent-indigo-600"
+												className="w-3 h-3 accent-indigo-600"
 											/>
-											{topic.title}
+
+											<span>{topic.title}</span>
 										</div>
 									))}
+
+									{/* Quiz */}
+									{course.quiz && (
+										<div className="mt-4 border-t border-gray-300 px-5 pt-4">
+											<p className="mb-2 font-semibold text-gray-700">
+												📝 {course.quiz.title}
+											</p>
+
+											{quizResults[course.quiz._id] ? (
+												<div className="rounded-md border border-green-300 bg-green-50 p-3">
+													<p className="font-semibold text-green-700">
+														✅ Quiz Completed
+													</p>
+
+													<p className="mt-2 text-sm">
+														Score :{" "}
+														<strong>
+															{
+																quizResults[
+																	course.quiz
+																		._id
+																].score
+															}
+															/
+															{
+																quizResults[
+																	course.quiz
+																		._id
+																].totalMarks
+															}
+														</strong>
+													</p>
+
+													<p className="mt-1 text-sm">
+														Status :{" "}
+														{quizResults[
+															course.quiz._id
+														].isPassed ? (
+															<span className="font-semibold text-green-600">
+																Passed ✔
+															</span>
+														) : (
+															<span className="font-semibold text-red-600">
+																Failed ✘
+															</span>
+														)}
+													</p>
+												</div>
+											) : (
+												<button
+													disabled={course.subSection.some(
+														(lecture) =>
+															!completedLectures.includes(
+																lecture._id,
+															),
+													)}
+													onClick={() =>
+														navigate(
+															`/quiz/${courseEntireData._id}/${course.quiz._id}`,
+														)
+													}
+													className={`w-full rounded-md py-2 text-white ${
+														course.subSection.some(
+															(lecture) =>
+																!completedLectures.includes(
+																	lecture._id,
+																),
+														)
+															? "cursor-not-allowed bg-gray-400"
+															: "bg-yellow-500 hover:bg-yellow-600"
+													}`}
+												>
+													{course.subSection.some(
+														(lecture) =>
+															!completedLectures.includes(
+																lecture._id,
+															),
+													)
+														? "Complete all lectures first"
+														: "Start Quiz"}
+												</button>
+											)}
+										</div>
+									)}
 								</div>
 							)}
 						</div>

@@ -1,7 +1,10 @@
+
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
+import ChatBot from "../chatbot/Chatbot";
+
 
 export default function HeroSection() {
 	const navigate = useNavigate();
@@ -29,6 +32,7 @@ export default function HeroSection() {
 
 		return () => ctx.revert(); // 🔥 cleanup fixes invisible issue
 	}, []);
+
 	
 
 	return (
@@ -51,10 +55,7 @@ export default function HeroSection() {
 					Future With <span className="">Codeemy</span>
 				</h1>
 
-				<p
-					className="mt-8 max-w-2xl font-inter text-neutral-500 md:text-lg"
-					
-				>
+				<p className="mt-8 max-w-2xl font-inter text-neutral-500 md:text-lg">
 					Powered by modern learning methods, Codeemy helps you master
 					coding through structured courses, hands-on practice, and
 					real-world projects.
@@ -62,12 +63,13 @@ export default function HeroSection() {
 
 				{/* Button */}
 				<button
-					
 					className="mt-12 px-10 py-3 rounded-full shadow-sm  border border-indigo-800 bg-primary hover:border-indigo-400 transition font-semibold hover:opacity-90  cursor-pointer"
 					onClick={() => navigate(user ? "/" : "/login")}
 				>
 					Join Us
 				</button>
+
+				<ChatBot/>
 			</main>
 		</div>
 	);
