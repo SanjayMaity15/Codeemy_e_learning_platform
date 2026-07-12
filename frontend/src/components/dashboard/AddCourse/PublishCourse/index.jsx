@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { resetCourseState, setStep } from "../../../../feature/courseSlice";
+import { resetCourseState, setCourse, setStep } from "../../../../feature/courseSlice";
 import { COURSE_STATUS } from "../../../../utils/constants";
 import IconBtn from "../../../common/IconBtn";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function PublishCourse() {
 	const { register, handleSubmit, setValue, getValues } = useForm();
@@ -105,66 +106,138 @@ export default function PublishCourse() {
 		}
 	};
 
-	return (
-		<div className="rounded-md p-6 bg-white shadow-sm">
-			<p className="text-2xl font-semibold text-black-5">
-				Publish Settings
-			</p>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				{/* Checkbox */}
-				<div className="my-6 mb-8">
-					<label
-						htmlFor="public"
-						className="inline-flex items-center text-lg"
-					>
-						<input
-							type="checkbox"
-							id="public"
-							{...register("public")}
-							className="border-gray-300 h-4 w-4 accent-indigo-600"
-						/>
-						<span className="ml-2 text-black-400">
-							Make this course as public
-						</span>
-					</label>
-				</div>
+return (
+	<div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-xl">
+		{/* Header */}
+		<div className="mb-8 flex items-center justify-between">
+			<div>
+				<h2 className="text-3xl font-bold text-gray-800">
+					🚀 Publish Course
+				</h2>
+				<p className="mt-2 text-gray-500">
+					Configure your course visibility before publishing.
+				</p>
+			</div>
 
-				{!course?.isCompletedByInstructor && (
-					<button
-						onClick={handleCourseComplete}
-						className="mt-4 rounded-md bg-green-600 px-5 py-2 text-white hover:bg-green-700"
-					>
-						Mark Course Complete
-					</button>
-				)}
+			<div className="rounded-xl bg-indigo-50 px-4 py-2">
+				<p className="text-xs uppercase tracking-wide text-gray-500">
+					Status
+				</p>
+				<p
+					className={`text-lg font-bold ${
+						course?.isCompletedByInstructor
+							? "text-green-600"
+							: "text-orange-500"
+					}`}
+				>
+					{course?.isCompletedByInstructor ? "Completed" : "Pending"}
+				</p>
+			</div>
+		</div>
 
-				{course?.isCompletedByInstructor && (
-					<div className="mt-4 rounded-md border border-green-500 bg-green-50 p-4">
-						<h3 className="font-semibold text-green-700">
-							✅ Course Completed
+		<form onSubmit={handleSubmit(onSubmit)}>
+			{/* Publish Toggle */}
+
+			<div className="rounded-2xl border border-gray-200 bg-gray-50 p-6">
+				<label
+					htmlFor="public"
+					className="flex cursor-pointer items-center justify-between"
+				>
+					<div>
+						<h3 className="text-lg font-semibold text-gray-800">
+							Public Course
 						</h3>
 
-						<p className="text-sm">
-							Students can now become eligible for certificates
-							after completing all videos and maintaining at least
-							a 60% average across section quizzes.
+						<p className="mt-1 text-sm text-gray-500">
+							Anyone can discover and enroll in this course.
 						</p>
 					</div>
-				)}
 
-				{/* Next Prev Button */}
-				<div className="ml-auto flex max-w-max items-center gap-x-4">
-					<button
-						disabled={loading}
-						type="button"
-						onClick={goBack}
-						className="flex cursor-pointer items-center gap-x-2 rounded-md bg-pink-600 py-2 px-5 font-semibold text-white"
-					>
-						Back
-					</button>
-					<IconBtn disabled={loading} loading={loading} text="Save" />
-				</div>
-			</form>
-		</div>
-	);
+					<input
+						type="checkbox"
+						id="public"
+						{...register("public")}
+						className="h-6 w-6 accent-indigo-600"
+					/>
+				</label>
+			</div>
+
+			{/* Course Completion */}
+
+			<div className="mt-8">
+				{!course?.isCompletedByInstructor ? (
+					<div className="rounded-2xl border border-yellow-300 bg-yellow-50 p-6">
+						<h3 className="text-lg font-semibold text-yellow-700">
+							⚠ Final Step
+						</h3>
+
+						<p className="mt-2 text-gray-600">
+							Mark your course as complete once all sections,
+							lectures and quizzes are ready.
+						</p>
+
+						<button
+							type="button"
+							onClick={handleCourseComplete}
+							className="mt-5 rounded-xl bg-green-600 px-6 py-3 font-semibold text-white transition hover:bg-green-700"
+						>
+							✅ Mark Course Complete
+						</button>
+					</div>
+				) : (
+					<div className="rounded-2xl border border-green-300 bg-green-50 p-6">
+						<div className="flex items-center gap-3">
+							<div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-600 text-2xl text-white">
+								✓
+							</div>
+
+							<div>
+								<h3 className="text-xl font-bold text-green-700">
+									Course Completed
+								</h3>
+
+								<p className="text-sm text-gray-600">
+									Your course is ready for students.
+								</p>
+							</div>
+						</div>
+
+						<div className="mt-5 rounded-xl bg-white p-4 text-sm leading-7 text-gray-700 shadow-sm">
+							Students will become eligible for certificates
+							after:
+							<ul className="mt-2 list-disc space-y-1 pl-5">
+								<li>Completing every lecture.</li>
+								<li>
+									Passing all quizzes with at least <b>60%</b>{" "}
+									average.
+								</li>
+								<li>Finishing the course successfully.</li>
+							</ul>
+						</div>
+					</div>
+				)}
+			</div>
+
+			{/* Bottom Buttons */}
+
+			<div className="mt-10 flex items-center justify-between border-t border-gray-200 pt-8">
+				<button
+					type="button"
+					disabled={loading}
+					onClick={goBack}
+					className="rounded-xl border border-gray-300 px-8 py-3 font-medium text-gray-700 transition hover:bg-gray-100"
+				>
+					← Back
+				</button>
+
+				<IconBtn
+					disabled={loading}
+					loading={loading}
+					text="Publish Course"
+					customClasses="rounded-xl px-8 py-3 shadow-lg"
+				/>
+			</div>
+		</form>
+	</div>
+);
 }

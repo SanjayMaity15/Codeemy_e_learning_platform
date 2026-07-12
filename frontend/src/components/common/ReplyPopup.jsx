@@ -2,64 +2,130 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaReply } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import ButtonLoader from "./ButtonLoader";
 
-const ReplyPopup = ({contactClientData, close, fetchSupportMessage}) => {
-    const [loading, setLoading] = useState(false);
-    const [reply, setReply] = useState("")
-	async function handleContactReply(e) {
-		e.preventDefault()
+const ReplyPopup = ({ contactClientData, close, fetchSupportMessage }) => {
+	const [loading, setLoading] = useState(false);
+	const [reply, setReply] = useState("");
+
+	const handleContactReply = async (e) => {
+		e.preventDefault();
+
+		if (!reply.trim()) {
+			return toast.error("Reply cannot be empty");
+		}
+
 		try {
-			if (!reply) {
-				return;
-			}
 			setLoading(true);
-			const data = {
-				reply,
-				contactId: contactClientData._id,
-			};
 
 			const response = await axios.post(
 				`${import.meta.env.VITE_SERVER_URL}admin/reply`,
-				data,
-				{ withCredentials: true },
+				{
+					reply,
+					contactId: contactClientData._id,
+				},
+				{
+					withCredentials: true,
+				},
 			);
-			toast.success(response.data.message)
-			setLoading(false);
-			fetchSupportMessage()
-			close()
+
+			toast.success(response.data.message);
+			fetchSupportMessage();
+			close();
 		} catch (error) {
-			toast.error(error.response.data.message)
-			setLoading(false)
-			close()
+			toast.error(
+				error.response?.data?.message || "Something went wrong",
+			);
+		} finally {
+			setLoading(false);
 		}
-	}
-	
-	
+	};
 
 	return (
-		<div className="fixed top-0 left-0 bg-black/50 inset-0 z-9999 flex justify-center items-center">
-			<div className="bg-white p-6 rounded-md w-sm flex flex-col items-center gap-4">
-				<h3 className="flex items-center gap-2 text-2xl font-semibold text-green-600">
-					<FaReply />
-					Reply
-				</h3>
+		<div
+			onClick={close}
+			className="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 backdrop-blur-md p-4"
+		>
+			<div
+				onClick={(e) => e.stopPropagation()}
+				className="w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl animate-[fadeIn_.25s_ease]"
+			>
+				{/* Header */}
 
-				<form onSubmit={handleContactReply} className="w-full">
-					<textarea
-						type="text"
-						placeholder="Reply message..."
-						rows={3}
-						className="ring-1 ring-primary border-none outline-none focus:ring-2 p-1 rounded-md w-full"
-						onChange={(e) => setReply(e.target.value)}
-						value={reply}
-					/>
+				<div className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 px-8 py-7 text-center">
+					<div className="mx-auto flex h-18 w-18 items-center justify-center rounded-full bg-white shadow-lg">
+						<FaReply className="text-4xl text-indigo-600" />
+					</div>
 
-					<div className="flex justify-end mt-4">
+					<h2 className="mt-4 text-2xl font-bold text-white">
+						Reply Message
+					</h2>
+
+					<p className="mt-2 text-sm text-indigo-100">
+						Send a response to the customer.
+					</p>
+				</div>
+
+				{/* Body */}
+
+				<form
+					onSubmit={handleContactReply}
+					className="space-y-6 px-8 py-7"
+				>
+					{/* Receiver */}
+
+					<div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+						<p className="font-semibold text-gray-800">
+							{contactClientData?.name}
+						</p>
+
+						<p className="mt-1 flex items-center gap-2 text-sm text-gray-500">
+							<MdEmail />
+							{contactClientData?.email}
+						</p>
+					</div>
+
+					{/* Reply */}
+
+					<div>
+						<label className="mb-2 block font-medium text-gray-700">
+							Your Reply
+						</label>
+
+						<textarea
+							rows={5}
+							value={reply}
+							onChange={(e) => setReply(e.target.value)}
+							placeholder="Write your reply..."
+							className="w-full resize-none rounded-xl border border-gray-300 p-4 outline-none transition-all focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+						/>
+					</div>
+
+					{/* Buttons */}
+
+					<div className="flex justify-end gap-4">
+						<button
+							type="button"
+							onClick={close}
+							className="rounded-xl border border-gray-300 px-6 py-2.5 font-medium text-gray-700 transition hover:bg-gray-100"
+						>
+							Cancel
+						</button>
+
 						<button
 							type="submit"
-							className="bg-primary text-white px-8 py-2 rounded-md"
+							disabled={loading}
+							className="rounded-xl bg-indigo-600 px-6 py-2.5 font-medium text-white shadow-md transition hover:bg-indigo-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
 						>
-							{loading ? "sending..." : "Send"}
+							{loading ? (
+								<ButtonLoader text="Sending" />
+							) : (
+								<div className="flex items-center gap-2">
+									<FaReply />
+									Send Reply
+								</div>
+							)}
 						</button>
 					</div>
 				</form>

@@ -28,83 +28,97 @@ const Support = () => {
 	}, []);
 
 	return (
-		<section className="min-h-screen bg-gray-100">
+		<section className="min-h-screen space-y-8 rounded-3xl bg-linear-to-br from-slate-50 via-white to-pink-50 p-6 md:p-8">
 			{/* Header */}
-			<div className="max-w-6xl mx-auto mb-8">
-				<h2 className="text-3xl font-bold text-gray-800">
-					📩 Contact Messages
+			<div className="rounded-3xl bg-white p-8 shadow-lg border border-gray-100">
+				<h2 className="text-4xl font-bold text-primary">
+					Support Messages
 				</h2>
-				<p className="text-gray-500 mt-1">
-					Manage and view user queries
+
+				<p className="mt-2 text-gray-500">
+					View, manage and reply to student support requests.
 				</p>
 			</div>
 
-			{/* Messages Grid */}
-			<div className="max-w-6xl mx-auto grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+			{/* Cards */}
+			<div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
 				{supportMsg?.length > 0 ? (
 					supportMsg.map((msg) => (
 						<div
 							key={msg._id}
-							className="bg-white rounded-2xl shadow-md p-5 hover:shadow-lg transition duration-300 border border-gray-200"
+							className="group flex flex-col justify-between rounded-3xl border border-gray-100 bg-white p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
 						>
-							{/* Name */}
-							<h3 className="text-lg font-semibold text-indigo-600">
-								{msg.name}
-							</h3>
+							<div>
+								{/* Name */}
+								<h3 className="text-xl font-bold text-primary">
+									{msg.name}
+								</h3>
 
-							{/* Email */}
-							<p className="text-sm text-gray-500 mb-2">
-								{msg.email}
-							</p>
+								{/* Email */}
+								<p className="mt-1 break-all text-sm text-gray-500">
+									{msg.email}
+								</p>
 
-							<details className="bg-gray-50 text-sm rounded-lg p-3 cursor-pointer">
-								<summary className="font-semibold">
-									{msg.message}
-								</summary>
+								{/* Message */}
+								<details className="mt-5 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+									<summary className="cursor-pointer font-semibold text-gray-700">
+										{msg.message}
+									</summary>
 
-								{msg.reply && (
-									<p className="mt-2 text-sm text-indigo-600">
-										<span className="font-semibold">
-											Reply:
-										</span>{" "}
-										<span className="text-gray-500">{msg.reply}</span>
-									</p>
-								)}
-							</details>
+									{msg.reply && (
+										<div className="mt-4 rounded-xl bg-indigo-50 p-3">
+											<p className="text-sm font-semibold text-primary">
+												Reply
+											</p>
 
-							{/* Date */}
-							<div className="text-xs text-gray-400">
-								{formatDate(msg.createdAt)}
+											<p className="mt-1 text-sm text-gray-600">
+												{msg.reply}
+											</p>
+										</div>
+									)}
+								</details>
+
+								{/* Date */}
+								<p className="mt-5 text-xs font-medium text-gray-400">
+									{formatDate(msg.createdAt)}
+								</p>
 							</div>
 
-							<div className="w-full flex justify-end">
+							{/* Button */}
+							<div className="mt-6 flex justify-end">
 								{msg.reply ? (
 									<button
-										className="flex items-center gap-1 bg-indigo-600 text-white px-4 py-1 rounded-md cursor-pointer text-sm"
-										onClick={(e) =>
+										className="flex cursor-pointer items-center gap-2 rounded-xl bg-green-100 px-5 py-2 font-semibold text-green-700 transition hover:bg-green-200"
+										onClick={() =>
 											toast.success("Already replied")
 										}
 									>
 										<SiTicktick />
-										replied
+										Replied
 									</button>
 								) : (
 									<button
-										className="flex items-center gap-1 bg-green-600 text-white px-4 py-1 rounded-md cursor-pointer text-sm"
-										onClick={(e) =>
+										className="flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-5 py-2 font-semibold text-white transition hover:opacity-90"
+										onClick={() =>
 											setContactClientData(msg)
 										}
 									>
 										<FaReply />
-										reply
+										Reply
 									</button>
 								)}
 							</div>
 						</div>
 					))
 				) : (
-					<div className="col-span-full text-center text-gray-500 text-lg">
-						No messages found 😔
+					<div className="col-span-full rounded-3xl bg-white py-20 text-center shadow-lg border border-gray-100">
+						<p className="text-xl font-semibold text-gray-500">
+							No support messages found
+						</p>
+
+						<p className="mt-2 text-gray-400">
+							New contact requests will appear here.
+						</p>
 					</div>
 				)}
 			</div>

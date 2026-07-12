@@ -26,6 +26,12 @@ const allowedKeywords = [
 	"section",
 	"completion",
 	"codeemy",
+	"react",
+	"nodejs",
+	"js",
+	"javascript",
+	"java",
+	"python"
 ];
 
 exports.aiGuard = (req, res, next) => {

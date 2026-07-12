@@ -37,6 +37,7 @@ const Popularcourses = () => {
 		fetchPopularCourses();
 	}, []);
 
+	console.log(popularCourses)
 	
 
 	if (popularCourses?.length === 0) {
@@ -49,83 +50,135 @@ const Popularcourses = () => {
 			ref={popularCourseRef}
 		>
 			{/* Heading */}
-			<h2 className="text-3xl md:text-5xl font-bold text-center mb-4 font-orbitron text-gray-500">
-				Popular{" "}
-				<span className="bg-linear-to-b from-indigo-600  to-pink-600 bg-clip-text text-transparent">
-					Courses
+			<div className="text-center mb-16">
+				<span className="rounded-full bg-indigo-100 px-5 py-2 text-sm font-semibold text-indigo-600">
+					TOP COURSES
 				</span>
-			</h2>
+
+				<h2 className="mt-6 text-4xl md:text-5xl font-bold font-orbitron text-slate-900">
+					Popular{" "}
+					<span className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+						Courses
+					</span>
+				</h2>
+
+				<p className="mx-auto mt-5 max-w-2xl text-lg text-slate-500">
+					Explore our most loved courses chosen by thousands of
+					learners and start building real-world skills today.
+				</p>
+			</div>
 
 			<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
 				{popularCourses.map((course) => (
 					<li
 						key={course._id}
-						className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform flex flex-col"
+						className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
 					>
-						{/* Course Image */}
-						<div className="overflow-hidden">
+						{/* Thumbnail */}
+						<div className="relative overflow-hidden">
 							<img
-								src={course?.thumbnail}
-								alt={course?.courseName}
-								className="object-center w-full h-60 rounded-t-xl transition-transform duration-300 hover:scale-105"
+								src={course.thumbnail}
+								alt={course.courseName}
+								className="h-60 w-full object-cover transition duration-500 group-hover:scale-110"
 							/>
+
+							{/* Overlay */}
+							<div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent"></div>
+
+							{/* Bestseller */}
+							<div className="absolute left-4 top-4 rounded-full bg-yellow-400 px-3 py-1 text-xs font-bold text-white shadow-lg">
+								🔥 Best Seller
+							</div>
+
+							{/* Price */}
+							<div className="absolute right-4 top-4 rounded-full bg-white px-4 py-2 font-bold text-indigo-600 shadow-lg flex items-center">
+								<PiCurrencyInrBold />
+								{course.price}
+							</div>
+
+							{/* Course Name */}
+							<div className="absolute bottom-4 left-4 right-4">
+								<h3 className="text-2xl font-bold text-white line-clamp-2">
+									{course.courseName}
+								</h3>
+							</div>
 						</div>
 
-						{/* Course Content */}
-						<div className="p-4 flex flex-col flex-1 gap-2">
-							<h3 className="text-xl text-primary font-bold truncate">
-								{course.courseName}
-							</h3>
+						{/* Content */}
+						<div className="p-6">
+							{/* Instructor */}
+							<div className="flex items-center gap-3">
+								<p
+									className="h-12 w-12 rounded-full
+									flex justify-center items-center border-2 bg-pink-600 text-white border-indigo-200"
+								>
+									{course.instructor.firstName[0]}{" "}
+									{course.instructor.lastName[0]}
+								</p>
 
-							<p className="text-gray-600 text-sm line-clamp-3">
+								<div>
+									<p className="font-semibold text-slate-800">
+										{course.instructor.firstName}{" "}
+										{course.instructor.lastName}
+									</p>
+
+									<p className="text-sm text-slate-500">
+										Professional Instructor
+									</p>
+								</div>
+							</div>
+
+							{/* Description */}
+							<p className="mt-5 line-clamp-3 leading-7 text-slate-500">
 								{course.whatYouWillLearn}
 							</p>
 
-							<h4 className="text-gray-800 font-medium text-sm">
-								Instructor:{" "}
-								<span className="text-pink-600 font-semibold text-sm">
-									{course.instructor.firstName}{" "}
-									{course.instructor.lastName}
-								</span>
-							</h4>
-
-							<div className="flex justify-between items-center mt-2">
+							{/* Stats */}
+							<div className="mt-6 flex items-center justify-between rounded-2xl bg-slate-50 p-4">
 								{/* Rating */}
-								<div className="flex items-center gap-1">
-									{Array.from({ length: 5 }).map((_, i) =>
-										i + 1 <= course.avgRating ? (
-											<FaStar
-												key={i}
-												className="text-yellow-400"
-											/>
-										) : (
-											<FaRegStar
-												key={i}
-												className="text-gray-300"
-											/>
-										),
-									)}
-									<span className="text-gray-500 text-xs ml-1">
-										({course.ratingAndReviews.length})
-									</span>
+								<div>
+									<div className="flex items-center gap-1">
+										{Array.from({ length: 5 }).map(
+											(_, i) =>
+												i + 1 <=
+												Math.round(course.avgRating) ? (
+													<FaStar
+														key={i}
+														className="text-yellow-400"
+													/>
+												) : (
+													<FaRegStar
+														key={i}
+														className="text-gray-300"
+													/>
+												),
+										)}
+									</div>
+
+									<p className="mt-1 text-xs text-slate-500">
+										{course.ratingAndReviews.length} Reviews
+									</p>
 								</div>
 
-								{/* Price */}
-								<div className="flex items-center text-primary font-bold">
-									<PiCurrencyInrBold className="mr-1" />{" "}
-									{course.price}
+								{/* Students */}
+								<div className="text-center">
+									<p className="text-xl font-bold text-indigo-600">
+										{course.studentsEnrolled?.length}
+									</p>
+
+									<p className="text-xs text-slate-500">
+										Students
+									</p>
 								</div>
 							</div>
 
-							{/* View Button */}
-							<div className="mt-4 text-center">
-								<Link
-									to={`course/${course._id}`}
-									className="text-primary hover:underline"
-								>
-									View Course
-								</Link>
-							</div>
+							{/* CTA */}
+							<Link
+								to={`/course/${course._id}`}
+								className="mt-6 flex items-center justify-center rounded-xl bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 py-3 font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:shadow-xl"
+							>
+								View Course →
+							</Link>
 						</div>
 					</li>
 				))}

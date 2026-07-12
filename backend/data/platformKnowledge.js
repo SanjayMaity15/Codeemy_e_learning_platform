@@ -55,5 +55,5 @@ Support:
 - Students can contact instructors through the platform.
 
 Important:
-Only answer questions related to Codeemy.
+Only answer questions related to Codeemy and also coding and programming.
 `;

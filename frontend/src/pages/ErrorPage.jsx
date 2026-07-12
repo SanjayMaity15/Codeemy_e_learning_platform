@@ -4,59 +4,56 @@ import { Link, useNavigate } from "react-router-dom";
 const ErrorPage = () => {
 	const navigate = useNavigate();
 
-	return (
-		<div className="min-h-screen flex items-center justify-center bg-bg-soft px-4 relative overflow-hidden">
-			<h2 className="lg:text-[500px] tracking-widest absolute -rotate-12 text-gray-200">
+return (
+	<div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+		<div className="max-w-xl w-full rounded-3xl bg-white border border-gray-200 shadow-lg p-10 text-center">
+			{/* 404 */}
+			<h1 className="text-8xl md:text-9xl font-extrabold text-primary tracking-tight">
 				404
+			</h1>
+
+			{/* Heading */}
+			<h2 className="mt-6 text-3xl font-bold text-gray-900">
+				Page Not Found
 			</h2>
-			{/* Background Blur Shape */}
-			<div className="absolute w-125 h-125 bg-linear-to-br from-primary/20 to-pink-200 blur-3xl rounded-full top-10 left-10"></div>
-			<div className="absolute w-100 h-100 bg-linear-to-tr from-secondary/20 to-primary/20 blur-3xl rounded-full bottom-10 right-10"></div>
 
-			{/* Card */}
-			<div className="relative z-10 bg-white/70 backdrop-blur-xl shadow-xl rounded-3xl p-10 max-w-md w-full text-center">
-				{/* Icon */}
-				<div className="w-20 h-20 mx-auto flex items-center justify-center rounded-full bg-white shadow-md mb-6">
-					<FaArrowLeft className="text-3xl text-primary" />
-				</div>
+			{/* Description */}
+			<p className="mt-4 text-gray-500 leading-7">
+				Sorry, the page you're looking for doesn't exist, has been
+				moved, or the URL is incorrect.
+			</p>
 
-				{/* Title */}
-				<h1 className="text-3xl font-bold text-gray-900">
-					Page not found
-				</h1>
+			{/* Buttons */}
+			<div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+				<button
+					onClick={() => navigate(-1)}
+					className="flex items-center justify-center gap-2 rounded-xl border border-gray-300 px-6 py-3 font-medium text-gray-700 hover:bg-gray-100 transition cursor-pointer"
+				>
+					<FaArrowLeft />
+					Go Back
+				</button>
 
-				{/* Description */}
-				<p className="mt-3 text-gray-500">
-					Oops! The page you are looking for not found.
-				</p>
+				<Link
+					to="/"
+					className="rounded-xl bg-primary px-6 py-3 text-white font-medium hover:bg-indigo-700 transition"
+				>
+					Go Home
+				</Link>
 
-				{/* Buttons */}
-				<div className="flex items-center justify-center gap-4 mt-6">
-					{/* Go Back */}
-					<button
-						onClick={() => navigate(-1)}
-						className="flex items-center gap-2 px-5 py-2 rounded-full bg-red-600 text-white hover:bg-red-700 transition cursor-pointer font-semibold"
-					>
-						<FaArrowLeft />
-						Go Back
-					</button>
+				<Link
+					to="/dashboard/my-profile"
+					className="rounded-xl bg-pink-600 px-6 py-3 text-white font-medium hover:bg-pink-700 transition"
+				>
+					Dashboard
+				</Link>
+			</div>
 
-					{/* Dashboard */}
-					<Link
-						to="/dashboard/my-profile"
-						className="px-6 py-2 rounded-full text-white font-semibold bg-linear-to-r from-primary to-pink-600 shadow-lg hover:opacity-90 transition"
-					>
-						Dashboard
-					</Link>
-				</div>
-
-				{/* Footer */}
-				<p className="mt-6 text-sm text-gray-400">
-					Error Code: 404 • Codeemy
-				</p>
+			<div className="mt-10 border-t border-gray-200 pt-5">
+				<p className="text-sm text-gray-400">Error Code • 404</p>
 			</div>
 		</div>
-	);
+	</div>
+);
 };
 
 export default ErrorPage;

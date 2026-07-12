@@ -35,7 +35,7 @@ const NavItems = ({ onClick, subLinks, isMobile }) => {
 							className={({ isActive }) =>
 								isActive
 									? "text-primary font-bold"
-									: `hover:text-sm transition-all duration-300 ${isMobile && "text-white"}`
+									: `hover:text-sm transition-all duration-300 ${isMobile && "text-black"}`
 							}
 						>
 							{currNavLink.title}
@@ -52,7 +52,7 @@ const NavItems = ({ onClick, subLinks, isMobile }) => {
 								className={`cursor-pointer flex items-center ${
 									coursesRoute
 										? "text-primary font-bold"
-										: `${isMobile && "text-white"}`
+										: `${isMobile && "text-black"}`
 								}`}
 							>
 								{currNavLink.title}
@@ -66,27 +66,36 @@ const NavItems = ({ onClick, subLinks, isMobile }) => {
 							{/* 🔥 Dropdown */}
 							{showDropdown && (
 								<div
-									className={`absolute top-8 -left-18 bg-white border border-primary rounded-md min-w-55  z-2000 text-sm ${isMobile ? "max-h-50 overflow-y-auto" : ""}`}
+									className={`absolute top-7 left-1/2 -translate-x-1/2 z-2000 min-w-60 rounded-xl border border-gray-200 bg-white shadow-xl ${
+										isMobile
+											? "max-h-60 overflow-y-auto"
+											: ""
+									}`}
 								>
-									<div className="w-5 h-5 bg-white relative left-1/2 -translate-x-1/2 rotate-45 bottom-2 " />
-
+									<div className="w-6 h-6 bg-white relative left-1/2 -translate-x-1/2 rotate-45 bottom-2 " />
 									{subLinks?.length > 0 ? (
 										subLinks.map((cat) => (
 											<NavLink
 												key={cat._id}
 												to={`/courses/${cat.name
 													.toLowerCase()
-													.replace(/\s+/g, "-")}`} // slug
+													.replace(/\s+/g, "-")}`}
 												onClick={onClick}
-												className="block px-3 py-2 hover:bg-indigo-400  hover:text-white text-xs"
+												className={({ isActive }) =>
+													`block px-5 py-2 text-xs transition-all duration-200 ${
+														isActive
+															? "bg-indigo-50 text-indigo-600 font-medium"
+															: "text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+													}`
+												}
 											>
 												{cat.name}
 											</NavLink>
 										))
 									) : (
-										<p className="text-sm text-gray-400">
-											No Categories
-										</p>
+										<div className="px-5 py-4 text-sm text-gray-500">
+											No Categories Found
+										</div>
 									)}
 								</div>
 							)}
@@ -140,8 +149,7 @@ const Navbar = () => {
 		})();
 	}, []);
 
-
-	console.log({token, user})
+	console.log({ token, user });
 
 	return (
 		<section
@@ -206,52 +214,88 @@ const Navbar = () => {
 
 				{/* Mobile menu setup */}
 
-				{/* Hamburger Toggle */}
-				<div className="md:hidden z-40">
+				{/* Hamburger */}
+				<div className="md:hidden z-50">
 					<button
 						onClick={() =>
 							setIsMobileMenuActive(!isMobileMenuActive)
 						}
-						className="text-xl"
+						className="text-2xl text-primary"
 					>
 						{isMobileMenuActive ? <FaTimes /> : <FaBars />}
 					</button>
 				</div>
 
-				{/* Mobile Menu */}
+				{/* Overlay */}
 				<div
-					className={`md:hidden fixed top-0 left-0 w-full mt-20 h-screen bg-black/80 flex flex-col justify-start pt-12 gap-4 items-center text-center transition-transform duration-300 z-2000  ${
+					className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 z-40 ${
+						isMobileMenuActive
+							? "opacity-100 visible"
+							: "opacity-0 invisible"
+					}`}
+					onClick={() => setIsMobileMenuActive(false)}
+				></div>
+
+				{/* Mobile Drawer */}
+				<div
+					className={`fixed top-0 left-0 h-screen w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ${
 						isMobileMenuActive
 							? "translate-x-0"
-							: "-translate-x-full"
+							: "-translate-x-full opacity-0"
 					}`}
 				>
-					{token !== null && <ProfileDropdown />}
+					{/* Header */}
+					<div className="flex items-center justify-between border-b px-6 py-5">
+						<h2 className="text-xl font-bold text-primary">
+							Codeemy
+						</h2>
 
-					<div className="">
-						{" "}
-						{user &&
-							(user?.accountType != "Instructor" || "Admin") && (
-								<Link
-									to="/dashboard/cart"
-									className="relative text-white text-lg flex gap-2 items-center text-left"
-								>
-									<span>Cart</span>
-									<AiOutlineShoppingCart />
-									{totalItems > 0 && (
-										<span className="bg-pink-500 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full absolute left-4 top-2.5 font-bold">
-											{totalItems}
-										</span>
-									)}
-								</Link>
-							)}
+						<button
+							onClick={() => setIsMobileMenuActive(false)}
+							className="text-2xl text-gray-700"
+						>
+							<FaTimes />
+						</button>
 					</div>
 
-					<NavItems
-						subLinks={subLinks}
-						isMobile={isMobile}
-						onClick={() => setIsMobileMenuActive(false)}
-					/>
+					{/* Profile */}
+					<div className="px-5 py-4">
+						{token && <ProfileDropdown />}
+					</div>
+
+					{/* Cart */}
+					{user &&
+						user.accountType !== "Instructor" &&
+						user.accountType !== "Admin" && (
+							<Link
+								to="/dashboard/cart"
+								onClick={() => setIsMobileMenuActive(false)}
+								className="mx-5 mb-5 flex items-center justify-between rounded-xl bg-gray-100 px-4 py-3 hover:bg-gray-200"
+							>
+								<div className="flex items-center gap-3">
+									<AiOutlineShoppingCart
+										size={22}
+										className="text-primary"
+									/>
+									<span className="font-medium">Cart</span>
+								</div>
+
+								{totalItems > 0 && (
+									<span className="flex h-6 w-6 items-center justify-center rounded-full bg-pink-600 text-xs font-bold text-white">
+										{totalItems}
+									</span>
+								)}
+							</Link>
+						)}
+
+					{/* Navigation */}
+					<div className="px-5">
+						<NavItems
+							subLinks={subLinks}
+							isMobile={true}
+							onClick={() => setIsMobileMenuActive(false)}
+						/>
+					</div>
 				</div>
 			</div>
 		</section>

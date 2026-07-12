@@ -9,77 +9,56 @@ export default function RenderSteps() {
 	const { step } = useSelector((state) => state.course);
 
 	const steps = [
-		{
-			id: 1,
-			title: "Course Information",
-		},
-		{
-			id: 2,
-			title: "Course Builder",
-		},
-		{
-			id: 3,
-			title: "Publish",
-		},
+		{ id: 1, title: "Course Information" },
+		{ id: 2, title: "Course Builder" },
+		{ id: 3, title: "Publish" },
 	];
 
 	return (
 		<>
-			<div className="relative mb-2 flex w-full justify-center">
-				{steps.map((item) => (
-					<>
-						<div
-							className="flex flex-col items-center "
-							key={item.id}
-						>
-							<button
-								className={`grid cursor-default aspect-square w-8.5 place-items-center rounded-full border ${
-									step === item.id
-										? "border-yellow-50 bg-primary text-white"
-										: "border-richblack-700 bg-gray-300 text-black-300"
-								} ${step > item.id && "bg-green-600 text-white border border-white"}} `}
-							>
-								{step > item.id ? (
-									<FaCheck className="font-bold text-white" />
-								) : (
-									item.id
-								)}
-							</button>
-						</div>
-						{item.id !== steps.length && (
-							<>
+			{/* Stepper */}
+			<div className="mb-12">
+				<div className="flex items-center justify-between">
+					{steps.map((item, index) => (
+						<div key={item.id} className="flex flex-1 items-center">
+							{/* Step */}
+							<div className="flex flex-col items-center">
 								<div
-									className={`h-4.25 md:w-[33%] w-[25%]  border-dashed border-b-2 ${
+									className={`relative flex h-12 w-12 items-center justify-center rounded-full border-2 font-semibold transition-all duration-300
+									${
 										step > item.id
-											? "border-primary"
-											: "border-indigo-300"
-									} `}
-								></div>
-							</>
-						)}
-					</>
-				))}
+											? "border-green-600 bg-green-600 text-white"
+											: step === item.id
+												? "border-indigo-600 bg-indigo-600 text-white shadow-lg shadow-indigo-300"
+												: "border-gray-300 bg-white text-gray-500"
+									}`}
+								>
+									{step > item.id ? <FaCheck /> : item.id}
+								</div>
+
+								<p
+									className={`mt-3 text-center text-sm font-medium transition-colors
+									${step >= item.id ? "text-indigo-700" : "text-gray-500"}`}
+								>
+									{item.title}
+								</p>
+							</div>
+
+							{/* Connector */}
+							{index !== steps.length - 1 && (
+								<div className="mx-4 flex-1">
+									<div
+										className={`h-1 rounded-full transition-all duration-500
+										${step > item.id ? "bg-green-600" : "bg-gray-300"}`}
+									/>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
 			</div>
 
-			<div className="relative mb-16 flex w-full select-none justify-between">
-				{steps.map((item) => (
-					<>
-						<div
-							className="flex md:min-w-32.5 min-w-20 flex-col items-center gap-y-2"
-							key={item.id}
-						>
-							<p
-								className={`text-xs md:text-sm ${
-									step >= item.id ? "text-green-600" : ""
-								}`}
-							>
-								{item.title}
-							</p>
-						</div>
-					</>
-				))}
-			</div>
-			{/* Render specific component based on current step */}
+			{/* Forms */}
 			{step === 1 && <CourseInformationForm />}
 			{step === 2 && <CourseBuilderForm />}
 			{step === 3 && <PublishCourse />}

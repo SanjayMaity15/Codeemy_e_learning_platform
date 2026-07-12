@@ -173,59 +173,85 @@ export default function CourseInformationForm() {
 		}
 	};
 
-	return (
-		<form
-			onSubmit={handleSubmit(onSubmit)}
-			className="space-y-8 rounded-md p-6 bg-white shadow-sm"
-		>
-			{/* Course Title */}
-			<div className="flex flex-col space-y-2">
-				<label className="text-sm" htmlFor="courseTitle">
-					Course Title{" "}
-					<span className="text-pink-600 text-lg">*</span>
-				</label>
-				<input
-					id="courseTitle"
-					placeholder="Enter Course Title"
-					{...register("courseTitle", { required: true })}
-					className="form-style w-full p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
-				/>
-				{errors.courseTitle && (
-					<span className="ml-2 text-xs tracking-wide text-red-600">
-						Course title is required
-					</span>
-				)}
-			</div>
-			{/* Course Short Description */}
-			<div className="flex flex-col space-y-2">
+return (
+	<form
+		onSubmit={handleSubmit(onSubmit)}
+		className="space-y-8 rounded-2xl bg-white p-8 shadow-xl border border-gray-200"
+	>
+		{/* Header */}
+		<div className="border-b pb-5">
+			<h2 className="text-3xl font-bold text-gray-900">
+				Course Information
+			</h2>
+
+			<p className="mt-2 text-gray-500">
+				Fill in the details to create a professional course.
+			</p>
+		</div>
+
+		{/* Course Title */}
+		<div className="space-y-2">
+			<label
+				htmlFor="courseTitle"
+				className="font-semibold text-gray-700"
+			>
+				Course Title
+				<span className="text-red-500">*</span>
+			</label>
+
+			<input
+				id="courseTitle"
+				placeholder="Enter your course title"
+				{...register("courseTitle", { required: true })}
+				className="w-full rounded-xl border border-gray-300 px-4 py-3 transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none"
+			/>
+
+			{errors.courseTitle && (
+				<p className="text-sm text-red-500">Course title is required</p>
+			)}
+		</div>
+
+		{/* Description */}
+		<div className="space-y-2">
+			<label
+				htmlFor="courseShortDesc"
+				className="font-semibold text-gray-700"
+			>
+				Course Description
+				<span className="text-red-500">*</span>
+			</label>
+
+			<textarea
+				rows={5}
+				id="courseShortDesc"
+				placeholder="Describe your course..."
+				{...register("courseShortDesc", { required: true })}
+				className="w-full rounded-xl border border-gray-300 px-4 py-3 resize-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none"
+			/>
+
+			{errors.courseShortDesc && (
+				<p className="text-sm text-red-500">
+					Course description is required
+				</p>
+			)}
+		</div>
+
+		{/* Price + Category */}
+		<div className="grid gap-6 md:grid-cols-2">
+			{/* Price */}
+			<div className="space-y-2">
 				<label
-					className="text-sm text-black-5"
-					htmlFor="courseShortDesc"
+					htmlFor="coursePrice"
+					className="font-semibold text-gray-700"
 				>
-					Course Short Description{" "}
-					<sup className="text-pink-200">*</sup>
+					Course Price
+					<span className="text-red-500">*</span>
 				</label>
-				<textarea
-					id="courseShortDesc"
-					placeholder="Enter Description"
-					{...register("courseShortDesc", { required: true })}
-					className="form-style resize-x-none min-h-32.5 w-full p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
-				/>
-				{errors.courseShortDesc && (
-					<span className="ml-2 text-xs tracking-wide text-red-600">
-						Course Description is required
-					</span>
-				)}
-			</div>
-			{/* Course Price */}
-			<div className="flex flex-col space-y-2">
-				<label className="text-sm text-black-5" htmlFor="coursePrice">
-					Course Price <sup className="text-pink-200">*</sup>
-				</label>
+
 				<div className="relative">
 					<input
 						id="coursePrice"
-						placeholder="Enter Course Price"
+						placeholder="499"
 						{...register("coursePrice", {
 							required: true,
 							valueAsNumber: true,
@@ -233,57 +259,68 @@ export default function CourseInformationForm() {
 								value: /^(0|[1-9]\d*)(\.\d+)?$/,
 							},
 						})}
-						className="form-style w-full pl-12! p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
+						className="w-full rounded-xl border border-gray-300 py-3 pl-12 pr-4 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
 					/>
-					<HiOutlineCurrencyRupee className="absolute left-3 top-1/2 inline-block -translate-y-1/2 text-2xl text-black-400" />
+
+					<HiOutlineCurrencyRupee className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-gray-500" />
 				</div>
+
 				{errors.coursePrice && (
-					<span className="ml-2 text-xs tracking-wide text-red-600">
-						Course Price is required
-					</span>
+					<p className="text-sm text-red-500">Price is required</p>
 				)}
 			</div>
-			{/* Course Category */}
-			<div className="flex flex-col space-y-2">
+
+			{/* Category */}
+			<div className="space-y-2">
 				<label
-					className="text-sm text-black-5"
 					htmlFor="courseCategory"
+					className="font-semibold text-gray-700"
 				>
-					Course Category <sup className="text-pink-200">*</sup>
+					Category
+					<span className="text-red-500">*</span>
 				</label>
+
 				<select
-					{...register("courseCategory", { required: true })}
-					defaultValue=""
 					id="courseCategory"
-					className="form-style w-full p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
+					defaultValue=""
+					{...register("courseCategory", {
+						required: true,
+					})}
+					className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
 				>
 					<option value="" disabled>
-						Choose a Category
+						Select Category
 					</option>
+
 					{!loading &&
-						courseCategories?.map((category, indx) => (
-							<option key={indx} value={category?._id}>
-								{category?.name}
+						courseCategories?.map((category) => (
+							<option key={category._id} value={category._id}>
+								{category.name}
 							</option>
 						))}
 				</select>
+
 				{errors.courseCategory && (
-					<span className="ml-2 text-xs tracking-wide text-red-600">
-						Course Category is required
-					</span>
+					<p className="text-sm text-red-500">Category is required</p>
 				)}
 			</div>
-			{/* Course Tags */}
+		</div>
+
+		{/* Tags */}
+		<div className="rounded-xl border bg-gray-50 p-5">
 			<ChipInput
 				label="Tags"
 				name="courseTags"
-				placeholder="Enter Tags and press Enter"
+				placeholder="Enter a tag and press Enter"
 				register={register}
 				errors={errors}
 				setValue={setValue}
 				getValues={getValues}
 			/>
-			{/* Course Thumbnail Image */}
+		</div>
+
+		{/* Thumbnail */}
+		<div className="rounded-xl border bg-gray-50 p-5">
 			<Upload
 				name="courseImage"
 				label="Course Thumbnail"
@@ -292,55 +329,67 @@ export default function CourseInformationForm() {
 				errors={errors}
 				editData={editCourse ? course?.thumbnail : null}
 			/>
-			{/* Benefits of the course */}
-			<div className="flex flex-col space-y-2">
-				<label
-					className="text-sm text-black-5"
-					htmlFor="courseBenefits"
-				>
-					Benefits of the course{" "}
-					<sup className="text-pink-200">*</sup>
-				</label>
-				<textarea
-					id="courseBenefits"
-					placeholder="Enter benefits of the course"
-					{...register("courseBenefits", { required: true })}
-					className="form-style resize-x-none min-h-32.5 w-full p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
-				/>
-				{errors.courseBenefits && (
-					<span className="ml-2 text-xs tracking-wide text-red-600">
-						Benefits of the course is required
-					</span>
-				)}
-			</div>
-			{/* Requirements/Instructions */}
+		</div>
+
+		{/* Benefits */}
+		<div className="space-y-2">
+			<label
+				htmlFor="courseBenefits"
+				className="font-semibold text-gray-700"
+			>
+				Benefits
+				<span className="text-red-500">*</span>
+			</label>
+
+			<textarea
+				rows={5}
+				id="courseBenefits"
+				placeholder="What will students learn?"
+				{...register("courseBenefits", {
+					required: true,
+				})}
+				className="w-full rounded-xl border border-gray-300 px-4 py-3 resize-none outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+			/>
+
+			{errors.courseBenefits && (
+				<p className="text-sm text-red-500">Benefits are required</p>
+			)}
+		</div>
+
+		{/* Requirements */}
+		<div className="rounded-xl border bg-gray-50 p-5">
 			<RequirementsField
 				name="courseRequirements"
-				label="Requirements/Instructions"
+				label="Requirements / Instructions"
 				register={register}
 				setValue={setValue}
 				errors={errors}
 				getValues={getValues}
 			/>
-			{/* Next Button */}
-			<div className="flex flex-col gap-2 md:flex-row justify-end gap-x-2">
-				{editCourse && (
-					<button
-						onClick={() => dispatch(setStep(2))}
-						disabled={loading}
-						className={`flex cursor-pointer justify-center items-center gap-x-2 rounded-md bg-pink-600 py-2 px-5 font-semibold text-white text-center hover:bg-pink-700`}
-					>
-						Continue Wihout Saving
-					</button>
-				)}
-				<IconBtn
+		</div>
+
+		{/* Footer Buttons */}
+		<div className="sticky bottom-0 flex flex-col-reverse gap-3 border-t bg-white pt-6 md:flex-row md:justify-end">
+			{editCourse && (
+				<button
+					type="button"
+					onClick={() => dispatch(setStep(2))}
 					disabled={loading}
-					loading={loading}
-					text={!editCourse ? "Next" : "Save Changes"}
+					className="rounded-xl border border-gray-300 px-6 py-3 font-semibold text-gray-700 transition hover:bg-gray-100"
 				>
-					<MdNavigateNext />
-				</IconBtn>
-			</div>
-		</form>
-	);
+					Continue Without Saving
+				</button>
+			)}
+
+			<IconBtn
+				disabled={loading}
+				loading={loading}
+				text={!editCourse ? "Next Step" : "Save Changes"}
+				customClasses="rounded-xl px-8 py-3"
+			>
+				<MdNavigateNext size={20} />
+			</IconBtn>
+		</div>
+	</form>
+);
 }

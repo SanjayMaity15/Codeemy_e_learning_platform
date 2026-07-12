@@ -31,61 +31,73 @@ const AdminCategory = () => {
 	}
 
 	return (
-		<div className="flex justify-center bg-gray-100">
+		<div className="min-h-screen rounded-3xl bg-linear-to-br from-slate-50 via-white to-pink-50 p-6 md:p-8 flex items-center justify-center">
 			<form
-				className="bg-white shadow-md rounded-lg p-8 w-full max-w-md space-y-6"
+				className="w-full max-w-xl rounded-3xl border border-gray-100 bg-white p-8 md:p-10 shadow-xl"
 				onSubmit={handleCreateCategory}
 			>
-				<h3 className="text-2xl font-semibold text-center uppercase text-primary">
-					Create Catagory
-				</h3>
+				{/* Header */}
+				<div className="mb-8 text-center">
+					<h3 className="text-3xl font-bold text-primary">
+						Create Category
+					</h3>
 
-				<div className="flex flex-col">
+					<p className="mt-2 text-gray-500">
+						Add a new course category for instructors.
+					</p>
+				</div>
+
+				{/* Category Name */}
+				<div className="mb-6 flex flex-col">
 					<label
 						htmlFor="name"
-						className="mb-2 font-medium text-gray-700"
+						className="mb-2 text-sm font-semibold text-gray-700"
 					>
 						Category Name
 					</label>
+
 					<input
 						type="text"
 						id="name"
 						value={name}
 						onChange={(e) => setName(e.target.value)}
-						className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className="rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 outline-none transition-all duration-200 focus:border-primary focus:bg-white focus:ring-2 focus:ring-pink-100"
 						placeholder="Enter category name"
 					/>
 				</div>
 
-				<div className="flex flex-col">
+				{/* Description */}
+				<div className="mb-8 flex flex-col">
 					<label
 						htmlFor="desc"
-						className="mb-2 font-medium text-gray-700"
+						className="mb-2 text-sm font-semibold text-gray-700"
 					>
 						Description
 					</label>
+
 					<textarea
 						type="text"
 						id="desc"
-						rows={4}
+						rows={5}
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
-						className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Enter description"
+						className="resize-none rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 outline-none transition-all duration-200 focus:border-primary focus:bg-white focus:ring-2 focus:ring-pink-100"
+						placeholder="Enter category description"
 					/>
 				</div>
 
+				{/* Button */}
 				<button
 					type="submit"
-					className="w-full bg-blue-600 text-white font-medium py-3 rounded-full hover:bg-blue-700 transition duration-200 flex justify-center items-center"
+					className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-primary py-3 font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
 					disabled={loading}
 				>
 					{loading ? (
 						<ButtonLoader />
 					) : (
-						<span className="flex items-center gap-1 tracking-wider">
-							<IoMdAdd />
-							Create
+						<span className="flex items-center gap-2 tracking-wide">
+							<IoMdAdd className="text-xl" />
+							Create Category
 						</span>
 					)}
 				</button>

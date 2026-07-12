@@ -24,17 +24,33 @@ export default function SidebarLink({ link, iconName }) {
 			to={link.path}
 			onClick={() => dispatch(resetCourseState())}
 			className={({ isActive }) =>
-				`relative px-8 py-2 text-sm font-medium ${
+				`group mx-2 my-1 flex items-center rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-300 ${
 					isActive
-						? "bg-pink-200 text-pink-700 border-r-4 border-r-pink-600"
-						: "hover:bg-pink-100"
-				} transition-all duration-200`
+						? "bg-linear-to-r from-pink-100 to-pink-200 text-primary shadow-md"
+						: "text-gray-600 hover:bg-pink-50 hover:text-primary hover:shadow-sm"
+				}`
 			}
 		>
-			<div className="flex items-center gap-x-2">
-				<Icon className="text-lg" />
-				<span>{link.name}</span>
-			</div>
+			{/* Active Indicator */}
+			<div
+				className={`mr-3 h-8 w-1 rounded-full transition-all duration-300 ${
+					window.location.pathname === link.path
+						? "bg-primary"
+						: "bg-transparent"
+				}`}
+			/>
+
+			{/* Icon */}
+			<Icon
+				className={`text-xl transition-transform duration-300 ${
+					window.location.pathname === link.path
+						? "scale-110"
+						: "group-hover:scale-110"
+				}`}
+			/>
+
+			{/* Text */}
+			<span className="ml-3 tracking-wide">{link.name}</span>
 		</NavLink>
 	);
 }

@@ -31,32 +31,57 @@ function ReviewSlider() {
 	return (
 		<div className="w-full py-12 mb-8">
 			<div className="mx-auto max-w-6xl">
-				<h2 className="text-3xl md:text-5xl font-bold text-center mb-12 md:mt-12 font-orbitron text-gray-500">
-					Student{" "}
-					<span className="bg-linear-to-b from-indigo-600 to-pink-600 bg-clip-text text-transparent">
-						Reviews
+				<div className="text-center mb-16">
+					<span className="rounded-full bg-indigo-100 px-5 py-2 text-sm font-semibold text-indigo-600">
+						TESTIMONIALS
 					</span>
-				</h2>
+
+					<h2 className="mt-6 text-4xl md:text-5xl font-bold font-orbitron text-slate-900">
+						What Our{" "}
+						<span className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+							Students Say
+						</span>
+					</h2>
+
+					<p className="mx-auto mt-5 max-w-2xl text-lg text-slate-500">
+						Thousands of learners have transformed their careers
+						through Codeemy. Here's what they have to say.
+					</p>
+				</div>
+
+				<div className="mb-8 flex justify-center">
+					<div className="rounded-full bg-white px-6 py-3 shadow">
+						⭐ <span className="font-bold">{reviews.length}</span>{" "}
+						Verified Student Reviews
+					</div>
+				</div>
 
 				<div className="px-4 lg:px-0">
 					<Swiper
+						modules={[Pagination, Autoplay]}
+						spaceBetween={30}
 						slidesPerView={1}
-						spaceBetween={25}
-						breakpoints={{
-							640: { slidesPerView: 1 },
-							768: { slidesPerView: 2 },
-							1024: { slidesPerView: 3 },
-						}}
-						loop={true}
-						freeMode={true}
-						speed={5000}
+						loop
+						speed={900}
 						autoplay={{
-							delay: 2500,
+							delay: 3000,
 							disableOnInteraction: false,
-							pauseOnMouseEnter: true,
 						}}
-						modules={[FreeMode, Pagination, Autoplay]}
-						className="w-full"
+						pagination={{
+							clickable: true,
+							dynamicBullets: true,
+						}}
+						breakpoints={{
+							640: {
+								slidesPerView: 1,
+							},
+							768: {
+								slidesPerView: 2,
+							},
+							1200: {
+								slidesPerView: 3,
+							},
+						}}
 					>
 						{reviews.map((review, i) => {
 							const isHovered = hoveredIndex === i;
@@ -71,72 +96,80 @@ function ReviewSlider() {
 											setHoveredIndex(null)
 										}
 										className={`
-                      flex min-h-50 flex-col justify-center gap-2 
-                      rounded-2xl bg-white p-4 shadow-md 
-                      transition-all duration-300
+										group relative overflow-hidden rounded-3xl
+										border border-slate-200
+										bg-white
+										p-6
+										shadow-sm
+										transition-all duration-500
+										hover:-translate-y-2 hover:shadow-2xl
 
-                    
+										${isOther ? "blur-sm opacity-50" : ""}
+										`}
+																		>
+										{/* Gradient Top */}
+										<div className="absolute left-0 top-0 h-1 w-full bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
 
-                      ${isOther ? "blur-sm opacity-50" : ""}
-                      ${isHovered ? "z-10 scale-95" : ""}
-                    `}
-									>
-										{/* User Info */}
-										<div className="flex items-center gap-3">
+										{/* Quote */}
+										<div className="absolute right-5 top-5 text-6xl text-indigo-100 font-serif">
+											“
+										</div>
+
+										{/* User */}
+										<div className="flex items-center gap-4">
 											<img
 												src={
-													review?.user?.image
-														? review?.user?.image
-														: `https://api.dicebear.com/5.x/initials/svg?seed=${review?.user?.firstName} ${review?.user?.lastName}`
+													review.user.image
+														? review.user.image
+														: `https://api.dicebear.com/7.x/initials/svg?seed=${review.user.firstName} ${review.user.lastName}`
 												}
 												alt=""
-												className="h-14 w-14 rounded-full object-cover"
+												className="h-16 w-16 rounded-full border-4 border-indigo-100 object-cover"
 											/>
 
 											<div>
-												<h3 className="font-semibold text-gray-900 text-lg">
-													{`${review?.user?.firstName} ${review?.user?.lastName}`}
+												<h3 className="font-bold text-lg text-slate-800">
+													{review.user.firstName}{" "}
+													{review.user.lastName}
 												</h3>
-												<p className="text-xs text-gray-500">
-													{review?.course?.courseName}
-												</p>
+
+												<span className="inline-block mt-1 rounded-full bg-indigo-100 px-3 py-1 text-xs font-medium text-indigo-600">
+													{review.course.courseName}
+												</span>
 											</div>
 										</div>
 
-										{/* Review Text */}
-										<p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
-											{review?.review.split(" ").length >
-											truncateWords
-												? `${review?.review
-														.split(" ")
-														.slice(0, truncateWords)
-														.join(" ")} ...`
-												: review?.review}
+										{/* Review */}
+										<p className="mt-6 text-slate-600 leading-7 line-clamp-4 min-h-28">
+											{review.review}
 										</p>
 
-										{/* Rating */}
-										<div className="flex items-center gap-1 mt-2">
-											{[1, 2, 3, 4, 5].map((star) => (
-												<div key={star}>
-													{star <= review.rating ? (
-														<FaStar className="text-yellow-500" />
+										{/* Footer */}
+										<div className="mt-6 flex items-center justify-between">
+											{/* Rating */}
+											<div className="flex items-center gap-1">
+												{[1, 2, 3, 4, 5].map((star) =>
+													star <= review.rating ? (
+														<FaStar
+															key={star}
+															className="text-yellow-400"
+														/>
 													) : (
-														<FaRegStar />
-													)}
-												</div>
-											))}
+														<FaRegStar
+															key={star}
+															className="text-gray-300"
+														/>
+													),
+												)}
+											</div>
+
+											{/* Date */}
+											<div className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-500">
+												{new Date(
+													review.createdAt,
+												).toLocaleDateString()}
+											</div>
 										</div>
-
-										{/* Date */}
-										<p className="text-xs mt-2 text-gray-400">
-											Post:{" "}
-											{new Date(
-												review.createdAt,
-											).toLocaleDateString()}
-										</p>
-
-										{/* Accent line */}
-										<div className="h-1 w-0 bg-[--color-primary] transition-all duration-300 hover:w-full rounded-full"></div>
 									</div>
 								</SwiperSlide>
 							);

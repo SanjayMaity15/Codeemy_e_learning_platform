@@ -44,250 +44,643 @@ export default function AboutUs() {
 	}, []);
 
 	return (
-		<div className="w-full section-container text-black">
-			<PageTitle title="About us" />
-			{/* ================= HERO SECTION ================= */}
-			<section className="min-h-screen flex flex-col items-center text-center md:px-6">
-				<h1
-					ref={textRef}
-					className="text-4xl md:text-6xl text-pink-600 font-bold mb-6 md:mt-20 mt-12 leading-tight font-orbitron"
-				>
-					{/* Line 1 */}
-					<p className="wave-line">
-						{"Empowering Learners.".split("").map((char, i) => (
-							<span key={i} className="inline-block">
-								{char === " " ? "\u00A0" : char}
+		<div className="relative overflow-hidden">
+			<PageTitle title="About Codeemy" />
+
+			{/* Background Blobs */}
+			<div className="absolute -top-32 -left-32 w-96 h-96 bg-indigo-500/10 blur-[120px] rounded-full"></div>
+
+			<div className="absolute top-96 -right-40 w-120 h-120 bg-pink-500/10 blur-[140px] rounded-full"></div>
+
+			<div className="section-container relative z-10">
+				{/* HERO */}
+
+				<section className="min-h-screen flex items-center">
+					<div className="grid md:grid-cols-2 gap-16 items-center">
+						{/* LEFT */}
+
+						<div>
+							<p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 text-primary font-semibold mb-8">
+								✨ Learn • Build • Grow
+							</p>
+
+							<h1 className="text-5xl md:text-7xl font-orbitron font-bold leading-tight">
+								<span className="text-gray-700">
+									Empowering
+								</span>
+
+								<br />
+
+								<span className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+									Future Developers
+								</span>
+							</h1>
+
+							<p className="mt-8 text-lg text-gray-500 leading-8">
+								Codeemy helps students master modern software
+								development through structured learning,
+								industry-focused projects, AI assistance, and
+								expert mentorship.
+							</p>
+
+							<div className="flex gap-5 mt-10 flex-wrap">
+								<Link to={user ? "/courses" : "/login"}>
+									<button className="px-8 py-4 rounded-full bg-primary text-white font-semibold hover:scale-105 transition">
+										Start Learning
+									</button>
+								</Link>
+
+								<Link to="/courses">
+									<button className="px-8 py-4 rounded-full border border-indigo-500 text-primary font-semibold hover:bg-indigo-50 transition">
+										Explore Courses
+									</button>
+								</Link>
+							</div>
+						</div>
+
+						{/* RIGHT */}
+
+						<div className="relative">
+							<div className="rounded-[35px] bg-white border border-gray-200 shadow-2xl p-8">
+								<img
+									src="https://plus.unsplash.com/premium_photo-1663075847012-c781e0d194ce?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+									alt="Students"
+									className="rounded-3xl"
+								/>
+							</div>
+
+							{/* Floating Card */}
+
+							<div className="absolute -left-10 top-12 bg-white rounded-2xl shadow-xl px-6 py-4">
+								<p className="text-sm text-gray-500">
+									Students
+								</p>
+
+								<h2 className="text-3xl font-bold text-primary">
+									10K+
+								</h2>
+							</div>
+
+							<div className="absolute -right-8 bottom-12 bg-white rounded-2xl shadow-xl px-6 py-4">
+								<p className="text-sm text-gray-500">Courses</p>
+
+								<h2 className="text-3xl font-bold text-pink-600">
+									200+
+								</h2>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				{/* ================= OUR STORY ================= */}
+
+				<section className="py-24">
+					<div className="text-center mb-16">
+						<p className="text-primary font-semibold tracking-widest uppercase">
+							Our Story
+						</p>
+
+						<h2 className="text-4xl md:text-5xl font-orbitron font-bold mt-3">
+							From an Idea to a
+							<span className="bg-linear-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent">
+								{" "}
+								Learning Platform
 							</span>
-						))}
-					</p>
+						</h2>
 
-					{/* Line 2 */}
-					<p className="wave-line text-neutral-500">
-						{"Building Future Careers.".split("").map((char, i) => (
-							<span key={i} className="inline-block">
-								{char === " " ? "\u00A0" : char}
+						<p className="text-gray-500 mt-5 max-w-3xl mx-auto leading-8">
+							Every great platform starts with one simple
+							question: "Why is learning programming still so
+							difficult?"
+						</p>
+					</div>
+
+					<div className="relative max-w-5xl mx-auto">
+						{/* Vertical Line */}
+
+						<div className="absolute left-5 top-0 bottom-0 w-1 bg-linear-to-b from-indigo-500 via-pink-500 to-purple-500 rounded-full"></div>
+
+						<div className="space-y-14">
+							{/* Step */}
+
+							<div className="relative pl-20">
+								<div className="absolute left-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold shadow-lg">
+									1
+								</div>
+
+								<div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+									<h3 className="text-2xl font-bold text-primary mb-3">
+										The Problem
+									</h3>
+
+									<p className="text-gray-500 leading-8">
+										Thousands of students complete college
+										every year but still struggle with
+										coding interviews, practical
+										development, and industry expectations.
+									</p>
+								</div>
+							</div>
+
+							{/* Step */}
+
+							<div className="relative pl-20">
+								<div className="absolute left-0 w-10 h-10 rounded-full bg-pink-500 flex items-center justify-center text-white font-bold shadow-lg">
+									2
+								</div>
+
+								<div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+									<h3 className="text-2xl font-bold text-pink-600 mb-3">
+										Our Solution
+									</h3>
+
+									<p className="text-gray-500 leading-8">
+										We created Codeemy to provide structured
+										learning, project-based education,
+										AI-powered assistance, and guidance from
+										experienced mentors.
+									</p>
+								</div>
+							</div>
+
+							{/* Step */}
+
+							<div className="relative pl-20">
+								<div className="absolute left-0 w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold shadow-lg">
+									3
+								</div>
+
+								<div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+									<h3 className="text-2xl font-bold text-green-600 mb-3">
+										Our Mission Today
+									</h3>
+
+									<p className="text-gray-500 leading-8">
+										Our goal is simple: make high-quality
+										tech education affordable, practical,
+										and accessible to every learner,
+										regardless of their background.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				{/* ================= Mission Vision Values ================= */}
+
+				<section className="py-24">
+					<div className="text-center mb-16">
+						<p className="uppercase tracking-widest text-primary font-semibold">
+							Our Foundation
+						</p>
+
+						<h2 className="text-4xl md:text-5xl font-orbitron font-bold mt-4">
+							Mission, Vision &
+							<span className="bg-linear-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent">
+								{" "}
+								Values
 							</span>
-						))}
-					</p>
-				</h1>
-				<p className="max-w-4xl text-gray-500 text-sm md:text-lg leading-relaxed">
-					Codeemy is an education-first technology platform focused on
-					transforming how students and professionals learn modern
-					technical skills. We don’t just teach concepts — we help
-					learners build confidence, discipline, and real-world
-					problem-solving ability.
-				</p>
-			</section>
+						</h2>
+					</div>
 
-			{/* ================= OUR ORIGIN ================= */}
-			<section className="max-w-6xl mx-auto md:px-6 md:py-16">
-				<h2 className="text-3xl md:text-4xl font-bold mb-8 font-orbitron text-pink-600">
-					Our Origin
-				</h2>
-				<div className="space-y-6 text-gray-500 leading-relaxed">
-					<p>
-						Codeemy was born from a simple observation: many
-						students spend years learning theory but still feel
-						unprepared for real-world software development and
-						technical interviews. The gap between academic learning
-						and industry expectations continues to grow.
-					</p>
-					<p>
-						We created Codeemy to bridge this gap. Our platform
-						focuses on structured learning paths, hands-on practice,
-						and mentor-guided growth so learners can move from
-						confusion to clarity and from basics to mastery.
-					</p>
-					<p>
-						Whether you are a beginner taking your first step into
-						coding or a final-year student preparing for placements,
-						Codeemy is designed to support you at every stage of
-						your journey.
-					</p>
-				</div>
-			</section>
+					<div className="grid md:grid-cols-3 gap-8">
+						{/* Mission */}
 
-			{/* ================= MISSION, VISION, VALUES ================= */}
-			<section className=" border-gray-800 md:p-8 hover:border-green-400 transition py-16">
-				<div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
-					<div className="bg-white md:p-8 p-4">
-						<h3 className="text-2xl font-bold mb-4 flex items-center gap-3 font-orbitron text-orange-500">
-							<FiTarget className="text-green-500" /> Our Mission
-						</h3>
-						<p className="text-gray-500 leading-relaxed">
-							To deliver practical, industry-aligned education
-							that empowers learners to think critically, build
-							confidently, and succeed in competitive tech
-							careers.
+						<div className="group bg-white rounded-3xl p-10 border border-gray-100 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition duration-500">
+							<div className="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center mb-8">
+								<FiTarget className="text-3xl text-primary" />
+							</div>
+
+							<h3 className="text-2xl font-bold mb-5">
+								Our Mission
+							</h3>
+
+							<p className="text-gray-500 leading-8">
+								Deliver industry-ready education through
+								practical learning, real-world projects, AI
+								guidance, and mentorship that prepares learners
+								for successful technology careers.
+							</p>
+						</div>
+
+						{/* Vision */}
+
+						<div className="group bg-white rounded-3xl p-10 border border-gray-100 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition duration-500">
+							<div className="w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center mb-8">
+								<FiTrendingUp className="text-3xl text-pink-600" />
+							</div>
+
+							<h3 className="text-2xl font-bold mb-5">
+								Our Vision
+							</h3>
+
+							<p className="text-gray-500 leading-8">
+								To become one of the most trusted online
+								learning platforms that transforms beginners
+								into confident software developers through
+								quality education.
+							</p>
+						</div>
+
+						{/* Values */}
+
+						<div className="group bg-white rounded-3xl p-10 border border-gray-100 shadow-lg hover:shadow-2xl hover:-translate-y-3 transition duration-500">
+							<div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center mb-8">
+								<FiGlobe className="text-3xl text-green-600" />
+							</div>
+
+							<h3 className="text-2xl font-bold mb-5">
+								Our Values
+							</h3>
+
+							<p className="text-gray-500 leading-8">
+								Consistency, innovation, curiosity,
+								collaboration, and lifelong learning are the
+								principles that shape every course and every
+								learner at Codeemy.
+							</p>
+						</div>
+					</div>
+				</section>
+
+				{/* ================= WHAT WE TEACH ================= */}
+
+				<section className="py-24">
+					<div className="text-center mb-16">
+						<p className="uppercase tracking-widest text-primary font-semibold">
+							What You'll Learn
+						</p>
+
+						<h2 className="text-4xl md:text-5xl font-bold font-orbitron mt-3">
+							Skills That Build
+							<span className="bg-linear-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent">
+								{" "}
+								Successful Careers
+							</span>
+						</h2>
+
+						<p className="text-gray-500 max-w-3xl mx-auto mt-5 leading-8">
+							Our curriculum focuses on the technologies and
+							skills companies actually expect from modern
+							developers.
 						</p>
 					</div>
-					<div className="bg-white p-8">
-						<h3 className="text-2xl font-bold mb-4 flex items-center gap-3 font-orbitron text-primary">
-							<FiTrendingUp className="text-green-500" /> Our
-							Vision
-						</h3>
-						<p className="text-gray-500 leading-relaxed">
-							To become a trusted global learning ecosystem where
-							skill, discipline, and innovation define success —
-							not background or privilege.
+
+					<div className="grid md:grid-cols-3 gap-8">
+						{/* Card */}
+
+						<div className="group rounded-3xl bg-linear-to-br from-indigo-500 to-blue-600 text-white p-10 shadow-xl hover:-translate-y-4 transition duration-500">
+							<div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center mb-8">
+								<FiCode className="text-3xl" />
+							</div>
+
+							<h3 className="text-2xl font-bold mb-4">
+								Web Development
+							</h3>
+
+							<p className="leading-8 opacity-90">
+								Master HTML, CSS, JavaScript, React, Node.js,
+								Express, MongoDB and modern full-stack
+								development through real projects.
+							</p>
+						</div>
+
+						{/* Card */}
+
+						<div className="group rounded-3xl bg-linear-to-br from-pink-500 to-rose-500 text-white p-10 shadow-xl hover:-translate-y-4 transition duration-500">
+							<div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center mb-8">
+								<FiLayers className="text-3xl" />
+							</div>
+
+							<h3 className="text-2xl font-bold mb-4">
+								DSA & Algorithms
+							</h3>
+
+							<p className="leading-8 opacity-90">
+								Build strong problem-solving skills through
+								arrays, trees, graphs, dynamic programming and
+								coding interview preparation.
+							</p>
+						</div>
+
+						{/* Card */}
+
+						<div className="group rounded-3xl bg-linear-to-br from-emerald-500 to-green-600 text-white p-10 shadow-xl hover:-translate-y-4 transition duration-500">
+							<div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center mb-8">
+								<FiBookOpen className="text-3xl" />
+							</div>
+
+							<h3 className="text-2xl font-bold mb-4">
+								Career Preparation
+							</h3>
+
+							<p className="leading-8 opacity-90">
+								Prepare for internships and placements with
+								resume building, mock interviews, aptitude
+								guidance and industry-ready projects.
+							</p>
+						</div>
+					</div>
+				</section>
+				{/* ================= HOW WE TEACH ================= */}
+
+				<section className="py-24">
+					<div className="grid lg:grid-cols-2 gap-20 items-center">
+						{/* Left */}
+
+						<div>
+							<p className="uppercase tracking-widest text-primary font-semibold">
+								Our Learning Process
+							</p>
+
+							<h2 className="text-4xl md:text-5xl font-bold font-orbitron mt-3 leading-tight">
+								Learn Faster,
+								<span className="bg-linear-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent">
+									{" "}
+									Practice Smarter
+								</span>
+							</h2>
+
+							<p className="mt-8 text-gray-500 leading-8">
+								Every course at Codeemy is carefully structured
+								to help you understand concepts quickly,
+								practice consistently, and build confidence
+								through real projects instead of memorization.
+							</p>
+
+							<p className="mt-5 text-gray-500 leading-8">
+								We believe long-term growth comes from hands-on
+								learning, feedback, and continuous
+								improvement—not shortcuts.
+							</p>
+						</div>
+
+						{/* Right */}
+
+						<div className="space-y-6">
+							<div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition">
+								<h3 className="text-xl font-bold text-indigo-600 mb-3">
+									01. Learn
+								</h3>
+
+								<p className="text-gray-500 leading-7">
+									Understand concepts with easy explanations
+									and visual examples.
+								</p>
+							</div>
+
+							<div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition">
+								<h3 className="text-xl font-bold text-pink-600 mb-3">
+									02. Practice
+								</h3>
+
+								<p className="text-gray-500 leading-7">
+									Solve coding challenges, quizzes and
+									real-world assignments after every lesson.
+								</p>
+							</div>
+
+							<div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition">
+								<h3 className="text-xl font-bold text-emerald-600 mb-3">
+									03. Build
+								</h3>
+
+								<p className="text-gray-500 leading-7">
+									Create portfolio-worthy projects and prepare
+									for real technical interviews.
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				{/* ================= COMMUNITY ================= */}
+
+				<section className="py-24">
+					<div className="rounded-[40px] bg-linear-to-r from-indigo-600 via-violet-600 to-pink-600 text-white overflow-hidden relative">
+						{/* Background Glow */}
+
+						<div className="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-white/10 blur-3xl" />
+
+						<div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-pink-400/20 blur-3xl" />
+
+						<div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center p-10 md:p-20">
+							{/* Left */}
+
+							<div>
+								<p className="uppercase tracking-widest text-pink-100 font-semibold">
+									Community & Mentorship
+								</p>
+
+								<h2 className="text-4xl md:text-5xl font-bold font-orbitron mt-4 leading-tight">
+									Learn Together.
+									<br />
+									Grow Together.
+								</h2>
+
+								<p className="mt-8 text-indigo-100 leading-8">
+									Codeemy isn't just a place to watch videos.
+									You'll learn with mentors, connect with
+									other students, ask questions, solve
+									problems together, and stay motivated
+									throughout your journey.
+								</p>
+							</div>
+
+							{/* Right */}
+
+							<div className="grid grid-cols-2 gap-6">
+								<div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+									<h3 className="text-5xl font-bold">500+</h3>
+
+									<p className="mt-3 text-indigo-100">
+										Students Learning
+									</p>
+								</div>
+
+								<div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+									<h3 className="text-5xl font-bold">20+</h3>
+
+									<p className="mt-3 text-indigo-100">
+										Industry Courses
+									</p>
+								</div>
+
+								<div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+									<h3 className="text-5xl font-bold">100+</h3>
+
+									<p className="mt-3 text-indigo-100">
+										Projects Built
+									</p>
+								</div>
+
+								<div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+									<h3 className="text-5xl font-bold">24×7</h3>
+
+									<p className="mt-3 text-indigo-100">
+										AI Learning Assistant
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				{/* ================= WHY CODEEMY ================= */}
+
+				<section className="py-24">
+					<div className="text-center mb-16">
+						<p className="text-primary font-semibold tracking-widest uppercase">
+							Why Choose Us
+						</p>
+
+						<h2 className="text-4xl md:text-5xl font-bold font-orbitron mt-4">
+							Why Learn With
+							<span className="bg-linear-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent">
+								{" "}
+								Codeemy
+							</span>
+						</h2>
+
+						<p className="text-gray-500 mt-6 max-w-2xl mx-auto">
+							Everything you need to become industry ready—from
+							structured learning to AI-powered assistance and
+							real projects.
 						</p>
 					</div>
-					<div className="bg-white p-8">
-						<h3 className="text-2xl font-bold mb-4 flex items-center gap-3 font-orbitron ">
-							<FiGlobe className="text-green-500" /> Our Values
-						</h3>
-						<p className="text-gray-500 leading-relaxed">
-							We believe in consistency over shortcuts, depth over
-							surface learning, and community-driven growth over
-							isolated progress.
-						</p>
+
+					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+						<div className="group bg-white rounded-3xl p-8 border border-gray-200 hover:border-indigo-500 hover:-translate-y-3 transition duration-300 shadow-sm hover:shadow-xl">
+							<div className="w-14 h-14 rounded-2xl bg-indigo-100 flex items-center justify-center text-2xl">
+								🚀
+							</div>
+
+							<h3 className="mt-6 text-xl font-bold">
+								Career Focused
+							</h3>
+
+							<p className="text-gray-500 mt-4 leading-7">
+								Learn exactly what companies expect in technical
+								interviews.
+							</p>
+						</div>
+
+						<div className="group bg-white rounded-3xl p-8 border border-gray-200 hover:border-pink-500 hover:-translate-y-3 transition duration-300 shadow-sm hover:shadow-xl">
+							<div className="w-14 h-14 rounded-2xl bg-pink-100 flex items-center justify-center text-2xl">
+								🤖
+							</div>
+
+							<h3 className="mt-6 text-xl font-bold">
+								AI Learning Assistant
+							</h3>
+
+							<p className="text-gray-500 mt-4 leading-7">
+								Get instant explanations and guidance whenever
+								you're stuck.
+							</p>
+						</div>
+
+						<div className="group bg-white rounded-3xl p-8 border border-gray-200 hover:border-purple-500 hover:-translate-y-3 transition duration-300 shadow-sm hover:shadow-xl">
+							<div className="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center text-2xl">
+								💻
+							</div>
+
+							<h3 className="mt-6 text-xl font-bold">
+								Hands-on Projects
+							</h3>
+
+							<p className="text-gray-500 mt-4 leading-7">
+								Build portfolio-ready projects while learning
+								modern tools.
+							</p>
+						</div>
+
+						<div className="group bg-white rounded-3xl p-8 border border-gray-200 hover:border-orange-500 hover:-translate-y-3 transition duration-300 shadow-sm hover:shadow-xl">
+							<div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-2xl">
+								📚
+							</div>
+
+							<h3 className="mt-6 text-xl font-bold">
+								Structured Learning
+							</h3>
+
+							<p className="text-gray-500 mt-4 leading-7">
+								Clear roadmap from beginner to advanced with no
+								confusion.
+							</p>
+						</div>
+
+						<div className="group bg-white rounded-3xl p-8 border border-gray-200 hover:border-green-500 hover:-translate-y-3 transition duration-300 shadow-sm hover:shadow-xl">
+							<div className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-2xl">
+								🎯
+							</div>
+
+							<h3 className="mt-6 text-xl font-bold">
+								Interview Preparation
+							</h3>
+
+							<p className="text-gray-500 mt-4 leading-7">
+								Prepare for service-based and product-based
+								company interviews.
+							</p>
+						</div>
+
+						<div className="group bg-white rounded-3xl p-8 border border-gray-200 hover:border-cyan-500 hover:-translate-y-3 transition duration-300 shadow-sm hover:shadow-xl">
+							<div className="w-14 h-14 rounded-2xl bg-cyan-100 flex items-center justify-center text-2xl">
+								🏆
+							</div>
+
+							<h3 className="mt-6 text-xl font-bold">
+								Certification
+							</h3>
+
+							<p className="text-gray-500 mt-4 leading-7">
+								Earn certificates after completing courses and
+								quizzes.
+							</p>
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+				{/* ================= FINAL CTA ================= */}
+				<section className="py-24">
+					<div className="max-w-6xl mx-auto px-6">
+						<div className="relative overflow-hidden rounded-4xl bg-linear-to-r from-indigo-600 via-violet-600 to-pink-600 p-12 md:p-16 text-center">
+							{/* Glow */}
+							<div className="absolute -top-24 -left-24 w-72 h-72 bg-pink-400/30 rounded-full blur-3xl"></div>
+							<div className="absolute -bottom-24 -right-24 w-72 h-72 bg-indigo-300/30 rounded-full blur-3xl"></div>
 
-			{/* ================= WHAT WE TEACH ================= */}
-			<section className="max-w-6xl mx-auto md:px-6 md:py-16">
-				<h2 className="text-3xl md:text-4xl font-bold mb-12 font-orbitron text-pink-600">
-					What We Teach
-				</h2>
-				<div className="grid md:grid-cols-3 gap-10">
-					<div className=" border-gray-800 bg-white md:p-8 p-4 hover:border-green-400 transition rounded-2xl border ">
-						<FiCode className="text-3xl mb-4 text-amber-300" />
-						<h4 className="text-xl text-green-500 font-semibold mb-3">
-							Modern Web Development
-						</h4>
-						<p className="text-gray-500">
-							Learn HTML, CSS, JavaScript, React, backend
-							fundamentals, and modern tooling through real-world
-							projects.
-						</p>
+							<div className="relative z-10">
+								<h2 className="text-4xl md:text-5xl font-bold text-white font-orbitron">
+									Ready To Build Your Future?
+								</h2>
+
+								<p className="text-indigo-100 max-w-2xl mx-auto mt-6 text-lg leading-8">
+									Join thousands of learners building
+									real-world skills through practical
+									projects, expert mentorship, and structured
+									learning.
+								</p>
+
+								<div className="flex flex-wrap justify-center gap-5 mt-10">
+									<Link to={user ? "/courses" : "/login"}>
+										<button className="bg-white text-indigo-700 px-10 py-4 rounded-full font-bold hover:scale-105 transition cursor-pointer shadow-lg">
+											Explore Courses
+										</button>
+									</Link>
+
+									<Link to="/contact">
+										<button className="border border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-indigo-700 transition cursor-pointer">
+											Contact Us
+										</button>
+									</Link>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div className=" border-gray-800 bg-white p-8 hover:border-green-400 border transition rounded-2xl">
-						<FiLayers className="text-3xl mb-4 text-indigo-600" />
-						<h4 className="text-xl text-orange-500 font-semibold mb-3">
-							DSA & Problem Solving
-						</h4>
-						<p className="text-gray-500">
-							Build strong logical thinking with data structures,
-							algorithms, and interview-focused problem-solving
-							techniques.
-						</p>
-					</div>
-					<div className=" border-gray-800 bg-white p-8 hover:border-green-400 border transition rounded-2xl">
-						<FiBookOpen className="text-3xl text-cyan-400 mb-4" />
-						<h4 className="text-xl text-purple-500 font-semibold mb-3">
-							Career Preparation
-						</h4>
-						<p className="text-gray-500">
-							Resume building, interview preparation, system
-							thinking, and guidance aligned with service-based
-							and product companies.
-						</p>
-					</div>
-				</div>
-			</section>
-
-			{/* ================= HOW WE TEACH ================= */}
-			<section className=" bg-white md:p-8 hover:border-green-400 transition mt-8 md:mt-0 py-16">
-				<div className="max-w-6xl mx-auto px-6">
-					<h2 className="text-3xl md:text-4xl font-bold mb-10 font-orbitron text-pink-600">
-						How We Teach
-					</h2>
-					<div className="grid md:grid-cols-2 gap-12 text-gray-500">
-						<p>
-							Our teaching methodology is built around clarity,
-							repetition, and application. Every concept is broken
-							down into simple ideas, followed by guided practice
-							and real-world usage.
-						</p>
-						<p>
-							We emphasize consistency and long-term growth rather
-							than quick hacks. Learners are encouraged to build
-							daily habits, reflect on mistakes, and continuously
-							improve through structured feedback.
-						</p>
-					</div>
-				</div>
-			</section>
-
-			{/* ================= COMMUNITY & MENTORSHIP ================= */}
-			<section className="max-w-6xl mx-auto px-6 py-24">
-				<h2 className="text-3xl md:text-4xl font-bold mb-8 font-orbitron text-pink-600">
-					Community & Mentorship
-				</h2>
-				<p className="text-gray-500 leading-relaxed max-w-4xl">
-					Codeemy is more than a learning platform — it’s a growing
-					community of learners, mentors, and builders. Our
-					mentorship-driven approach helps students stay accountable,
-					overcome doubts, and learn from real industry experiences.
-				</p>
-			</section>
-
-			{/* ================= WHY CODEEMY ================= */}
-			<section className="bg-white md:p-8 p-4 hover:border-green-400 transition md:py-24 ">
-				<div className="max-w-6xl mx-auto md:px-6">
-					<h2 className="text-3xl md:text-4xl font-bold mb-10 font-orbitron text-pink-600">
-						Why Codeemy?
-					</h2>
-					<ul className="grid md:grid-cols-2 gap-6 text-gray-500">
-						<li className="flex gap-1">
-							<span className="text-green-500">✔</span>Structured
-							learning paths with clear outcomes
-						</li>
-						<li className="flex gap-1">
-							<span className="text-green-500">✔</span>
-							Beginner-friendly explanations with depth
-						</li>
-						<li className="flex gap-1">
-							<span className="text-green-500">✔</span>Focus on
-							service-based and IT company exams
-						</li>
-						<li className="flex gap-1">
-							<span className="text-green-500">✔</span>Hands-on
-							projects and practical assignments
-						</li>
-						<li className="flex gap-1">
-							<span className="text-green-500">✔</span>Mentor
-							guidance and community support
-						</li>
-						<li className="flex gap-1">
-							<span className="text-green-500">✔</span>Long-term
-							skill development mindset
-						</li>
-					</ul>
-				</div>
-			</section>
-
-			{/* ================= FUTURE ROADMAP ================= */}
-			<section className="max-w-6xl mx-auto px-6 py-16">
-				<h2 className="text-3xl md:text-4xl font-bold mb-8 font-orbitron text-pink-600">
-					Our Roadmap
-				</h2>
-				<p className="text-gray-500 leading-relaxed max-w-4xl">
-					We are continuously expanding Codeemy with advanced courses,
-					real project collaborations, certification programs, and
-					deeper mentorship opportunities. Our roadmap is guided by
-					one goal — to help learners stay relevant in a rapidly
-					evolving tech industry.
-				</p>
-			</section>
-
-			{/* ================= CTA ================= */}
-			<section className="md:py-24 py-8 text-center px-6">
-				<h2 className="text-3xl md:text-4xl font-bold mb-6 font-orbitron text-pink-600">
-					Start Your Learning Journey with Codeemy
-				</h2>
-				<p className="text-gray-500 max-w-3xl mx-auto mb-8">
-					Whether you are starting from zero or refining your skills,
-					Codeemy provides the structure, support, and clarity you
-					need to move forward with confidence.
-				</p>
-				<Link to={user ? "/dashboard/my-profile" : "/login"}>
-					<button className="px-10 py-4 rounded-full shadow-sm bg-primary   font-semibold hover:opacity-90 transition cursor-pointer text-white font-orbitron">
-						Get's started
-					</button>
-				</Link>
-			</section>
+				</section>
+			</div>
 		</div>
 	);
+				
+				
 }

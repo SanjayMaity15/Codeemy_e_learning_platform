@@ -24,7 +24,7 @@ export default function ChangeProfilePicture() {
 
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
-		
+
 		if (file) {
 			setImageFile(file);
 			previewFile(file);
@@ -41,11 +41,10 @@ export default function ChangeProfilePicture() {
 
 	const handleFileUpload = async () => {
 		try {
-			
 			setLoading(true);
+
 			const formData = new FormData();
 			formData.append("displayPicture", imageFile);
-			
 
 			const result = await axios.put(
 				`${import.meta.env.VITE_SERVER_URL}profile/updateDisplayPicture`,
@@ -72,20 +71,30 @@ export default function ChangeProfilePicture() {
 			previewFile(imageFile);
 		}
 	}, [imageFile]);
+
 	return (
-		<>
-			<div className="flex items-center justify-between rounded-md  bg-white shadow-sm p-8 px-12">
-				<div className="flex flex-col md:flex-row items-center gap-x-4">
+		<div className="rounded-3xl border border-gray-200 bg-white shadow-lg p-6 md:p-8 transition-all duration-300 hover:shadow-xl">
+
+			
+			<div className="flex flex-col md:flex-row items-center justify-between gap-6">
+				<div className="flex flex-col sm:flex-row items-center gap-5">
 					<img
 						src={previewSource || user?.image}
 						alt={`profile-${user?.firstName}`}
-						className="aspect-square w-12 md:w-19.5 rounded-full object-cover"
+						className="w-24 h-24 rounded-full object-cover border-4 border-pink-100 shadow-md"
 					/>
-					<div className="space-y-2">
-						<p className="text-center md:text-left">
-							Change Profile Picture
+
+					<div>
+						<h3 className="text-xl font-semibold text-gray-800 text-center md:text-left">
+							Profile Picture
+						</h3>
+
+						<p className="text-sm text-gray-500 mt-1 text-center md:text-left">
+							Upload a new profile picture. PNG, JPG or GIF
+							supported.
 						</p>
-						<div className="flex flex-row gap-3">
+
+						<div className="flex flex-wrap justify-center md:justify-start gap-3 mt-5">
 							<input
 								type="file"
 								ref={fileInputRef}
@@ -93,13 +102,15 @@ export default function ChangeProfilePicture() {
 								className="hidden"
 								accept="image/png, image/gif, image/jpeg"
 							/>
+
 							<button
 								onClick={handleClick}
 								disabled={loading}
-								className="cursor-pointer rounded-md bg-pink-600 py-2 px-5 font-semibold text-white"
+								className="px-5 py-2.5 rounded-xl bg-pink-100 text-pink-600 font-semibold hover:bg-pink-200 transition cursor-pointer disabled:opacity-60"
 							>
-								Select
+								Select Image
 							</button>
+
 							<IconBtn
 								text={
 									loading ? (
@@ -109,15 +120,16 @@ export default function ChangeProfilePicture() {
 									)
 								}
 								onclick={handleFileUpload}
+								customClasses="rounded-xl px-6"
 							>
 								{!loading && (
-									<FiUpload className="text-lg text-black-900" />
+									<FiUpload className="text-lg text-white" />
 								)}
 							</IconBtn>
 						</div>
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }

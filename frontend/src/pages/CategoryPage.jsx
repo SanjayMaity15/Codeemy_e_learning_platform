@@ -76,102 +76,133 @@ function CategoryPage() {
 		return <Loader />;
 	}
 
-	if (!courses || courses.length === 0) {
-		return (
-			<div className="h-screen flex flex-col justify-start md:pt-24 pt-12 items-center gap-4 relative">
-				<img src={cartoonImage} alt="cartoon crying" className="w-50 z-10" />
-				<p className="-rotate-15 md:text-8xl text-4xl text-gray-400 absolute top-45">No course found</p>
-			</div>
-		);
-	}
-
+if (!courses || courses.length === 0) {
 	return (
-		<div className="section-container">
-			<PageTitle title={`Courses | ${category}`} />
-			{/* Hero Section */}
-			<div className="">
-				<div className="mx-auto flex py-8 flex-col justify-center gap-2">
-					<p className="text-sm text-primary">
-						{`Home / Catalog / `}
-						<span className="font-bold">
-							{catalogPageData?.data?.selectedCategory?.name}
-						</span>
-					</p>
-					<p className="text-3xl text-pink-600">
+		<div className="min-h-[80vh] flex flex-col items-center justify-center text-center px-6">
+			<img src={cartoonImage} alt="No Courses" className="w-60" />
+
+			<h1 className="mt-8 text-4xl font-bold text-gray-800">
+				No Courses Found
+			</h1>
+
+			<p className="mt-3 max-w-md text-gray-500">
+				Sorry, we couldn't find any courses in this category. Try
+				browsing another category.
+			</p>
+
+			<button
+				onClick={() => window.history.back()}
+				className="mt-8 rounded-full bg-primary px-8 py-3 text-white hover:bg-indigo-700 transition"
+			>
+				Browse Categories
+			</button>
+		</div>
+	);
+}
+
+return (
+	<div className="bg-gray-50 min-h-screen">
+		<PageTitle title={`Courses | ${category}`} />
+
+		{/* Hero */}
+		<section className="bg-white border-b border-gray-200">
+			<div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
+				<p className="text-sm text-gray-500">
+					Home / Catalog /
+					<span className="font-medium text-primary">
+						{" "}
 						{catalogPageData?.data?.selectedCategory?.name}
-					</p>
-					<p className="max-w-217.5 text-gray-500">
-						{catalogPageData?.data?.selectedCategory?.description}
-					</p>
+					</span>
+				</p>
+
+				<h1 className="mt-3 text-4xl font-bold text-gray-900">
+					{catalogPageData?.data?.selectedCategory?.name}
+				</h1>
+
+				<p className="mt-4 max-w-3xl text-gray-600 leading-7">
+					{catalogPageData?.data?.selectedCategory?.description}
+				</p>
+			</div>
+		</section>
+
+		<div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
+			{/* Courses */}
+			<div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+				<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+					<h2 className="text-2xl font-bold text-gray-900">
+						Courses to get you started
+					</h2>
+
+					<div className="flex rounded-xl bg-gray-100 p-1 w-fit">
+						<button
+							onClick={() => setActive(1)}
+							className={`px-5 py-2 rounded-lg text-sm font-medium transition ${
+								active === 1
+									? "bg-primary text-white shadow"
+									: "text-gray-600 hover:bg-white"
+							}`}
+						>
+							Most Popular
+						</button>
+
+						<button
+							onClick={() => setActive(2)}
+							className={`px-5 py-2 rounded-lg text-sm font-medium transition ${
+								active === 2
+									? "bg-primary text-white shadow"
+									: "text-gray-600 hover:bg-white"
+							}`}
+						>
+							New
+						</button>
+					</div>
+				</div>
+
+				<div className="mt-8">
+					<Course_Slider Courses={filteredCourses} id="slider1" />
 				</div>
 			</div>
 
-			{/* Section 1 */}
-			<div className="w-full mt-6">
-				<div className="text-2xl">Courses to get you started</div>
-				<div className="my-4 flex text-sm">
-					<p
-						className={`px-4 py-2 ${
-							active === 1
-								? "border-b border-b-yellow-25 text-yellow-25"
-								: "text-black-50"
-						} cursor-pointer`}
-						onClick={() => setActive(1)}
-					>
-						Most Populer
-					</p>
-					<p
-						className={`px-4 py-2 ${
-							active === 2
-								? "border-b border-b-yellow-25 text-yellow-25"
-								: "text-black-50"
-						} cursor-pointer`}
-						onClick={() => setActive(2)}
-					>
-						New
-					</p>
-				</div>
-				<div className="">
-					<Course_Slider Courses={filteredCourses} id={"slider1"} />
-				</div>
-			</div>
-			{/* Section 2 */}
-			<div className="w-full md:px-4 py-12">
-				<div className="section_heading text-2xl">
-					Top courses in{" "}
-					{catalogPageData?.data?.differentCategory?.name}
-				</div>
-				<div className="py-8">
+			{/* Top Courses */}
+			<div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mt-10">
+				<h2 className="text-2xl font-bold text-gray-900">
+					Top Courses in{" "}
+					<span className="text-primary">
+						{catalogPageData?.data?.differentCategory?.name}
+					</span>
+				</h2>
+
+				<div className="mt-8">
 					<Course_Slider
 						Courses={
 							catalogPageData?.data?.differentCategory?.courses
 						}
-						id={"slider2"}
+						id="slider2"
 					/>
 				</div>
 			</div>
 
-			{/* Section 3 */}
-			<div className="w-full md:px-4 py-12">
-				<div className="section_heading text-2xl">
-					Frequently Bought
-				</div>
-				<div className="py-8">
-					<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-						{catalogPageData?.data?.mostSellingCourses
-							?.slice(0, 3)
-							.map((course, i) => (
-								<Course_Card
-									course={course}
-									key={i}
-									Height={"h-[200px]"}
-								/>
-							))}
-					</div>
+			{/* Frequently Bought */}
+			<div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mt-10">
+				<h2 className="text-2xl font-bold text-gray-900">
+					Frequently Bought Together
+				</h2>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+					{catalogPageData?.data?.mostSellingCourses
+						?.slice(0, 3)
+						.map((course) => (
+							<Course_Card
+								key={course._id}
+								course={course}
+								Height="h-[220px]"
+							/>
+						))}
 				</div>
 			</div>
 		</div>
-	);
+	</div>
+);
 }
 
 export default CategoryPage;

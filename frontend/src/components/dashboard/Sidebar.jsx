@@ -18,7 +18,7 @@ export default function Sidebar() {
 
 	if (profileLoading || authLoading) {
 		return (
-			<div className="grid h-[calc(100vh-3.5rem)] min-w-55 items-center border-r- border-r-richblack-700 bg-gray-800">
+			<div className="grid h-[calc(100vh-3.5rem)] min-w-60 place-items-center border-r border-pink-100 bg-linear-to-b from-white to-pink-50">
 				<div className="spinner"></div>
 			</div>
 		);
@@ -26,34 +26,55 @@ export default function Sidebar() {
 
 	return (
 		<>
-			<div className="flex w-50 sm:w-55 md:w-60 bg-white flex-col border-r border-r-pink-200 shadow-md py-10 h-screen">
-				<div className="flex flex-col">
-					{sidebarLinks.map((link) => {
-						if (link.type && user?.accountType !== link.type)
-							return null;
-						return (
-							<SidebarLink
-								key={link.id}
-								link={link}
-								iconName={link.icon}
-							/>
-						);
-					})}
+			<div className="flex h-screen w-52 sm:w-56 md:w-64 flex-col justify-between border-r border-pink-100 bg-white shadow-xl">
+				{/* Logo/Header Space */}
+				<div >
+					<div className="border-b border-pink-100 px-6 py-6">
+						<h2 className="text-xl font-bold text-primary">
+							Dashboard
+						</h2>
+
+						<p className="mt-1 text-xs text-gray-500">
+							Welcome back
+						</p>
+					</div>
+
+					{/* Navigation */}
+					<div className="mt-4 flex flex-col gap-1 px-3">
+						{sidebarLinks.map((link) => {
+							if (link.type && user?.accountType !== link.type)
+								return null;
+
+							return (
+								<SidebarLink
+									key={link.id}
+									link={link}
+									iconName={link.icon}
+								/>
+							);
+						})}
+					</div>
 				</div>
-				<div className="mx-auto mt-6 mb-6 h-px w-10/12 bg-gray-700" />
-				<div className="flex flex-col">
-					<SidebarLink
-						link={{ name: "Settings", path: "/dashboard/settings" }}
-						iconName="VscSettingsGear"
-					/>
+
+				{/* Bottom */}
+				<div className="border-t border-pink-100 p-3">
+					<div className="mb-2">
+						<SidebarLink
+							link={{
+								name: "Settings",
+								path: "/dashboard/settings",
+							}}
+							iconName="VscSettingsGear"
+						/>
+					</div>
+
 					<button
-						className="px-8 py-2 text-sm font-medium hover:bg-pink-100 cursor-pointer"
+						className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-11 py-3 text-sm font-medium text-red-600 transition-all duration-300  hover:bg-red-50 hover:shadow-sm"
 						onClick={() => setOpenLogoutPopup(true)}
 					>
-						<div className="flex items-center gap-x-2 text-red-600">
-							<VscSignOut className="text-lg" />
-							<span>Logout</span>
-						</div>
+						<VscSignOut className="text-xl" />
+
+						<span>Logout</span>
 					</button>
 				</div>
 			</div>

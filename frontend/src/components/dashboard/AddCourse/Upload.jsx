@@ -59,82 +59,109 @@ export default function Upload({
 		setValue(name, selectedFile);
 	}, [selectedFile, setValue, name]);
 
-	return (
-		<div className="flex flex-col space-y-2">
-			<label className="text-sm text-black-5" htmlFor={name}>
-				{label} {!viewData && <sup className="text-pink-200">*</sup>}
-			</label>
+return (
+	<div className="space-y-3">
+		<label
+			htmlFor={name}
+			className="block text-sm font-semibold text-gray-700"
+		>
+			{label}
+			{!viewData && <span className="ml-1 text-red-500">*</span>}
+		</label>
 
-			{/* 🔥 IMPORTANT: rootProps ALWAYS here */}
-			<div
-				{...getRootProps()}
-				className={`${
-					isDragActive ? "bg-gray-200" : "bg-gray-100"
-				} flex min-h-62.5 cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}
-			>
-				{/* 🔥 REQUIRED INPUT */}
-				<input {...getInputProps()} />
+		<div
+			{...getRootProps()}
+			className={`
+				group relative overflow-hidden rounded-2xl border-2 border-dashed
+				transition-all duration-300 cursor-pointer
+				${
+					isDragActive
+						? "border-indigo-500 bg-indigo-50"
+						: "border-gray-300 bg-gray-50 hover:border-indigo-400 hover:bg-indigo-50"
+				}
+			`}
+		>
+			<input {...getInputProps()} />
 
-				{previewSource ? (
-					<div className="flex w-full flex-col p-6">
-						{!video ? (
-							<img
-								src={previewSource}
-								alt="Preview"
-								className="h-full w-full rounded-md object-cover"
-							/>
-						) : (
+			{previewSource ? (
+				<div className="relative p-5">
+					{!video ? (
+						<img
+							src={previewSource}
+							alt="Preview"
+							className="w-full rounded-xl object-cover shadow-md max-h-87.5"
+						/>
+					) : (
+						<div className="overflow-hidden rounded-xl shadow-lg">
 							<Player
 								aspectRatio="16:9"
 								playsInline
 								src={previewSource}
 							/>
-						)}
+						</div>
+					)}
 
-						{!viewData && (
-							<button
-								type="button"
-								onClick={(e) => {
-									e.stopPropagation(); // 🔥 prevents file dialog
-									setPreviewSource("");
-									setSelectedFile(null);
-									setValue(name, null);
-								}}
-								className="mt-3 text-black-400 underline"
-							>
-								Cancel
-							</button>
-						)}
+					{!viewData && (
+						<button
+							type="button"
+							onClick={(e) => {
+								e.stopPropagation();
+								setPreviewSource("");
+								setSelectedFile(null);
+								setValue(name, null);
+							}}
+							className="absolute right-8 top-8 rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:bg-red-700"
+						>
+							Remove
+						</button>
+					)}
+				</div>
+			) : (
+				<div className="flex flex-col items-center justify-center px-8 py-14 text-center">
+					<div className="mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100 transition group-hover:scale-105">
+						<FiUploadCloud className="text-4xl text-indigo-600" />
 					</div>
-				) : (
-					<div className="flex w-full flex-col items-center p-6">
-						<div className="grid aspect-square w-14 place-items-center rounded-full bg-pure-greys-800">
-							<FiUploadCloud className="text-2xl text-yellow-50" />
+
+					<h3 className="text-lg font-semibold text-gray-800">
+						Drop your {!video ? "image" : "video"} here
+					</h3>
+
+					<p className="mt-2 max-w-md text-sm text-gray-500">
+						Drag & drop your file here or{" "}
+						<span className="font-semibold text-indigo-600">
+							click to browse
+						</span>
+					</p>
+
+					<div className="mt-8 grid w-full max-w-lg grid-cols-2 gap-4 text-sm">
+						<div className="rounded-xl border bg-white p-4 shadow-sm">
+							<p className="font-semibold text-gray-700">
+								Aspect Ratio
+							</p>
+							<p className="mt-1 text-gray-500">16 : 9</p>
 						</div>
 
-						<p className="mt-2 max-w-50 text-center text-sm text-black-200">
-							Drag and drop an {!video ? "image" : "video"}, or
-							click to{" "}
-							<span className="font-semibold text-primary">
-								Browse
-							</span>{" "}
-							a file
-						</p>
-
-						<ul className="mt-10 flex list-disc justify-between space-x-12 text-xs text-black-200">
-							<li>Aspect ratio 16:9</li>
-							<li>Recommended size 1024x576</li>
-						</ul>
+						<div className="rounded-xl border bg-white p-4 shadow-sm">
+							<p className="font-semibold text-gray-700">
+								Recommended Size
+							</p>
+							<p className="mt-1 text-gray-500">1024 × 576 px</p>
+						</div>
 					</div>
-				)}
-			</div>
 
-			{/* Error */}
-			{errors[name] && (
-				<span className="ml-2 text-xs tracking-wide text-red-600">
-					{label} is required
-				</span>
+					<p className="mt-6 text-xs text-gray-400">
+						Supported formats:{" "}
+						{video ? "MP4, MOV, WebM" : "JPG, PNG, JPEG, WEBP"}
+					</p>
+				</div>
 			)}
 		</div>
-	);
+
+		{errors[name] && (
+			<p className="text-sm font-medium text-red-500">
+				{label} is required.
+			</p>
+		)}
+	</div>
+);
 }

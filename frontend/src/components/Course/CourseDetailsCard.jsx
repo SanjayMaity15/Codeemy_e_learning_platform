@@ -58,83 +58,89 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
 
 
 
-  return (
-		<>
-			<div
-				className={`flex flex-col gap-4 rounded-md bg-white shadow-md`}
-			>
-				{/* Course Image */}
-				<img
-					src={ThumbnailImage}
-					alt={course?.courseName}
-					className="max-h-75 min-h-45 w-100 overflow-hidden rounded-2xl object-cover md:max-w-full"
-				/>
+return (
+	<div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg">
+		{/* Thumbnail */}
+		<img
+			src={ThumbnailImage}
+			alt={course?.courseName}
+			className="h-60 w-full object-fit"
+		/>
 
-				<div className="px-4">
-					<div className="space-x-3 pb-4 text-3xl text-pink-600 font-semibold">
-						Rs. {CurrentPrice}
-					</div>
-					<div className="flex flex-col gap-4">
-						<button
-							className="bg-primary py-2 rounded-md text-white cursor-pointer hover:bg-indigo-700 transition-colors duration-200  "
-							onClick={
-								user &&
-								course?.studentsEnrolled.includes(user?._id)
-									? () =>
-											navigate(
-												"/dashboard/enrolled-courses",
-											)
-									: handleBuyCourse
-							}
-						>
-							{user &&
-							course?.studentsEnrolled.includes(user?._id)
-								? "Go To Course"
-								: "Buy Now"}
-						</button>
-						{(!user ||
-							!course?.studentsEnrolled.includes(user?._id)) && (
-							<button
-								onClick={() => handleAddToCart()}
-								className="bg-pink-600 py-2 rounded-md text-white cursor-pointer hover:bg-pink-700 transition-colors duration-200 "
-							>
-								Add to Cart
-							</button>
-						)}
-					</div>
-					<div>
-						<p className="pb-3 pt-6 text-center text-sm text-gray-500">
-							30-Day Money-Back Guarantee
-						</p>
-					</div>
+		<div className="p-6">
+			{/* Price */}
+			<div className="mb-6">
+				<p className="text-4xl font-bold text-primary">
+					₹ {CurrentPrice}
+				</p>
+			</div>
 
-					<div>
-						<p className={`my-2 text-xl font-semibold `}>
-							This Course Prequisite :
-						</p>
-						<div className="flex flex-col gap-3 text-sm text-caribbeangreen-100">
-							{course?.instructions?.map((item, i) => {
-								return (
-									<p className={`flex gap-2 items-center`} key={i}>
-										<BsFillCaretRightFill />
-										<span>{item}</span>
-									</p>
-								);
-							})}
+			{/* Buttons */}
+			<div className="space-y-3">
+				<button
+					onClick={
+						user && course?.studentsEnrolled.includes(user?._id)
+							? () => navigate("/dashboard/enrolled-courses")
+							: handleBuyCourse
+					}
+					className="w-full rounded-xl bg-primary py-3 text-white font-semibold transition hover:bg-indigo-700 cursor-pointer"
+				>
+					{user && course?.studentsEnrolled.includes(user?._id)
+						? "Go To Course"
+						: "Buy Now"}
+				</button>
+
+				{(!user || !course?.studentsEnrolled.includes(user?._id)) && (
+					<button
+						onClick={handleAddToCart}
+						className="w-full rounded-xl border border-primary py-3 font-semibold text-primary transition hover:bg-indigo-50 cursor-pointer"
+					>
+						Add to Cart
+					</button>
+				)}
+			</div>
+
+			{/* Guarantee */}
+			<div className="my-6 rounded-xl bg-gray-50 py-3 text-center">
+				<p className="text-sm text-gray-600">
+					✅ 30-Day Money-Back Guarantee
+				</p>
+			</div>
+
+			{/* Includes */}
+			<div className="border-t border-gray-200 pt-6">
+				<h3 className="mb-4 text-lg font-semibold text-gray-900">
+					Course Prerequisites
+				</h3>
+
+				<div className="space-y-3">
+					{course?.instructions?.map((item, i) => (
+						<div key={i} className="flex items-start gap-3">
+							<div className="mt-1 text-primary">
+								<BsFillCaretRightFill size={10} />
+							</div>
+
+							<p className="text-sm leading-6 text-gray-600">
+								{item}
+							</p>
 						</div>
-					</div>
-					<div className="text-center">
-						<button
-							className="mx-auto flex items-center gap-2 py-6 text-green-600 "
-							onClick={handleShare}
-						>
-							<FaShareSquare size={15} /> Share
-						</button>
-					</div>
+					))}
 				</div>
 			</div>
-		</>
-  );
+
+			{/* Share */}
+			<div className="mt-8 border-t border-gray-200 pt-5">
+				<button
+					onClick={handleShare}
+					className="mx-auto flex items-center gap-2 text-primary font-medium hover:text-indigo-700 transition cursor-pointer"
+				>
+					<FaShareSquare />
+					Share this course
+				</button>
+			</div>
+		</div>
+	</div>
+);
 }
 
 export default CourseDetailsCard

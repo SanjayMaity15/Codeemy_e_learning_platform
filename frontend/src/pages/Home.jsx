@@ -11,7 +11,9 @@ const Home = () => {
 		<div>
 			<HeroSection />
 			<CodeBlocks />
-			<Popularcourses/>
+			<div id="popular-courses">
+				<Popularcourses />
+			</div>
 			<MeetWithOurMentors />
 			<WhyChooseUs />
 			<Faq />

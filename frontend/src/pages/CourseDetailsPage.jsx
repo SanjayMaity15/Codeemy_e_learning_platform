@@ -160,181 +160,277 @@ function CourseDetailsPage() {
 	
 
 	return (
-		<>
-			<div
-				className={`relative section-container w-full bg-linear-to-br from-green-50 via-white to-yellow-50 text-black z-10`}
-			>
-				<PageTitle title={response.data.courseDetails.courseName} />
-				{/* Hero Section */}
-				<div className="mx-auto lg:w-315 2xl:relative ">
-					<div className="mx-auto grid min-h-112.5 py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-202.5">
-						<div className="relative block max-h-120 lg:hidden">
-							<div className="absolute bottom-0 left-0 h-full w-full shadow-md"></div>
-							<img
-								src={thumbnail}
-								alt="course thumbnail"
-								className="aspect-auto w-full"
-							/>
-						</div>
-						<div
-							className={`z-30 my-5 flex flex-col justify-start gap-4 py-5 text-lg `}
-						>
-							<div>
-								<p className="md:text-4xl text-2xl text-primary font-bold">
-									{courseName}
-								</p>
-							</div>
-							<p className={`text-gray-500`}>
-								{courseDescription}
-							</p>
-							<div className="text-md flex flex-wrap items-center gap-2">
+	<>
+		<section className="min-h-screen bg-gray-50">
+			<PageTitle title={response.data.courseDetails.courseName} />
+
+			{/* ---------------- Hero Section ---------------- */}
+			<section className="bg-white border-b border-gray-200">
+				<div className="max-w-7xl mx-auto px-6 py-12 grid lg:grid-cols-3 gap-10">
+					{/* Left Side */}
+					<div className="lg:col-span-2">
+
+						<p className="text-sm text-indigo-600 font-medium mb-3">
+							Home / Courses
+						</p>
+
+						<h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+							{courseName}
+						</h1>
+
+						<p className="mt-5 text-lg text-gray-600 leading-8">
+							{courseDescription}
+						</p>
+
+						{/* Rating */}
+						<div className="flex flex-wrap items-center gap-4 mt-6">
+
+							<div className="flex items-center gap-2">
 								<RatingStars
 									Review_Count={avgReviewCount}
-									Star_Size={24}
+									Star_Size={22}
 								/>
-								<span className="text-sm">{`(${ratingAndReviews.length} reviews)`}</span>
-								<span className="text-sm">{`${studentsEnrolled.length} students enrolled`}</span>
+
+								<span className="text-gray-700 font-medium">
+									({ratingAndReviews.length} Reviews)
+								</span>
 							</div>
+
+							<span className="text-gray-400">•</span>
+
+							<span className="text-gray-700">
+								{studentsEnrolled.length} Students
+							</span>
+						</div>
+
+						{/* Instructor */}
+						<div className="mt-8 flex items-center gap-4">
+
+							<img
+								src={
+									instructor.image
+										? instructor.image
+										: `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
+								}
+								alt="Instructor"
+								className="w-14 h-14 rounded-full object-cover border"
+							/>
+
 							<div>
-								<p className="text-sm text-pink-600">
-									Created By{" "}
+								<p className="font-semibold text-gray-900">
 									{`${instructor.firstName} ${instructor.lastName}`}
 								</p>
-							</div>
-							<div className="flex text-sm flex-wrap gap-5">
-								<p className="flex items-center gap-2">
-									{" "}
-									<BiInfoCircle /> Created at{" "}
-									{formatDate(createdAt)}
-								</p>
-								<p className="flex items-center gap-2">
-									{" "}
-									<HiOutlineGlobeAlt /> English
+
+								<p className="text-sm text-gray-500">
+									Course Instructor
 								</p>
 							</div>
-							<div className="text-center md:hidden ">
+						</div>
+
+						{/* Extra Info */}
+						<div className="flex flex-wrap gap-6 mt-8 text-gray-600">
+
+							<div className="flex items-center gap-2">
+								<BiInfoCircle />
+								<span>
+									Created {formatDate(createdAt)}
+								</span>
+							</div>
+
+							<div className="flex items-center gap-2">
+								<HiOutlineGlobeAlt />
+								<span>English</span>
+							</div>
+
+							<button
+								onClick={handleShare}
+								className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition"
+							>
+								<FaShareSquare />
+								Share
+							</button>
+
+						</div>
+
+						{/* Mobile Thumbnail */}
+						<div className="lg:hidden mt-10">
+							<img
+								src={thumbnail}
+								alt={courseName}
+								className="rounded-2xl shadow-md w-full object-cover"
+							/>
+						</div>
+
+						{/* Mobile Purchase */}
+						<div className="lg:hidden mt-8 bg-white rounded-2xl border p-6 shadow-sm">
+
+							<h2 className="text-3xl font-bold text-gray-900">
+								₹ {price}
+							</h2>
+
+							<div className="mt-6 flex flex-col gap-4">
+
 								<button
-									className="mx-auto flex items-center gap-2 py-6 text-green-600 "
-									onClick={handleShare}
+									onClick={handleBuyCourse}
+									className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-semibold transition"
 								>
-									<FaShareSquare size={15} /> Share
+									Buy Now
 								</button>
-							</div>
-						</div>
-						<div className="flex w-full flex-col gap-4 py-4 lg:hidden">
-							<p className="space-x-3 pb-4 text-3xl font-semibold ">
-								Rs. {price}
-							</p>
-							<button
-								className="bg-primary py-2 rounded-md text-white cursor-pointer hover:bg-indigo-700 transition-colors duration-200 "
-								onClick={handleBuyCourse}
-							>
-								Buy Now
-							</button>
-							<button
-								className="bg-pink-600 py-2 rounded-md text-white cursor-pointer hover:bg-pink-700 transition-colors duration-200 "
-								onClick={() =>
-									handleAddToCart(
-										response?.data?.courseDetails,
-									)
-								}
-							>
-								Add to Cart
-							</button>
-						</div>
-					</div>
-					{/* Courses Card */}
-					<div className="right-4 top-15 mx-auto hidden min-h-150 w-1/3 max-w-102.5 translate-y-24 md:translate-y-0 lg:absolute rounded-full lg:block z-500">
-						<CourseDetailsCard
-							course={response?.data?.courseDetails}
-							setConfirmationModal={setConfirmationModal}
-							handleBuyCourse={handleBuyCourse}
-						/>
-					</div>
-				</div>
-			</div>
-			<div className="mx-auto text-start  lg:w-315">
-				<div className="mx-auto lg:mx-0 xl:max-w-202.5 px-6">
-					{/* What will you learn section */}
-					<div className="my-8 rounded-md">
-						<p className="text-3xl font-semibold">
-							What you'll learn
-						</p>
-						<div className="mt-5 text-gray-500">
-							<ReactMarkdown>{whatYouWillLearn}</ReactMarkdown>
-						</div>
-					</div>
 
-					{/* Course Content Section */}
-					<div className="max-w-207.5">
-						<div className="flex flex-col gap-3">
-							<p className="text-[28px] font-semibold">
-								Course Content
-							</p>
-							<div className="flex flex-wrap justify-between gap-2">
-								<div className="flex gap-2 text-xs md:text-sm">
-									<span>
-										{courseContent.length} {`section(s)`}
-									</span>
-									<span>
-										{totalNoOfLectures} {`lecture(s)`}
-									</span>
-									<span>
-										{response.data?.totalDuration} total
-										length
-									</span>
-								</div>
-								<div className="flex justify-end w-full text-xs md:text-sm">
-									<button
-										className="text-pink-500 cursor-pointer"
-										onClick={() => setIsActive([])}
-									>
-										Collapse all sections
-									</button>
-								</div>
-							</div>
-						</div>
-
-						{/* Course Details Accordion */}
-						<div className="py-4">
-							{courseContent?.map((course, index) => (
-								<CourseAccordionBar
-									course={course}
-									key={index}
-									isActive={isActive}
-									handleActive={handleActive}
-								/>
-							))}
-						</div>
-
-						{/* Author Details */}
-						<div className="mb-12 py-4 w-full">
-							<p className="text-[28px] font-semibold">Author</p>
-							<div className="flex items-center gap-4 py-4">
-								<img
-									src={
-										instructor.image
-											? instructor.image
-											: `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
+								<button
+									onClick={() =>
+										handleAddToCart(
+											response.data.courseDetails
+										)
 									}
-									alt="Author"
-									className="h-14 w-14 rounded-full object-cover"
-								/>
-								<p className="text-lg">{`${instructor.firstName} ${instructor.lastName}`}</p>
+									className="w-full border border-indigo-600 text-indigo-600 hover:bg-indigo-50 py-3 rounded-xl font-semibold transition"
+								>
+									Add to Cart
+								</button>
+
 							</div>
-							<p className="text-gray-500 w-full">
-								{instructor?.additionalDetails?.about}
-							</p>
+
+						</div>
+
+					</div>
+
+					{/* Desktop Sticky Card */}
+					<div className="hidden lg:block">
+						<div className="sticky top-24">
+							<CourseDetailsCard
+								course={response?.data?.courseDetails}
+								setConfirmationModal={setConfirmationModal}
+								handleBuyCourse={handleBuyCourse}
+							/>
 						</div>
 					</div>
-				</div>
-			</div>
 
-			{confirmationModal && (
-				<ConfirmationModal modalData={confirmationModal} />
-			)}
-		</>
-	);
+				</div>
+			</section>
+
+			{/* ---------- Content Starts ---------- */}
+			<div className="max-w-7xl mx-auto px-6 py-12">				{/* ---------------- What You'll Learn ---------------- */}
+				<div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+
+					<h2 className="text-3xl font-bold text-gray-900">
+						What You'll Learn
+					</h2>
+
+					<div className="mt-6 text-gray-700 leading-8 prose max-w-none">
+						<ReactMarkdown>
+							{whatYouWillLearn}
+						</ReactMarkdown>
+					</div>
+
+				</div>
+
+				{/* ---------------- Course Content ---------------- */}
+				<div className="mt-12 bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+
+					<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+						<div>
+							<h2 className="text-3xl font-bold text-gray-900">
+								Course Content
+							</h2>
+
+							<div className="flex flex-wrap gap-5 mt-3 text-gray-600">
+
+								<span>
+									{courseContent.length} Sections
+								</span>
+
+								<span>
+									{totalNoOfLectures} Lectures
+								</span>
+
+								<span>
+									{response.data?.totalDuration}
+								</span>
+
+							</div>
+						</div>
+
+						<button
+							onClick={() => setIsActive([])}
+							className="text-indigo-600 hover:text-indigo-700 font-medium transition"
+						>
+							Collapse All
+						</button>
+
+					</div>
+
+					{/* Accordion */}
+					<div className="mt-8 space-y-4">
+
+						{courseContent?.map((course, index) => (
+							<CourseAccordionBar
+								key={index}
+								course={course}
+								isActive={isActive}
+								handleActive={handleActive}
+							/>
+						))}
+
+					</div>
+
+				</div>				{/* ---------------- Instructor ---------------- */}
+				<div className="mt-12 mb-16 bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+
+					<h2 className="text-3xl font-bold text-gray-900 mb-8">
+						Meet Your Instructor
+					</h2>
+
+					<div className="flex flex-col md:flex-row gap-6">
+
+						{/* Profile Image */}
+						<div className="shrink-0">
+
+							<img
+								src={
+									instructor.image
+										? instructor.image
+										: `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
+								}
+								alt="Instructor"
+								className="w-28 h-28 rounded-full object-cover border-4 border-indigo-100 shadow-md"
+							/>
+
+						</div>
+
+						{/* Details */}
+						<div className="flex-1">
+
+							<h3 className="text-2xl font-semibold text-gray-900">
+								{`${instructor.firstName} ${instructor.lastName}`}
+							</h3>
+
+							<p className="mt-2 text-indigo-600 font-medium">
+								Course Instructor
+							</p>
+
+							<p className="mt-5 text-gray-600 leading-8">
+								{instructor?.additionalDetails?.about ||
+									"No instructor description available."}
+							</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+
+		{/* Confirmation Modal */}
+		{confirmationModal && (
+			<ConfirmationModal
+				modalData={confirmationModal}
+			/>
+		)}
+	</>
+);
 }
 
 export default CourseDetailsPage;

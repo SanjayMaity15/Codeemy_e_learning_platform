@@ -1,107 +1,170 @@
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 import { useScrollAnim } from "../common/ScrollAnimation";
+
 gsap.registerPlugin(ScrollTrigger);
 
-const CodeBlocks = () => {
-
-	
+export default function CodeBlocks() {
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.profile);
-	const isMobile = window.innerWidth < 450;
+
 	const codeBlockRef = useRef(null);
+
 	useScrollAnim(codeBlockRef, {
 		start: "top 75%",
 		end: "top 40%",
 	});
 
-
 	return (
-		<div className={`max-w-7xl mx-auto`} ref={codeBlockRef}>
-			<div className="">
-				<div className="flex flex-col md:flex-row">
-					{/*Section 1*/}
-					<div className="text-pink-600  flex-1  rounded-md px-4 md:py-16 py-8 flex flex-col items-start gap-5 ">
-						<h1 className="text-3xl font-semibold font-orbitron text-center md:text-left">
-							Empowering you with practical coding skills through
-							online education.
-						</h1>
-						<p className="md:w-[80%] text-neutral-500 text-center md:text-left">
-							Our courses are designed and taught by industry
-							experts who have years of experience in coding and
-							are passionate about sharing their knowledge with
-							you
-						</p>
-						<div className="flex justify-center md:justify-start w-full">
-							<button
-								className="font-orbitron px-10 py-3 rounded-full shadow-sm border border-indigo-800 bg-primary text-white hover:border-green-400   font-semibold hover:opacity-90 transition cursor-pointer"
-								onClick={() =>
-									navigate(user ? "/courses" : "/login")
-								}
-							>
-								Let's Start
-							</button>
+		<section
+			ref={codeBlockRef}
+			className="section-container py-24 overflow-hidden"
+		>
+			<div className="grid lg:grid-cols-2 gap-14 items-center">
+				{/* Left Side */}
+
+				<div>
+					<div className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 mb-6">
+						🚀 Learn by Building Real Projects
+					</div>
+
+					<h1 className="text-5xl lg:text-6xl font-bold leading-tight font-orbitron text-gray-800">
+						Master Coding
+						<br />
+						with
+						<span className="bg-linear-to-r from-indigo-600 via-violet-500 to-pink-500 bg-clip-text text-transparent">
+							{" "}
+							Codeemy
+						</span>
+					</h1>
+
+					<p className="mt-7 text-lg text-gray-500 leading-8 max-w-xl">
+						Learn Web Development, AI, Programming, DSA and
+						Placement Preparation from experienced instructors.
+						Practice through projects, quizzes and earn verified
+						certificates.
+					</p>
+
+					<div className="mt-10 flex gap-5 flex-wrap">
+						<button
+							onClick={() =>
+								navigate(user ? "/courses" : "/login")
+							}
+							className="rounded-full bg-linear-to-r from-indigo-600 to-violet-600 px-8 py-4 text-white font-semibold shadow-xl transition hover:-translate-y-1 hover:shadow-indigo-300"
+						>
+							Start Learning →
+						</button>
+
+						<button
+							onClick={() => navigate("/courses")}
+							className="rounded-full border border-gray-300 bg-white px-8 py-4 font-semibold hover:border-indigo-500 hover:text-indigo-600 transition"
+						>
+							Explore Courses
+						</button>
+					</div>
+
+					<div className="mt-10 flex gap-10">
+						<div>
+							<h2 className="text-3xl font-bold text-indigo-600">
+								50+
+							</h2>
+							<p className="text-gray-500">Courses</p>
+						</div>
+
+						<div>
+							<h2 className="text-3xl font-bold text-pink-500">
+								1000+
+							</h2>
+							<p className="text-gray-500">Students</p>
+						</div>
+
+						<div>
+							<h2 className="text-3xl font-bold text-violet-600">
+								20+
+							</h2>
+							<p className="text-gray-500">Projects</p>
 						</div>
 					</div>
-					{/*Section 2*/}
-					<div className=" h-fit  relative flex flex-row text-10[px] w-full pt-16 flex-1 px-4 md:px-0">
-						{/*HW -> BG gradient*/}
-						<div className="absolute top-30 left-35 w-36 h-36 bg-purple-300 opacity-20 rounded-full filter blur-3xl animate-pulse z-0" />
+				</div>
 
-						<div className="text-center flex flex-col w-[10%] bg-linear-to-b from-pink-600 via-green-600 to-indigo-600 bg-clip-text text-transparent font-inter font-bold">
-							<p>1</p>
-							<p>2</p>
-							<p>3</p>
-							<p>4</p>
-							<p>5</p>
-							<p>6</p>
-							<p>7</p>
-							<p>8</p>
-							<p>9</p>
-							<p>10</p>
-							<p>11</p>
-							<p>12</p>
-							<p>13</p>
-							<p>14</p>
-							<p>15</p>
-							{isMobile && (
-								<>
-									<p>16</p>
-									<p>17</p>
-									<p>18</p>
-									<p>19</p>
-									<p>20</p>
-								</>
-							)}
-						</div>
+				{/* Right Side */}
 
-						<div
-							className={`w-[90%] flex flex-col gap-2 font-bold font-mono bg-linear-to-b from-pink-600 via-green-400 to-indigo-600 bg-clip-text text-transparent pr-2`}
-						>
-							<TypeAnimation
-								sequence={[
-									`<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8" />\n<link rel="icon" type="image/svg+xml" href="/vite.svg" />\n<meta name="viewport" content="width=device-width, initial-scale=1.0" />\n<title>Learn HTML</title>\n</head>\n<body>\n<h1 id="root">Hello World!</h1>\n<script type="module" src="script.js"></script>\n</body>\n</html>\n`,
-									2000,
-									"",
-								]}
-								repeat={Infinity}
-								cursor={true}
-								style={{
-									whiteSpace: "pre-line",
-									display: "block",
-								}}
-								omitDeletionAnimation={true}
-							/>
+				<div className="relative">
+					{/* Blur */}
+
+					<div className="absolute -top-10 -left-10 w-56 h-56 rounded-full bg-indigo-300 blur-[120px] opacity-30"></div>
+
+					<div className="absolute bottom-0 right-0 w-56 h-56 rounded-full bg-pink-300 blur-[120px] opacity-30"></div>
+
+					{/* Glow Border */}
+
+					<div className="rounded-3xl bg-linear-to-r from-indigo-500 via-violet-500 to-pink-500 p-0.5 shadow-2xl">
+						<div className="rounded-3xl bg-[#0f172a] overflow-hidden">
+							{/* Window Header */}
+
+							<div className="flex items-center gap-2 px-5 py-4 border-b border-slate-700">
+								<div className="w-3 h-3 rounded-full bg-red-500"></div>
+
+								<div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+
+								<div className="w-3 h-3 rounded-full bg-green-500"></div>
+
+								<p className="ml-4 text-gray-400 text-sm">
+									index.html
+								</p>
+							</div>
+
+							{/* Code */}
+
+							<div className="flex">
+								{/* Line Numbers */}
+
+								<div className="bg-[#111827] px-4 py-4 text-gray-500 text-sm leading-7 select-none">
+									{Array.from({ length: 18 }).map((_, i) => (
+										<p key={i}>{i + 1}</p>
+									))}
+								</div>
+
+								{/* Animated Code */}
+
+								<div className="flex-1 px-2 py-4 font-mono text-sm leading-7 text-green-400 overflow-x-auto">
+									<TypeAnimation
+										sequence={[
+											`<!DOCTYPE html>
+												<html>
+												<head>
+												<title>Codeemy</title>
+												</head>
+												<body>
+													<h1>Welcome to Codeemy 🚀</h1>
+
+													<p>Build Real Projects</p>
+
+												<script>
+													console.log("Happy Coding!");
+												</script>
+
+												</body>
+												</html>`,
+											2500,
+											"",
+										]}
+										repeat={Infinity}
+										cursor={true}
+										style={{
+											whiteSpace: "pre-line",
+										}}
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
-};
-
-export default CodeBlocks;
+}

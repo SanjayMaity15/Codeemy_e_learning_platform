@@ -9,7 +9,6 @@ import { BigPlayButton, Player } from "video-react";
 import { updateCompletedLectures } from "../../feature/viewCourseSlice";
 import IconBtn from "../../components/common/IconBtn";
 import axios from "axios";
-import toast from "react-hot-toast";
 
 const VideoDetails = () => {
 	const { courseId, sectionId, subSectionId } = useParams();
@@ -25,7 +24,6 @@ const VideoDetails = () => {
 	const [previewSource, setPreviewSource] = useState("");
 	const [videoEnded, setVideoEnded] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [quizResults, setQuizResults] = useState({});
 
 	useEffect(() => {
 		(async () => {
@@ -92,15 +90,9 @@ const VideoDetails = () => {
 				`/view-course/${courseId}/section/${sectionId}/sub-section/${nextSubSectionId}`,
 			);
 		} else {
-			if (!canMoveToNextSection()) {
-				return;
-			}
-
 			const nextSectionId = courseSectionData[currentSectionIndx + 1]._id;
-
 			const nextSubSectionId =
 				courseSectionData[currentSectionIndx + 1].subSection[0]._id;
-
 			navigate(
 				`/view-course/${courseId}/section/${nextSectionId}/sub-section/${nextSubSectionId}`,
 			);
@@ -177,63 +169,6 @@ const VideoDetails = () => {
 		setLoading(false);
 	};
 
-	const fetchQuizResult = async (quizId) => {
-		try {
-			const res = await axios.get(
-				`${import.meta.env.VITE_SERVER_URL}course/quizResult/${quizId}`,
-				{
-					withCredentials: true,
-				},
-			);
-
-			setQuizResults((prev) => ({
-				...prev,
-				[quizId]: res.data.data,
-			}));
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	useEffect(() => {
-		courseSectionData.forEach((section) => {
-			if (section.quiz) {
-				fetchQuizResult(section.quiz._id);
-			}
-		});
-	}, [courseSectionData]);
-
-	const canMoveToNextSection = () => {
-		const currentSectionIndex = courseSectionData.findIndex(
-			(section) => section._id === sectionId,
-		);
-
-		const currentSection = courseSectionData[currentSectionIndex];
-
-		// Check all videos completed
-		const allVideosCompleted = currentSection.subSection.every((lecture) =>
-			completedLectures.includes(lecture._id),
-		);
-
-		if (!allVideosCompleted) {
-			toast.error("Complete all lectures first.");
-			return false;
-		}
-
-		// Check quiz completion (if quiz exists)
-		if (currentSection.quiz) {
-			const result = quizResults[currentSection.quiz._id];
-
-			if (!result) {
-				toast.error(
-					"Complete the quiz before moving to the next section.",
-				);
-				return false;
-			}
-		}
-
-		return true;
-	};
 	return (
 		<div className="flex flex-col gap-5 text-white">
 			{!videoData ? (
@@ -256,52 +191,73 @@ const VideoDetails = () => {
 					{videoEnded && (
 						<div
 							style={{
-								backgroundImage:
-									"linear-gradient(to top, rgb(0, 0, 0), rgba(0,0,0,0.7), rgba(0,0,0,0.5), rgba(0,0,0,0.1)",
+								background:
+									"linear-gradient(to top, rgba(15,23,42,.95), rgba(15,23,42,.75), rgba(15,23,42,.45), transparent)",
 							}}
-							className="full absolute inset-0 z-100 grid h-full place-content-center gap-2 text-center font-inter"
+							className="absolute inset-0 z-50 flex flex-col items-center justify-center px-6 backdrop-blur-[2px]"
 						>
-							{!completedLectures.includes(subSectionId) && (
-								<IconBtn
+							{/* Success Icon */}
+							<div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20 border border-green-400">
+								<span className="text-5xl">🎉</span>
+							</div>
+
+							<h2 className="text-3xl font-bold text-white">
+								Lecture Completed
+							</h2>
+
+							<p className="mt-2 max-w-md text-center text-gray-200">
+								Great job! Continue learning and unlock the next
+								lesson.
+							</p>
+
+							{/* Buttons */}
+							<div className="mt-8 flex flex-wrap justify-center gap-4">
+								{!completedLectures.includes(subSectionId) && (
+									<IconBtn
+										disabled={loading}
+										onclick={handleLectureCompletion}
+										text={
+											loading
+												? "Saving..."
+												: "✓ Mark as Completed"
+										}
+										customClasses="rounded-xl px-6 py-3 bg-green-600 hover:bg-green-700 text-white shadow-lg"
+									/>
+								)}
+
+								<button
 									disabled={loading}
-									onclick={() => handleLectureCompletion()}
-									text={
-										!loading
-											? "Mark as completed"
-											: "Loading..."
-									}
-									customClasses="text-sm max-w-max px-4 mx-auto"
-								/>
-							)}
-							<IconBtn
-								disabled={loading}
-								onclick={() => {
-									if (playerRef?.current) {
-										// set the current time of the video to 0
-										playerRef?.current?.seek(0);
-										setVideoEnded(false);
-									}
-								}}
-								text="Re-watch"
-								customClasses="text-sm max-w-max px-4 mx-auto mt-2"
-							/>
-							<div className="mt-10 flex min-w-62.5 justify-center gap-x-4 text-xl">
+									onClick={() => {
+										if (playerRef.current) {
+											playerRef.current.seek(0);
+											setVideoEnded(false);
+										}
+									}}
+									className="rounded-xl border border-white/30 bg-white/10 px-6 py-3 font-medium text-white transition hover:bg-white/20"
+								>
+									🔄 Watch Again
+								</button>
+							</div>
+
+							{/* Navigation */}
+							<div className="mt-10 flex gap-4">
 								{!isFirstVideo() && (
 									<button
 										disabled={loading}
 										onClick={goToPrevVideo}
-										className="blackButton bg-red-600 text-white px-4 py-1 rounded-sm text-sm hover:bg-red-700 transition-colors duration-200 cursor-pointer "
+										className="rounded-xl bg-red-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:bg-red-600"
 									>
-										Previous
+										← Previous Lesson
 									</button>
 								)}
+
 								{!isLastVideo() && (
 									<button
 										disabled={loading}
 										onClick={goToNextVideo}
-										className="blackButton bg-green-600 text-white px-4 py-1 rounded-sm text-sm hover:bg-green-700 transition-colors duration-200 cursor-pointer"
+										className="rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:bg-indigo-700"
 									>
-										Next
+										Next Lesson →
 									</button>
 								)}
 							</div>
@@ -310,12 +266,11 @@ const VideoDetails = () => {
 				</Player>
 			)}
 
-			<h1 className="mt-4 text-3xl font-semibold text-black">
-				Title: {videoData?.title}
-			</h1>
-			<p className="pt-2 pb-6 text-black">
-				Description: {videoData?.description}
-			</p>
+			<div className="bg-white rounded-xl ">
+				<h1 className="p-4 text-xl font-semibold text-black">
+					Title: {videoData?.title}
+				</h1>
+			</div>
 		</div>
 	);
 };

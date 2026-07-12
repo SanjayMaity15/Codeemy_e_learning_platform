@@ -1,93 +1,149 @@
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
-
 import {
 	FaRocket,
 	FaBrain,
 	FaProjectDiagram,
 	FaChartLine,
 } from "react-icons/fa";
+import { useRef } from "react";
 import { useScrollAnim } from "../common/ScrollAnimation";
 
-export default function WhyChooseUs() {
-	const WhyChooseRef = useRef(null);
+const features = [
+	{
+		icon: <FaRocket />,
+		title: "Career-Oriented Learning",
+		desc: "Master industry-demanded technologies with structured learning paths designed to help you land your dream job.",
+		color: "from-pink-500 to-rose-500",
+	},
+	{
+		icon: <FaBrain />,
+		title: "AI Learning Assistant",
+		desc: "Get instant explanations, coding guidance, and platform support anytime with our built-in AI assistant.",
+		color: "from-indigo-500 to-blue-500",
+	},
+	{
+		icon: <FaProjectDiagram />,
+		title: "Project-Based Learning",
+		desc: "Build real-world applications that strengthen your portfolio and prepare you for professional development.",
+		color: "from-cyan-500 to-indigo-500",
+	},
+	{
+		icon: <FaChartLine />,
+		title: "Track Your Progress",
+		desc: "Monitor completed lessons, quizzes, certificates, and achievements from your personalized dashboard.",
+		color: "from-pink-500 to-orange-500",
+	},
+];
 
-	useScrollAnim(WhyChooseRef, {
+export default function WhyChooseUs() {
+	const sectionRef = useRef(null);
+
+	useScrollAnim(sectionRef, {
 		start: "top 75%",
 		end: "top 40%",
 	});
 
 	return (
-		<section className="text-white md:py-20 px-6" ref={WhyChooseRef}>
-			<div className="max-w-6xl mx-auto">
-				{/* Heading */}
-				<h2 className="text-3xl md:text-5xl font-bold text-center mb-4 font-orbitron text-gray-500">
-					Why Learn With{" "}
-					<span className="bg-linear-to-b from-indigo-600  to-pink-600 bg-clip-text text-transparent">
+		<section
+			ref={sectionRef}
+			className="relative overflow-hidden py-24 section-container"
+		>
+			{/* Background Blur */}
+			<div className="absolute -top-28 left-0 h-72 w-72 rounded-full bg-pink-300/20 blur-3xl"></div>
+
+			<div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-indigo-300/20 blur-3xl"></div>
+
+			{/* Heading */}
+
+			<div className="text-center max-w-3xl mx-auto mb-16">
+				<h2 className="font-orbitron text-4xl md:text-5xl font-bold text-gray-800">
+					Why Choose{" "}
+					<span className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
 						Codeemy
 					</span>
 				</h2>
-				<p className="text-gray-500 text-center max-w-2xl mx-auto mb-14">
-					Upgrade your skills with industry-focused learning,
-					real-world projects, and smart tools designed to accelerate
-					your tech career.
+
+				<p className="mt-5 text-lg leading-8 text-gray-600">
+					Everything you need to become a skilled developer —
+					structured courses, AI assistance, hands-on projects,
+					quizzes, certificates, and career-focused learning.
 				</p>
+			</div>
 
-				{/* Grid */}
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-					{/* why-card 1 */}
-					<div className="rounded-2xl border border-pink-800 bg-white hover:bg-pink-50 p-8 hover:border-green-400 transition why-card">
-						<FaRocket className="text-pink-400 text-4xl mb-4" />
-						<h3 className="text-xl text-pink-600 font-semibold mb-2">
-							Career-Oriented Learning
-						</h3>
-						<p className="text-gray-500">
-							Learn skills that companies actually hire for — from
-							fundamentals to advanced concepts with clear career
-							paths.
-						</p>
-					</div>
+			{/* Cards */}
 
-					{/* why-card 2 */}
-					<div className="rounded-2xl border border-indigo-800 bg-white p-8 hover:border-green-400 transition hover:bg-indigo-50 why-card">
-						<FaBrain className="text-indigo-400 text-4xl mb-4" />
-						<h3 className="text-xl text-primary font-semibold mb-2">
-							Smart Learning Assistance
-						</h3>
-						<p className="text-gray-500">
-							Get instant help, explanations, and guidance
-							whenever you’re stuck — so learning never slows
-							down.
-						</p>
-					</div>
+			<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+				{features.map((item, index) => (
+					<div
+						key={index}
+						className="
+                        group
+                        relative
+                        overflow-hidden
+                        rounded-3xl
+                        bg-white
+                        border
+                        border-gray-200
+                        shadow-sm
+                        hover:shadow-2xl
+                        transition-all
+                        duration-500
+                        hover:-translate-y-3
+                        p-8
+                    "
+					>
+						{/* Gradient Top */}
 
-					{/* why-card 3 */}
-					<div className="rounded-2xl border border-indigo-800 bg-white p-8 hover:border-green-400 transition hover:bg-indigo-50 why-card">
-						<FaProjectDiagram className="text-indigo-400 text-4xl mb-4" />
-						<h3 className="text-xl text-primary font-semibold mb-2">
-							Real-World Projects
-						</h3>
-						<p className="text-gray-500">
-							Build practical projects that strengthen your
-							portfolio and prepare you for real development
-							environments.
-						</p>
-					</div>
+						<div
+							className={`absolute top-0 left-0 h-1 w-full bg-linear-to-r ${item.color}`}
+						/>
 
-					{/* why-card 4 */}
-					<div className="rounded-2xl border border-pink-800 bg-white p-8 hover:border-green-400 transition hover:bg-pink-50 why-card">
-						<FaChartLine className="text-pink-400 text-4xl mb-4" />
-						<h3 className="text-xl text-pink-600 font-semibold mb-2">
-							Track Your Growth
+						{/* Glow */}
+
+						<div
+							className={`absolute -right-12 -top-12 h-32 w-32 rounded-full bg-linear-to-r ${item.color} opacity-10 blur-3xl group-hover:opacity-30 transition`}
+						/>
+
+						{/* Icon */}
+
+						<div
+							className={`inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-r ${item.color} text-white text-3xl shadow-lg`}
+						>
+							{item.icon}
+						</div>
+
+						{/* Title */}
+
+						<h3 className="mt-6 text-xl font-bold text-gray-800">
+							{item.title}
 						</h3>
-						<p className="text-gray-500">
-							Monitor your progress, stay motivated, and see how
-							far you’ve come with clear learning milestones.
+
+						{/* Description */}
+
+						<p className="mt-4 text-gray-600 leading-7 text-sm">
+							{item.desc}
 						</p>
+
+						{/* Bottom Line */}
+
+						<div
+							className={`mt-7 h-1 w-12 rounded-full bg-linear-to-r ${item.color} transition-all duration-500 group-hover:w-full`}
+						/>
 					</div>
-				</div>
+				))}
+			</div>
+
+			{/* Bottom Banner */}
+
+			<div className="mt-20 rounded-3xl bg-linear-to-r from-indigo-600 via-purple-600 to-pink-500 p-10 text-center shadow-xl">
+				<h3 className="font-orbitron text-3xl font-bold text-white">
+					Learn. Build. Get Hired.
+				</h3>
+
+				<p className="mt-4 text-white/90 max-w-3xl mx-auto leading-8">
+					Codeemy combines practical learning, AI-powered guidance,
+					real projects, quizzes, and certificates to help students
+					become industry-ready developers.
+				</p>
 			</div>
 		</section>
 	);

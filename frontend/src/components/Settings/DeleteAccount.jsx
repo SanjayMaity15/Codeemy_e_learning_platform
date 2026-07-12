@@ -14,6 +14,7 @@ export default function DeleteAccount() {
 	const navigate = useNavigate();
 	const [confirmationModal, setConfirmationModal] = useState(null);
 	const [loading, setLoading] = useState(false);
+
 	async function handleDeleteAccount() {
 		try {
 			setLoading(true);
@@ -32,48 +33,71 @@ export default function DeleteAccount() {
 		} catch (error) {
 			toast.error(error.response.data.message);
 			setLoading(false);
-			
 		}
 	}
 
 	return (
 		<>
-			<div className="my-10 flex flex-col gap-4 md:flex-row gap-x-5 rounded-md border border-pink-700 bg-pink-600 p-8 md:px-12">
-				<div className="flex aspect-square h-14 w-14 items-center justify-center rounded-full bg-red-400">
-					<FiTrash2 className="text-2xl md:text-3xl text-pink-200" />
-				</div>
-				<div className="flex flex-col space-y-2">
-					<h2 className="text-lg font-semibold text-white">
-						Delete Account
-					</h2>
-					<div className="text-gray-200 text-xs md:text-sm">
-						<p>Would you like to delete account?</p>
-						<p>
-							This account may contain Paid Courses. Deleting your
-							account is permanent and will remove all the contain
-							associated with it.
-						</p>
+			<div className="my-10 rounded-3xl border border-red-200 bg-linear-to-r from-red-50 via-pink-50 to-red-50 shadow-lg transition-all duration-300 hover:shadow-xl">
+				<div className="flex flex-col md:flex-row items-start gap-6 p-6 md:p-8">
+					{/* Icon */}
+					<div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-red-100 shadow-sm">
+						<FiTrash2 className="text-3xl text-red-600" />
 					</div>
-					<button
-						type="button"
-						className="w-fit cursor-pointer italic text-yellow-300"
-						onClick={() =>
-							setConfirmationModal({
-								text1: "Do you want to delete this Account ?",
-								text2: "Think again if you delete this account you will unenroll from all enrolled courses",
-								btn1Text: "Delete",
-								btn2Text: "Cancel",
-								loadingText: "Deleting...",
-								btn1Handler: () => handleDeleteAccount(),
 
-								btn2Handler: () => setConfirmationModal(null),
-							})
-						}
-					>
-						I want to delete my account.
-					</button>
+					{/* Content */}
+					<div className="flex-1">
+						<h2 className="text-2xl font-bold text-red-600">
+							Delete Account
+						</h2>
+
+						<p className="mt-2 text-sm text-gray-600 leading-relaxed">
+							Deleting your account is permanent. All your
+							enrolled courses, profile information, purchase
+							history, and other associated data will be removed
+							permanently.
+						</p>
+
+						<div className="mt-4 rounded-xl border border-red-200 bg-white p-4">
+							<p className="font-semibold text-red-600 mb-2">
+								⚠ This action cannot be undone.
+							</p>
+
+							<ul className="list-disc space-y-1 pl-5 text-sm text-gray-600">
+								<li>
+									You will lose access to all purchased
+									courses.
+								</li>
+								<li>Your learning progress will be deleted.</li>
+								<li>
+									Your profile and account data will be
+									removed permanently.
+								</li>
+							</ul>
+						</div>
+
+						<button
+							type="button"
+							className="mt-6 rounded-full bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-red-700 hover:shadow-lg cursor-pointer"
+							onClick={() =>
+								setConfirmationModal({
+									text1: "Do you want to delete this Account ?",
+									text2: "Think again if you delete this account you will unenroll from all enrolled courses",
+									btn1Text: "Delete",
+									btn2Text: "Cancel",
+									loadingText: "Deleting...",
+									btn1Handler: () => handleDeleteAccount(),
+									btn2Handler: () =>
+										setConfirmationModal(null),
+								})
+							}
+						>
+							I want to delete my account
+						</button>
+					</div>
 				</div>
 			</div>
+
 			{confirmationModal && (
 				<ConfirmationModal modalData={confirmationModal} />
 			)}

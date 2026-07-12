@@ -1,10 +1,10 @@
-const ButtonLoader = ({text ="Please wait"}) => {
-    return (
-		<div className="flex gap-2 justify-center items-center">
-			<h3>{text}</h3>
-			<div
-				className="animate-spin rounded-full h-5 w-5 border-t-3 border-b-3 border-white"
-			></div>
+import { ImSpinner2 } from "react-icons/im";
+
+const ButtonLoader = ({ text = "Please wait..." }) => {
+	return (
+		<div className="flex items-center justify-center gap-2">
+			<ImSpinner2 className="animate-spin text-lg" />
+			<span className="font-medium">{text}</span>
 		</div>
 	);
 };

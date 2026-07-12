@@ -23,7 +23,6 @@ export default function EditProfile() {
 	} = useForm();
 
 	const submitProfileForm = async (data) => {
-		
 		try {
 			setLoading(true);
 			const result = await axios.put(
@@ -42,73 +41,80 @@ export default function EditProfile() {
 		}
 	};
 	return (
-		<>
-			<form onSubmit={handleSubmit(submitProfileForm)}>
-				{/* Profile Information */}
-				<div className="my-10 flex flex-col gap-y-6 rounded-md  bg-white shadow-sm p-8 px-12">
-					<h2 className="text-lg font-semibold">
-						Profile Information
-					</h2>
-					<div className="flex flex-col gap-5 lg:flex-row">
-						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label
-								htmlFor="firstName"
-								className="lable-style text-sm"
-							>
-								First Name
-							</label>
-							<input
-								type="text"
-								name="firstName"
-								id="firstName"
-								placeholder="Enter first name"
-								className="form-style border p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
-								{...register("firstName", { required: true })}
-								defaultValue={user?.firstName}
-							/>
-							{errors.firstName && (
-								<span className="-mt-1 text-[12px] text-red-600">
-									Please enter your first name.
-								</span>
-							)}
+		<div className="mx-auto max-w-6xl">
+			{/* Header */}
+		
+
+			<form onSubmit={handleSubmit(submitProfileForm)} className="pt-8">
+				<div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-xl">
+					<div className="mb-8 flex items-center justify-between border-b pb-5">
+						<div>
+							<h2 className="text-2xl font-bold text-gray-800">
+								Profile Information
+							</h2>
+
+							<p className="mt-1 text-sm text-gray-500">
+								Update your personal details.
+							</p>
 						</div>
-						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label
-								htmlFor="lastName"
-								className="lable-style text-sm"
-							>
-								Last Name
-							</label>
-							<input
-								type="text"
-								name="lastName"
-								id="lastName"
-								placeholder="Enter first name"
-								className="form-style border p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
-								{...register("lastName", { required: true })}
-								defaultValue={user?.lastName}
-							/>
-							{errors.lastName && (
-								<span className="-mt-1 text-[12px] text-red-600">
-									Please enter your last name.
-								</span>
-							)}
+
+						<div className="rounded-full bg-indigo-100 px-4 py-2 text-sm font-semibold text-indigo-700">
+							Personal Info
 						</div>
 					</div>
 
-					<div className="flex flex-col gap-5 lg:flex-row">
-						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label
-								htmlFor="dateOfBirth"
-								className="lable-style text-sm"
-							>
+					<div className="grid gap-6 md:grid-cols-2">
+						{/* First Name */}
+
+						<div>
+							<label className="mb-2 block text-sm font-semibold text-gray-700">
+								First Name
+							</label>
+
+							<input
+								{...register("firstName", { required: true })}
+								defaultValue={user?.firstName}
+								placeholder="John"
+								className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 transition focus:border-indigo-500 focus:bg-white focus:outline-none"
+							/>
+
+							{errors.firstName && (
+								<p className="mt-2 text-sm text-red-500">
+									Please enter your first name.
+								</p>
+							)}
+						</div>
+
+						{/* Last Name */}
+
+						<div>
+							<label className="mb-2 block text-sm font-semibold text-gray-700">
+								Last Name
+							</label>
+
+							<input
+								{...register("lastName", { required: true })}
+								defaultValue={user?.lastName}
+								placeholder="Doe"
+								className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 transition focus:border-indigo-500 focus:bg-white focus:outline-none"
+							/>
+
+							{errors.lastName && (
+								<p className="mt-2 text-sm text-red-500">
+									Please enter your last name.
+								</p>
+							)}
+						</div>
+
+						{/* DOB */}
+
+						<div>
+							<label className="mb-2 block text-sm font-semibold text-gray-700">
 								Date of Birth
 							</label>
+
 							<input
 								type="date"
-								name="dateOfBirth"
-								id="dateOfBirth"
-								className="form-style border p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
 								{...register("dateOfBirth", {
 									required: {
 										value: true,
@@ -126,58 +132,46 @@ export default function EditProfile() {
 								defaultValue={
 									user?.additionalDetails?.dateOfBirth
 								}
+								className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 transition focus:border-indigo-500 focus:bg-white focus:outline-none"
 							/>
+
 							{errors.dateOfBirth && (
-								<span className="-mt-1 text-[12px] text-red-600">
+								<p className="mt-2 text-sm text-red-500">
 									{errors.dateOfBirth.message}
-								</span>
+								</p>
 							)}
 						</div>
-						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label
-								htmlFor="gender"
-								className="lable-style text-sm"
-							>
+
+						{/* Gender */}
+
+						<div>
+							<label className="mb-2 block text-sm font-semibold text-gray-700">
 								Gender
 							</label>
+
 							<select
-								type="text"
-								name="gender"
-								id="gender"
-								className="form-style border p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
 								{...register("gender", { required: true })}
 								defaultValue={user?.additionalDetails?.gender}
+								className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 transition focus:border-indigo-500 focus:bg-white focus:outline-none"
 							>
-								{genders.map((ele, i) => {
-									return (
-										<option key={i} value={ele}>
-											{ele}
-										</option>
-									);
-								})}
+								{genders.map((gender, index) => (
+									<option key={index} value={gender}>
+										{gender}
+									</option>
+								))}
 							</select>
-							{errors.gender && (
-								<span className="-mt-1 text-[12px] text-red-600">
-									Please enter your Date of Birth.
-								</span>
-							)}
 						</div>
-					</div>
 
-					<div className="flex flex-col gap-5 lg:flex-row">
-						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label
-								htmlFor="contactNumber"
-								className="lable-style text-sm"
-							>
+						{/* Contact */}
+
+						<div>
+							<label className="mb-2 block text-sm font-semibold text-gray-700">
 								Contact Number
 							</label>
+
 							<input
 								type="tel"
-								name="contactNumber"
-								id="contactNumber"
-								placeholder="Enter Contact Number"
-								className="form-style border p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
+								placeholder="9876543210"
 								{...register("contactNumber", {
 									required: {
 										value: true,
@@ -196,56 +190,59 @@ export default function EditProfile() {
 								defaultValue={
 									user?.additionalDetails?.contactNumber
 								}
+								className="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 transition focus:border-indigo-500 focus:bg-white focus:outline-none"
 							/>
+
 							{errors.contactNumber && (
-								<span className="-mt-1 text-[12px] text-red-600">
+								<p className="mt-2 text-sm text-red-500">
 									{errors.contactNumber.message}
-								</span>
+								</p>
 							)}
 						</div>
-						<div className="flex flex-col gap-2 lg:w-[48%]">
-							<label
-								htmlFor="about"
-								className="lable-style text-sm"
-							>
+
+						{/* About */}
+
+						<div className="md:col-span-2">
+							<label className="mb-2 block text-sm font-semibold text-gray-700">
 								About
 							</label>
-							<input
-								type="text"
-								name="about"
-								id="about"
-								placeholder="Enter Bio Details"
-								className="form-style border p-1 bg-white px-4 rounded-2xl focus:outline-primary outline"
+
+							<textarea
+								rows={5}
+								placeholder="Tell us something about yourself..."
 								{...register("about", { required: true })}
 								defaultValue={user?.additionalDetails?.about}
+								className="w-full resize-none rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 transition focus:border-indigo-500 focus:bg-white focus:outline-none"
 							/>
+
 							{errors.about && (
-								<span className="-mt-1 text-[12px] text-red-600">
-									Please enter your About.
-								</span>
+								<p className="mt-2 text-sm text-red-500">
+									Please enter your bio.
+								</p>
 							)}
 						</div>
 					</div>
-				</div>
 
-				<div className="flex justify-end gap-2">
-					<button
-						onClick={() => {
-							navigate("/dashboard/my-profile");
-						}}
-						className="cursor-pointer rounded-md bg-red-500 py-2 px-5 font-semibold text-white"
-					>
-						Cancel
-					</button>
+					{/* Buttons */}
 
-					<IconBtn
-						type="submit"
-						text={
-							loading ? <ButtonLoader text={"Saving"} /> : "Save"
-						}
-					/>
+					<div className="mt-10 flex flex-col-reverse gap-4 border-t pt-6 sm:flex-row sm:justify-end">
+						<button
+							type="button"
+							onClick={() => navigate("/dashboard/my-profile")}
+							className="rounded-xl border border-red-500 px-8 py-3 font-semibold text-red-600 transition hover:bg-red-50"
+						>
+							Cancel
+						</button>
+
+						<IconBtn
+							type="submit"
+							loading={loading}
+							text="Save Changes"
+							customClasses="rounded-xl px-8 py-3"
+						/>
+					</div>
 				</div>
 			</form>
-		</>
+		</div>
 	);
 }
